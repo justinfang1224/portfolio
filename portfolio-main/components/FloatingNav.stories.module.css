@@ -1,0 +1,14 @@
+.preview {
+  align-items: center;
+  background: var(--color-background-secondary);
+  border-radius: 24px;
+  display: flex;
+  justify-content: center;
+  min-height: 220px;
+  overflow: hidden;
+  position: relative;
+}
+
+.preview :global(header) {
+  position: static;
+}

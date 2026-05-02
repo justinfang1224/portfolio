@@ -1,0 +1,153 @@
+.card {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: var(--portfolio-shell);
+}
+
+.media {
+  background: var(--color-surface-card-primary);
+  border-radius: 24px;
+  color: inherit;
+  display: block;
+  height: 528px;
+  overflow: hidden;
+  position: relative;
+  text-decoration: none;
+  width: 100%;
+}
+
+.mediaLink {
+  cursor: pointer;
+}
+
+.mediaLink:focus-visible {
+  outline: 2px solid var(--color-content-primary);
+  outline-offset: 6px;
+}
+
+.image {
+  --image-hover-scale: 1.12;
+  --image-rest-scale: 1;
+
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  transform: scale(var(--image-rest-scale));
+  transition: transform 300ms ease;
+  width: 100%;
+  will-change: transform;
+}
+
+.card:hover .image,
+.card:focus-within .image {
+  transform: scale(var(--image-hover-scale));
+}
+
+.projectImagePhone {
+  --image-hover-scale: 1.1312;
+  --image-rest-scale: 1.01;
+
+  object-position: center;
+}
+
+.projectImageBrowser {
+  object-position: center;
+}
+
+.projectImageFilter {
+  object-position: center top;
+}
+
+.statusBadge {
+  left: 24px;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 24px;
+  transform: translateY(-4px);
+  transition:
+    opacity 300ms ease,
+    transform 300ms ease;
+  z-index: 1;
+}
+
+.card:hover .statusBadge,
+.card:focus-within .statusBadge {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.content {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: var(--portfolio-text-column);
+}
+
+.text {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.title {
+  color: var(--color-content-primary);
+  font-family: var(--font-family-base);
+  font-size: var(--typography-subtitle-font-size);
+  font-weight: var(--typography-heading-3-font-weight);
+  line-height: var(--typography-subtitle-line-height);
+  margin: 0;
+}
+
+.description {
+  color: var(--color-content-secondary);
+  font-family: var(--font-family-base);
+  font-size: var(--typography-body-medium-font-size);
+  font-weight: var(--typography-body-medium-font-weight);
+  line-height: var(--typography-body-medium-line-height);
+  margin: 0;
+  max-width: 100%;
+}
+
+.tags {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+@media (max-width: 1199px) {
+  .card {
+    width: 100%;
+  }
+
+  .media {
+    aspect-ratio: 960 / 528;
+    height: auto;
+  }
+}
+
+@media (max-width: 767px) {
+  .statusBadge {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .image,
+  .statusBadge {
+    transition: none;
+  }
+
+  .card:hover .image,
+  .card:focus-within .image {
+    transform: scale(var(--image-rest-scale));
+  }
+}

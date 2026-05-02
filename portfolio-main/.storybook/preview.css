@@ -1,0 +1,20 @@
+.storybook-portfolio-shell {
+  background: var(--portfolio-page-background);
+  color: var(--color-content-primary);
+  min-height: 100vh;
+  padding: 48px 24px;
+}
+
+.sbdocs,
+.sbdocs-wrapper,
+.sbdocs-content {
+  background: var(--portfolio-page-background);
+  color: var(--color-content-primary);
+  font-family: var(--font-family-base);
+}
+
+@media (max-width: 767px) {
+  .storybook-portfolio-shell {
+    padding: 32px 16px;
+  }
+}

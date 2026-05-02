@@ -1,0 +1,99 @@
+.overlay {
+  align-items: center;
+  background: #ffffff;
+  color: #050505;
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  position: fixed;
+  z-index: 2147483647;
+}
+
+.overlayExiting {
+  pointer-events: none;
+}
+
+.word {
+  align-items: center;
+  animation: welcome-ease-in 560ms var(--motion-fade-ease) 180ms both;
+  display: inline-flex;
+  font-family: var(--font-family-base);
+  font-size: clamp(32px, 2.78vw, 40px);
+  font-weight: 500;
+  letter-spacing: normal;
+  line-height: 1.2;
+  user-select: none;
+}
+
+.overlayExiting .word {
+  animation: welcome-ease-out 350ms var(--motion-fade-ease) both;
+}
+
+.iconSlot {
+  align-items: center;
+  display: inline-flex;
+  height: 0.5em;
+  justify-content: center;
+  margin-inline: 0.135em;
+  transform: translate(1px, calc(0.04em + 2px));
+  width: 0.5em;
+}
+
+.icon {
+  animation: symbol-soft-swap 200ms var(--motion-fade-ease) both;
+  height: 100%;
+  object-fit: contain;
+  width: 100%;
+}
+
+@media (max-width: 767px) {
+  .word {
+    font-size: clamp(30px, 9vw, 40px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay,
+  .overlayExiting,
+  .word,
+  .icon {
+    animation-duration: 1ms;
+    animation-delay: 0ms;
+  }
+}
+
+@keyframes welcome-ease-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes welcome-ease-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.985);
+  }
+}
+
+@keyframes symbol-soft-swap {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

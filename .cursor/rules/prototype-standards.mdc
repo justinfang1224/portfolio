@@ -1,0 +1,33 @@
+---
+description: Prototype build standards for design-system compliance, QA, and interaction consistency
+alwaysApply: true
+---
+
+# Prototype Standards
+
+Apply these standards by default when working on this prototype. Be flexible when the current codebase or user request requires it, but call out any important deviation clearly.
+
+## Design System Compliance
+
+- When building new UI, first look for existing design-system patterns for typography, color, spacing, layout, buttons, controls, cards, and states.
+- Prefer existing tokens, CSS variables, shared components, and local conventions over hard-coded values or one-off styling.
+- If any hard-coded value or custom interaction is necessary, explicitly flag it to the user with the reason and where it was used.
+
+## Build and Runtime QA
+
+- Every time the portfolio is changed (new feature, edit, refactor, content update, or bug fix), treat QA as part of the task before finalizing.
+- After implementation, run relevant checks available in the project (build, lint, type, and app/dev checks) when practical.
+- Verify the portfolio is up and accessible after changes (for example, local app responds and key routes still load).
+- Confirm there are no new runtime/build errors or obvious console-breaking issues introduced by the change.
+- Relaunch or re-verify after fixes, then summarize what was checked and any remaining risks.
+
+## Interaction Consistency
+
+- Match interactions to the closest relevant existing page or flow, especially loading states, scrolling behavior, transitions, hover/focus states, and navigation patterns.
+- For new articles or content pages, keep loading and scrolling behavior consistent with existing article/content experiences.
+- If consistency is not possible because the existing pattern is missing, conflicting, or technically constrained, explain the chosen fallback.
+
+## Project And Article Imagery
+
+- On project detail pages and article detail pages, use a 12px radius for content image frames, content images, and article hero images.
+- This radius standard is scoped to project and article pages only; homepage cards, about-page imagery, and other page types remain flexible unless a specific design requires otherwise.

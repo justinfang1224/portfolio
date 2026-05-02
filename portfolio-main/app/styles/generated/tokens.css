@@ -1,0 +1,84 @@
+/* AUTO-GENERATED FILE. DO NOT EDIT DIRECTLY.
+ * Source: tokens/source.json
+ * Run: npm run tokens:build
+ */
+
+:root {
+  --font-family-base: "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --typography-heading-1-font-size: 40px;
+  --typography-heading-1-font-weight: 500;
+  --typography-heading-1-line-height: 48px;
+  --typography-heading-2-font-size: 28px;
+  --typography-heading-2-font-weight: 500;
+  --typography-heading-2-line-height: 36px;
+  --typography-heading-3-font-size: 20px;
+  --typography-heading-3-font-weight: 500;
+  --typography-heading-3-line-height: 28px;
+  --typography-subtitle-font-size: 18px;
+  --typography-subtitle-font-weight: 400;
+  --typography-subtitle-line-height: 28px;
+  --typography-button-font-size: 15px;
+  --typography-button-font-weight: 500;
+  --typography-button-line-height: 18px;
+  --typography-body-large-font-size: 18px;
+  --typography-body-large-font-weight: 400;
+  --typography-body-large-line-height: 30px;
+  --typography-body-medium-font-size: 16px;
+  --typography-body-medium-font-weight: 400;
+  --typography-body-medium-line-height: 27px;
+  --typography-body-small-font-size: 14px;
+  --typography-body-small-font-weight: 400;
+  --typography-body-small-line-height: 20px;
+  --typography-caption-font-size: 12px;
+  --typography-caption-font-weight: 400;
+  --typography-caption-line-height: 16px;
+  --spacing-0: 0px;
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-20: 20px;
+  --spacing-24: 24px;
+  --spacing-36: 36px;
+  --spacing-40: 40px;
+  --spacing-48: 48px;
+  --spacing-56: 56px;
+  --spacing-64: 64px;
+  --spacing-80: 80px;
+  --spacing-100: 100px;
+  --spacing-128: 128px;
+  --spacing-190: 190px;
+  --spacing-201: 201px;
+  --color-border-primary: #EDEDED;
+  --color-border-secondary: #F0F0F0;
+  --color-content-primary: #111111;
+  --color-content-secondary: #737373;
+  --color-content-tertiary: #B3B3B3;
+  --color-content-contrast: #F9F9F7;
+  --color-background-primary: #F7F7F7;
+  --color-background-secondary: #F0F0F0;
+  --color-background-contrast: #FFFFFF;
+  --color-surface-card-primary: #F7F7F7;
+  --color-surface-card-secondary: #F0F0F0;
+  --color-button-secondary-default: #F5F5F5;
+  --color-button-secondary-hover: #EEEEEE;
+  --color-button-secondary-pressed: #E0E0E0;
+}
+
+.text-heading-1 { font-family: var(--font-family-base); font-size: var(--typography-heading-1-font-size); font-weight: var(--typography-heading-1-font-weight); line-height: var(--typography-heading-1-line-height); }
+.text-heading-2 { font-family: var(--font-family-base); font-size: var(--typography-heading-2-font-size); font-weight: var(--typography-heading-2-font-weight); line-height: var(--typography-heading-2-line-height); }
+.text-heading-3 { font-family: var(--font-family-base); font-size: var(--typography-heading-3-font-size); font-weight: var(--typography-heading-3-font-weight); line-height: var(--typography-heading-3-line-height); }
+.text-subtitle { font-family: var(--font-family-base); font-size: var(--typography-subtitle-font-size); font-weight: var(--typography-subtitle-font-weight); line-height: var(--typography-subtitle-line-height); }
+.text-button { font-family: var(--font-family-base); font-size: var(--typography-button-font-size); font-weight: var(--typography-button-font-weight); line-height: var(--typography-button-line-height); }
+.text-body-large { font-family: var(--font-family-base); font-size: var(--typography-body-large-font-size); font-weight: var(--typography-body-large-font-weight); line-height: var(--typography-body-large-line-height); }
+.text-body-medium { font-family: var(--font-family-base); font-size: var(--typography-body-medium-font-size); font-weight: var(--typography-body-medium-font-weight); line-height: var(--typography-body-medium-line-height); }
+.text-body-small { font-family: var(--font-family-base); font-size: var(--typography-body-small-font-size); font-weight: var(--typography-body-small-font-weight); line-height: var(--typography-body-small-line-height); }
+.text-caption { font-family: var(--font-family-base); font-size: var(--typography-caption-font-size); font-weight: var(--typography-caption-font-weight); line-height: var(--typography-caption-line-height); }
+
+.btn-secondary { background-color: var(--color-button-secondary-default); }
+.btn-secondary:hover { background-color: var(--color-button-secondary-hover); }
+.btn-secondary:active { background-color: var(--color-button-secondary-pressed); }
+
+.card-surface-primary { background-color: var(--color-surface-card-primary); }
+.card-surface-secondary { background-color: var(--color-surface-card-secondary); }
+

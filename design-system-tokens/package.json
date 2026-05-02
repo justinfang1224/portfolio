@@ -1,0 +1,10 @@
+{
+  "name": "portfolio-design-system-tokens",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "tokens:build": "node scripts/generate-tokens.mjs",
+    "tokens:check": "node scripts/verify-tokens.mjs"
+  }
+}

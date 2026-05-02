@@ -1,0 +1,554 @@
+.collage {
+  --collage-ease: ease-in-out;
+  --collage-motion-ease: cubic-bezier(0.2, 1.28, 0.36, 1);
+  --collage-transition-duration: 300ms;
+
+  align-items: center;
+  display: flex;
+  height: 278px;
+  justify-content: center;
+  overflow: visible;
+  padding-right: 64px;
+  perspective: 900px;
+  position: relative;
+  transition: height var(--collage-transition-duration) var(--collage-ease);
+  width: var(--portfolio-text-column);
+}
+
+.card {
+  --card-rotation: 0deg;
+  --card-hover-rotation: var(--card-rotation);
+  --card-flip-rotation: rotateY(0deg);
+  --selected-shift-x: 0px;
+  --stack-shift-x: 0px;
+
+  appearance: none;
+  animation: cardFadeIn 300ms ease-in-out backwards;
+  background: transparent;
+  border: 1px solid var(--color-border-primary);
+  border-radius: 12px;
+  cursor: pointer;
+  flex: 0 0 188px;
+  height: 251px;
+  margin-right: -64px;
+  opacity: 1;
+  overflow: hidden;
+  padding: 0;
+  position: relative;
+  transform: translate3d(0, -12px, 0) scale(1) rotate(var(--card-rotation))
+    var(--card-flip-rotation);
+  transform-origin: center;
+  transform-style: preserve-3d;
+  transition:
+    border-color var(--collage-transition-duration) var(--collage-ease),
+    box-shadow var(--collage-transition-duration) var(--collage-ease),
+    opacity var(--collage-transition-duration) var(--collage-ease),
+    transform var(--collage-transition-duration) var(--collage-motion-ease);
+  will-change: transform, opacity;
+  z-index: 1;
+}
+
+.flipInner {
+  display: block;
+  height: 100%;
+  position: relative;
+  transform: rotateY(0deg);
+  transform-style: preserve-3d;
+  transition: transform var(--collage-transition-duration) var(--collage-ease);
+  will-change: transform;
+  width: 100%;
+}
+
+.flipped .flipInner {
+  transform: rotateY(180deg);
+}
+
+.face {
+  backface-visibility: hidden;
+  border-radius: 11px;
+  display: block;
+  inset: 0;
+  overflow: hidden;
+  position: absolute;
+}
+
+.frontFace {
+  opacity: 1;
+  transition: opacity 140ms var(--collage-ease);
+  transform: rotateY(0deg);
+}
+
+.backFace {
+  align-items: flex-start;
+  background: var(--color-background-contrast);
+  box-sizing: border-box;
+  color: var(--color-content-primary);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+  opacity: 0;
+  padding: 20px;
+  text-align: left;
+  transition: opacity 140ms var(--collage-ease);
+  transform: rotateY(180deg);
+}
+
+.flipped .frontFace {
+  opacity: 0;
+}
+
+.flipped .backFace {
+  opacity: 1;
+}
+
+.backTitle {
+  color: var(--color-content-primary);
+  display: block;
+  font-family: var(--font-family-base);
+  font-size: var(--typography-heading-3-font-size);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: var(--typography-heading-3-line-height);
+  width: 100%;
+}
+
+.backBody {
+  color: var(--color-content-secondary);
+  display: block;
+  font-family: var(--font-family-base);
+  font-size: var(--typography-body-small-font-size);
+  font-weight: 300;
+  letter-spacing: 0;
+  line-height: var(--typography-body-small-line-height);
+  width: 100%;
+}
+
+.card img {
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  width: 100%;
+}
+
+.customCursorActive,
+.customCursorActive * {
+  cursor: none;
+}
+
+.magneticCursor {
+  display: inline-flex;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  transform: translate3d(
+    calc(var(--cursor-x, 50%) - 50%),
+    calc(var(--cursor-y, 50%) - 50%),
+    96px
+  );
+  transition:
+    opacity 120ms var(--collage-ease),
+    transform 110ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+  z-index: 12;
+}
+
+.magneticCursorBadge {
+  user-select: none;
+}
+
+.card:hover {
+  border-color: color-mix(in srgb, var(--color-content-primary) 18%, var(--color-border-primary));
+  opacity: 1;
+  transform: translate3d(0, -20px, 0) scale(1) rotate(var(--card-rotation))
+    var(--card-flip-rotation);
+}
+
+.card:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--color-content-primary) 40%, transparent);
+  outline-offset: 4px;
+}
+
+.card:nth-child(1) {
+  animation-delay: 0ms;
+  --selected-shift-x: 248px;
+}
+
+.card:nth-child(2) {
+  animation-delay: 0ms;
+  --selected-shift-x: 124px;
+}
+
+.card:nth-child(3) {
+  animation-delay: 0ms;
+  --selected-shift-x: 0px;
+}
+
+.card:nth-child(4) {
+  animation-delay: 0ms;
+  --selected-shift-x: -124px;
+}
+
+.card:nth-child(5) {
+  animation-delay: 0ms;
+  --selected-shift-x: -248px;
+}
+
+.portrait,
+.city {
+  --card-hover-rotation: -4deg;
+  --card-rotation: -9.19deg;
+}
+
+.running,
+.cafe {
+  --card-hover-rotation: 9deg;
+  --card-rotation: 5.02deg;
+}
+
+.cat {
+  --card-hover-rotation: 1.5deg;
+  --card-rotation: -2.47deg;
+}
+
+.expanded {
+  height: 430px;
+}
+
+.expanded:hover .card:not(:hover),
+.expanded .card {
+  opacity: 1;
+}
+
+.expanded .card:hover {
+  border-color: var(--color-border-primary);
+  transform: translate3d(0, -12px, 0) scale(1) rotate(var(--card-rotation))
+    var(--card-flip-rotation);
+  z-index: 1;
+}
+
+.expanded .stacked {
+  opacity: 0.9;
+  transform: translate3d(var(--stack-shift-x), 125px, -48px) scale(0.5)
+    rotate(var(--card-rotation)) var(--card-flip-rotation);
+  z-index: 9;
+}
+
+.expanded .stacked:hover {
+  opacity: 0.96;
+  transform: translate3d(var(--stack-shift-x), 117px, -48px) scale(0.5)
+    rotate(var(--card-rotation)) var(--card-flip-rotation);
+  z-index: 9;
+}
+
+.expanded .selected,
+.expanded .selected:hover {
+  border-color: color-mix(in srgb, var(--color-content-primary) 14%, var(--color-border-primary));
+  box-shadow: 0 24px 60px color-mix(in srgb, var(--color-content-primary) 10%, transparent);
+  opacity: 1;
+  transform: translate3d(var(--selected-shift-x), -74px, 64px) scale(1.12) rotate(0deg)
+    var(--card-flip-rotation);
+  z-index: 6;
+}
+
+.expanded .selected.flipped,
+.expanded .selected.flipped:hover {
+  border-color: var(--color-border-primary);
+  box-shadow: none;
+}
+
+.selected1 .card:nth-child(2) {
+  --stack-shift-x: 28px;
+}
+
+.selected1 .card:nth-child(3),
+.selected2 .card:nth-child(3) {
+  --stack-shift-x: -32px;
+}
+
+.selected1 .card:nth-child(4),
+.selected2 .card:nth-child(4),
+.selected3 .card:nth-child(4) {
+  --stack-shift-x: -92px;
+}
+
+.selected1 .card:nth-child(5),
+.selected2 .card:nth-child(5),
+.selected3 .card:nth-child(5),
+.selected4 .card:nth-child(5) {
+  --stack-shift-x: -152px;
+}
+
+.selected2 .card:nth-child(1),
+.selected3 .card:nth-child(1),
+.selected4 .card:nth-child(1),
+.selected5 .card:nth-child(1) {
+  --stack-shift-x: 152px;
+}
+
+.selected3 .card:nth-child(2),
+.selected4 .card:nth-child(2),
+.selected5 .card:nth-child(2) {
+  --stack-shift-x: 92px;
+}
+
+.selected4 .card:nth-child(3),
+.selected5 .card:nth-child(3) {
+  --stack-shift-x: 32px;
+}
+
+.selected5 .card:nth-child(4) {
+  --stack-shift-x: -28px;
+}
+
+@keyframes cardFadeIn {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0) scale(0.96) rotate(var(--card-rotation));
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(0, -12px, 0) scale(1) rotate(var(--card-rotation));
+  }
+}
+
+@media (max-width: 767px) {
+  .collage {
+    height: 232px;
+    overflow: hidden;
+    padding-inline: 0;
+    padding-right: 48px;
+    width: 100%;
+  }
+
+  .backTitle {
+    font-size: var(--typography-subtitle-font-size);
+    font-weight: var(--typography-subtitle-font-weight);
+    line-height: var(--typography-subtitle-line-height);
+  }
+
+  .backBody {
+    font-size: var(--typography-body-small-font-size);
+    font-weight: var(--typography-body-small-font-weight);
+    line-height: var(--typography-body-small-line-height);
+  }
+
+  .card {
+    flex-basis: 150px;
+    height: 200px;
+    margin-right: -48px;
+  }
+
+  .expanded {
+    height: 360px;
+    overflow: visible;
+  }
+
+  .card:nth-child(1) {
+    --selected-shift-x: 204px;
+  }
+
+  .card:nth-child(2) {
+    --selected-shift-x: 102px;
+  }
+
+  .card:nth-child(3) {
+    --selected-shift-x: 0px;
+  }
+
+  .card:nth-child(4) {
+    --selected-shift-x: -102px;
+  }
+
+  .card:nth-child(5) {
+    --selected-shift-x: -204px;
+  }
+
+  .selected1 .card:nth-child(2) {
+    --stack-shift-x: 34px;
+  }
+
+  .selected1 .card:nth-child(3),
+  .selected2 .card:nth-child(3) {
+    --stack-shift-x: -23px;
+  }
+
+  .selected1 .card:nth-child(4),
+  .selected2 .card:nth-child(4),
+  .selected3 .card:nth-child(4) {
+    --stack-shift-x: -79px;
+  }
+
+  .selected1 .card:nth-child(5),
+  .selected2 .card:nth-child(5),
+  .selected3 .card:nth-child(5),
+  .selected4 .card:nth-child(5) {
+    --stack-shift-x: -136px;
+  }
+
+  .selected2 .card:nth-child(1),
+  .selected3 .card:nth-child(1),
+  .selected4 .card:nth-child(1),
+  .selected5 .card:nth-child(1) {
+    --stack-shift-x: 136px;
+  }
+
+  .selected3 .card:nth-child(2),
+  .selected4 .card:nth-child(2),
+  .selected5 .card:nth-child(2) {
+    --stack-shift-x: 79px;
+  }
+
+  .selected4 .card:nth-child(3),
+  .selected5 .card:nth-child(3) {
+    --stack-shift-x: 23px;
+  }
+
+  .selected5 .card:nth-child(4) {
+    --stack-shift-x: -34px;
+  }
+
+  .expanded .stacked {
+    transform: translate3d(var(--stack-shift-x), 90px, -42px) scale(0.5)
+      rotate(var(--card-rotation)) var(--card-flip-rotation);
+  }
+
+  .expanded .stacked:hover {
+    transform: translate3d(var(--stack-shift-x), 82px, -42px) scale(0.5)
+      rotate(var(--card-rotation)) var(--card-flip-rotation);
+    z-index: 9;
+  }
+
+  .expanded .selected,
+  .expanded .selected:hover {
+    transform: translate3d(var(--selected-shift-x), -70px, 56px) scale(1.1) rotate(0deg)
+      var(--card-flip-rotation);
+  }
+}
+
+@media (max-width: 479px) {
+  .collage {
+    justify-content: center;
+  }
+
+  .card:nth-child(1) {
+    --selected-shift-x: 204px;
+  }
+
+  .card:nth-child(2) {
+    --selected-shift-x: 102px;
+  }
+
+  .card:nth-child(3) {
+    --selected-shift-x: 0px;
+  }
+
+  .card:nth-child(4) {
+    --selected-shift-x: -102px;
+  }
+
+  .card:nth-child(5) {
+    --selected-shift-x: -204px;
+  }
+
+  .selected1 .card:nth-child(2) {
+    --stack-shift-x: 34px;
+  }
+
+  .selected1 .card:nth-child(3),
+  .selected2 .card:nth-child(3) {
+    --stack-shift-x: -23px;
+  }
+
+  .selected1 .card:nth-child(4),
+  .selected2 .card:nth-child(4),
+  .selected3 .card:nth-child(4) {
+    --stack-shift-x: -79px;
+  }
+
+  .selected1 .card:nth-child(5),
+  .selected2 .card:nth-child(5),
+  .selected3 .card:nth-child(5),
+  .selected4 .card:nth-child(5) {
+    --stack-shift-x: -136px;
+  }
+
+  .selected2 .card:nth-child(1),
+  .selected3 .card:nth-child(1),
+  .selected4 .card:nth-child(1),
+  .selected5 .card:nth-child(1) {
+    --stack-shift-x: 136px;
+  }
+
+  .selected3 .card:nth-child(2),
+  .selected4 .card:nth-child(2),
+  .selected5 .card:nth-child(2) {
+    --stack-shift-x: 79px;
+  }
+
+  .selected4 .card:nth-child(3),
+  .selected5 .card:nth-child(3) {
+    --stack-shift-x: 23px;
+  }
+
+  .selected5 .card:nth-child(4) {
+    --stack-shift-x: -34px;
+  }
+
+  .expanded .stacked {
+    transform: translate3d(var(--stack-shift-x), 86px, -42px) scale(0.5)
+      rotate(var(--card-rotation)) var(--card-flip-rotation);
+  }
+
+  .expanded .stacked:hover {
+    transform: translate3d(var(--stack-shift-x), 78px, -42px) scale(0.5)
+      rotate(var(--card-rotation)) var(--card-flip-rotation);
+  }
+
+  .expanded .selected,
+  .expanded .selected:hover {
+    transform: translate3d(var(--selected-shift-x), -74px, 48px) scale(1.06) rotate(0deg)
+      var(--card-flip-rotation);
+  }
+}
+
+@media (pointer: coarse) {
+  .customCursorActive,
+  .customCursorActive * {
+    cursor: pointer;
+  }
+
+  .magneticCursor {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    animation: none;
+    opacity: 1;
+    transform: rotate(var(--card-rotation)) var(--card-flip-rotation);
+    transition: none;
+  }
+
+  .card:hover {
+    transform: rotate(var(--card-rotation)) var(--card-flip-rotation);
+  }
+
+  .expanded .stacked,
+  .expanded .stacked:hover {
+    transform: translate3d(var(--stack-shift-x), 78px, 0) scale(0.5)
+      rotate(var(--card-rotation)) var(--card-flip-rotation);
+  }
+
+  .expanded .selected,
+  .expanded .selected:hover {
+    transform: translate3d(var(--selected-shift-x), -74px, 0) scale(1.12) rotate(0deg)
+      var(--card-flip-rotation);
+  }
+
+  .magneticCursor {
+    transition: none;
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "name": "portfolio-landing",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "sync:tokens": "node scripts/sync-tokens.mjs",
+    "predev": "npm run sync:tokens",
+    "prebuild": "npm run sync:tokens",
+    "prestorybook": "npm run sync:tokens",
+    "prebuild-storybook": "npm run sync:tokens",
+    "dev": "node scripts/dev-stable.mjs",
+    "dev:reset": "node scripts/dev-stable.mjs",
+    "dev:stable": "node scripts/dev-stable.mjs",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "dependencies": {
+    "lenis": "^1.3.23",
+    "lucide-react": "^1.11.0",
+    "next": "latest",
+    "process": "^0.11.10",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "@storybook/addon-a11y": "^10.3.5",
+    "@storybook/addon-docs": "^10.3.5",
+    "@storybook/nextjs-vite": "^10.3.5",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "eslint": "latest",
+    "eslint-config-next": "latest",
+    "storybook": "^10.3.5",
+    "typescript": "latest"
+  }
+}

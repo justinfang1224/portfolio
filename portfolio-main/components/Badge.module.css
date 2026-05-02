@@ -1,0 +1,37 @@
+.badge {
+  align-items: center;
+  border-radius: 24px;
+  display: inline-flex;
+  font-family: var(--font-family-base);
+  font-size: var(--typography-caption-font-size);
+  font-style: normal;
+  font-weight: var(--typography-caption-font-weight);
+  justify-content: center;
+  line-height: var(--typography-caption-line-height);
+  white-space: nowrap;
+}
+
+.sizeS {
+  padding: 4px 8px;
+}
+
+.sizeL {
+  padding: 8px 16px;
+}
+
+.positive {
+  backdrop-filter: blur(12px);
+  background: rgba(0, 201, 60, 0.16);
+  color: #00c93c;
+}
+
+.warning {
+  backdrop-filter: blur(12px);
+  background: rgba(201, 184, 0, 0.16);
+  color: #c9b800;
+}
+
+.neutral {
+  background: var(--color-background-primary);
+  color: var(--color-content-secondary);
+}

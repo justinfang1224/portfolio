@@ -1,0 +1,137 @@
+@import "lenis/dist/lenis.css";
+@import "./styles/generated/tokens.css";
+
+:root {
+  --portfolio-page-background: Canvas;
+  --portfolio-nav-active-background: Canvas;
+  --portfolio-nav-background: color-mix(in srgb, var(--color-surface-card-primary) 80%, transparent);
+  --portfolio-shell: 960px;
+  --portfolio-text-column: 796px;
+  --motion-fade-duration: 360ms;
+  --motion-fade-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --motion-reveal-distance: 14px;
+  --motion-stagger-step: 60ms;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--portfolio-page-background);
+  color: var(--color-content-primary);
+  scroll-behavior: auto;
+}
+
+body {
+  background: var(--portfolio-page-background);
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-family-base);
+  margin: 0;
+  min-height: 100svh;
+  padding-bottom: 40px;
+  text-rendering: geometricPrecision;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+.portfolio-content-shell {
+  opacity: 0;
+  transition: opacity 300ms var(--motion-fade-ease);
+}
+
+html[data-landing-splash="entered"] .portfolio-content-shell,
+html[data-landing-splash="entered"] .portfolio-content-shell {
+  opacity: 1;
+}
+
+.portfolio-route-fade {
+  opacity: 0;
+  transition: opacity 300ms var(--motion-fade-ease);
+}
+
+.portfolio-route-fade--visible {
+  opacity: 1;
+}
+
+img,
+svg {
+  display: block;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: var(--color-button-secondary-pressed);
+  color: var(--color-content-primary);
+}
+
+.motion-reveal {
+  opacity: 0;
+  transform: translate3d(0, var(--motion-reveal-distance), 0);
+  transition:
+    opacity var(--motion-fade-duration) var(--motion-fade-ease),
+    transform var(--motion-fade-duration) var(--motion-fade-ease);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.motion-reveal:empty {
+  opacity: 1;
+}
+
+.motion-reveal--visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  will-change: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .motion-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    will-change: auto;
+  }
+
+  .portfolio-content-shell {
+    transition: none;
+  }
+
+  .portfolio-route-fade {
+    opacity: 1;
+    transition: none;
+  }
+}
+
+@media (max-width: 1199px) {
+  :root {
+    --portfolio-shell: calc(100vw - 64px);
+    --portfolio-text-column: min(796px, var(--portfolio-shell));
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --portfolio-shell: calc(100vw - 48px);
+    --portfolio-text-column: var(--portfolio-shell);
+  }
+
+  body {
+    padding-bottom: 40px;
+  }
+}

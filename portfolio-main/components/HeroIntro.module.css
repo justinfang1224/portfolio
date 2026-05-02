@@ -1,0 +1,167 @@
+.hero {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  justify-content: flex-end;
+  width: var(--portfolio-text-column);
+}
+
+.identity {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: center;
+}
+
+.index {
+  color: var(--color-content-secondary);
+  font-family: var(--font-family-base);
+  font-size: var(--typography-caption-font-size);
+  font-weight: var(--typography-caption-font-weight);
+  line-height: var(--typography-caption-line-height);
+  margin: 0;
+}
+
+.avatar {
+  border-radius: 50%;
+  display: block;
+  height: 64px;
+  width: 64px;
+}
+
+.name {
+  color: var(--color-content-primary);
+  font-family: var(--font-family-base);
+  font-size: var(--typography-heading-3-font-size);
+  font-weight: var(--typography-heading-3-font-weight);
+  line-height: var(--typography-heading-3-line-height);
+  margin: 0;
+}
+
+.copyGroup {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.intro {
+  color: var(--color-content-secondary);
+  font-family: var(--font-family-base);
+  font-size: var(--typography-body-large-font-size);
+  font-weight: var(--typography-body-large-font-weight);
+  line-height: var(--typography-body-large-line-height);
+  margin: 0;
+  max-width: 671px;
+}
+
+.intro p {
+  margin: 0;
+}
+
+.intro span {
+  color: var(--color-content-secondary);
+}
+
+.intro a {
+  color: var(--color-content-primary);
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 3px;
+}
+
+.companyLink {
+  align-items: center;
+  display: inline-flex;
+  gap: 6px;
+  vertical-align: -2px;
+}
+
+.companyLink:hover span,
+.companyLink:focus-visible span {
+  color: var(--color-content-primary);
+}
+
+.companyLogo {
+  border-radius: 4px;
+  display: inline-block;
+  flex: 0 0 auto;
+  height: 16px;
+  object-fit: cover;
+  width: 16px;
+}
+
+.intro a:hover {
+  text-decoration-style: solid;
+}
+
+.intro a:focus-visible {
+  border-radius: 4px;
+  outline: 2px solid var(--color-content-primary);
+  outline-offset: 2px;
+}
+
+.updated {
+  color: var(--color-content-tertiary);
+  font-family: var(--font-family-base);
+  font-size: var(--typography-body-medium-font-size);
+  font-weight: var(--typography-body-medium-font-weight);
+  line-height: var(--typography-body-medium-line-height);
+  margin: 0;
+}
+
+.updatedEmoji {
+  display: inline-block;
+  margin-right: 4px;
+}
+
+.updatedText {
+  display: inline-block;
+  min-width: 0;
+}
+
+.typeCursor {
+  background: currentColor;
+  display: inline-block;
+  height: 1em;
+  margin-left: 2px;
+  opacity: 0;
+  transform: translateY(2px);
+  width: 1px;
+}
+
+.typeCursorActive {
+  animation: type-cursor-blink 800ms steps(2, start) infinite;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+@media (max-width: 1199px) {
+  .hero {
+    width: min(100%, var(--portfolio-text-column));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .typeCursorActive {
+    animation: none;
+  }
+}
+
+@keyframes type-cursor-blink {
+  0%,
+  45% {
+    opacity: 1;
+  }
+
+  46%,
+  100% {
+    opacity: 0;
+  }
+}
