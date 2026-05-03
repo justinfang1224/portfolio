@@ -12,6 +12,7 @@
     "dev:reset": "node scripts/dev-stable.mjs",
     "dev:stable": "node scripts/dev-stable.mjs",
     "build": "next build",
+    "vercel-build": "npm run build",
     "start": "next start",
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
