@@ -32,9 +32,9 @@
 .identity {
   align-items: center;
   display: flex;
+  flex: 1;
   gap: 16px;
   min-width: 0;
-  width: 449px;
 }
 
 .logo {
@@ -111,6 +111,13 @@
   color: var(--color-content-secondary);
   font-size: var(--typography-body-medium-font-size);
   line-height: inherit;
+}
+
+.roleMeta {
+  align-items: center;
+  column-gap: 12px;
+  display: inline-flex;
+  white-space: nowrap;
 }
 
 .toggle {

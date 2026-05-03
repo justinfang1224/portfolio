@@ -131,6 +131,10 @@ a {
     --portfolio-text-column: var(--portfolio-shell);
   }
 
+  html {
+    overflow-x: clip;
+  }
+
   body {
     padding-bottom: 40px;
   }

@@ -165,7 +165,7 @@ export const cryptoProjectDetail = {
     year: "2025",
     title: "Launching Crypto.com Credit Card",
     summary:
-      "0 -> 1 U.S. credit card launch. Centralizing rewards within a scalable global architecture.",
+      "0 to 1 U.S. credit card launch. Centralizing rewards within a scalable global architecture.",
     details: [
       { label: "Client", value: "Crypto.com" },
       { label: "Role", value: "Lead product designer" },

@@ -81,7 +81,7 @@ export function AboutTimeline({
                   <p className={styles.role}>
                     <span>{entry.role}</span>
                     {inlineMeta ? (
-                      <>
+                      <span className={styles.roleMeta}>
                         <span aria-hidden="true" className={styles.separator}>
                           •
                         </span>
@@ -90,7 +90,7 @@ export function AboutTimeline({
                         ) : (
                           <span>{inlineMeta}</span>
                         )}
-                      </>
+                      </span>
                     ) : null}
                   </p>
                 </div>

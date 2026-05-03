@@ -165,8 +165,12 @@ export function AboutCollage() {
                 />
               </span>
               <span className={`${styles.face} ${styles.backFace}`}>
-                <span className={styles.backTitle}>{image.back.title}</span>
-                <span className={styles.backBody}>{image.back.body}</span>
+                <span className={styles.backTitle} title={image.back.title}>
+                  {image.back.title}
+                </span>
+                <span className={styles.backBody} title={image.back.body}>
+                  {image.back.body}
+                </span>
               </span>
             </span>
             {showCustomCursor ? (
