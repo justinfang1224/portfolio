@@ -1,0 +1,7 @@
+{
+  "name": "portfolio-repo",
+  "private": true,
+  "scripts": {
+    "vercel-build": "npm ci --prefix portfolio-main && npm run vercel-build --prefix portfolio-main"
+  }
+}
