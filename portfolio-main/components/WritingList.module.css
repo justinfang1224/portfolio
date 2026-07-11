@@ -62,10 +62,10 @@
   display: flex;
   flex-wrap: wrap;
   font-family: var(--font-family-base);
-  font-size: var(--typography-caption-font-size);
-  font-weight: var(--typography-caption-font-weight);
+  font-size: var(--typography-body-medium-font-size);
+  font-weight: var(--typography-body-medium-font-weight);
   gap: 8px;
-  line-height: var(--typography-caption-line-height);
+  line-height: var(--typography-body-medium-line-height);
   margin: 0;
 }
 

@@ -197,9 +197,6 @@ export default function BowtieProjectPage() {
             </div>
 
             <MotionReveal className={styles.actions} delay={80}>
-              <Link className={styles.button} href={bowtieProjectDetail.actions.back.href}>
-                {bowtieProjectDetail.actions.back.label}
-              </Link>
               <Link className={styles.button} href={bowtieProjectDetail.actions.next.href}>
                 {bowtieProjectDetail.actions.next.label}
               </Link>
@@ -207,7 +204,7 @@ export default function BowtieProjectPage() {
           </div>
         </div>
       </main>
-      <Footer width="content" />
+      <Footer />
     </>
   );
 }

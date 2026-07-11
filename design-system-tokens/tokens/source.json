@@ -56,6 +56,10 @@
         "secondary": "#F0F0F0"
       }
     },
+    "status": {
+      "positive": "#66DC16",
+      "warning": "#FFD600"
+    },
     "button": {
       "secondary": {
         "default": "#F5F5F5",

@@ -1,8 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import type { ReactNode } from "react";
+import { aboutFavorites } from "@/content/about";
 import { assetUrls } from "@/content/portfolio";
 import { AboutCollage } from "@/components/about/AboutCollage";
 import { AboutTimeline } from "@/components/about/AboutTimeline";
+import { FavoriteTravelCard } from "@/components/about/FavoriteTravelCard";
 import { Badge } from "@/components/Badge";
 import { Button } from "@/components/Button";
 import { FloatingNav } from "@/components/FloatingNav";
@@ -45,6 +47,8 @@ const colorTokens = [
   { name: "background-secondary", value: "#F0F0F0" },
   { name: "surface-card-primary", value: "#F7F7F7" },
   { name: "surface-card-secondary", value: "#F0F0F0" },
+  { name: "status-positive", value: "#66DC16" },
+  { name: "status-warning", value: "#FFD600" },
   { name: "button-secondary-default", value: "#F5F5F5" },
   { name: "button-secondary-hover", value: "#EEEEEE" },
   { name: "button-secondary-pressed", value: "#E0E0E0" }
@@ -307,6 +311,11 @@ export const Overview: Story = {
                 </ComponentCard>
                 <ComponentCard description="Interactive image collage from the About page." isLarge title="AboutCollage">
                   <AboutCollage />
+                </ComponentCard>
+                <ComponentCard description="Compact favorite card for travel/place links." title="FavoriteTravelCard">
+                  <div className={styles.favoriteCardPreview}>
+                    <FavoriteTravelCard {...aboutFavorites.travel} />
+                  </div>
                 </ComponentCard>
               </div>
               <ComponentCard description="Writing index section with linked entries and CTA." isLarge title="WritingList">

@@ -21,14 +21,14 @@
 
 .positive {
   backdrop-filter: blur(12px);
-  background: rgba(0, 201, 60, 0.16);
-  color: #00c93c;
+  background: color-mix(in srgb, var(--color-status-positive) 16%, transparent);
+  color: var(--color-status-positive);
 }
 
 .warning {
   backdrop-filter: blur(12px);
-  background: rgba(201, 184, 0, 0.16);
-  color: #c9b800;
+  background: color-mix(in srgb, var(--color-status-warning) 16%, transparent);
+  color: var(--color-status-warning);
 }
 
 .neutral {

@@ -830,7 +830,7 @@ export const writings = [
     href: "/writings/ethnographic-research-at-a-local-park-in-hong-kong"
   },
   {
-    title: "The social Dilemma — Quotes and thoughts",
+    title: "The Social Dilemma — Quotes and thoughts",
     date: "Posted on 02.04.2023",
     category: "Reading",
     href: "/writings/the-social-dilemma-quotes-and-thoughts"
@@ -863,7 +863,7 @@ export const writingsPage = {
       href: "/writings/ethnographic-research-at-a-local-park-in-hong-kong"
     },
     {
-      title: "The social Dilemma — Quotes and thoughts",
+      title: "The Social Dilemma — Quotes and thoughts",
       date: "Posted on 02.04.2023",
       category: "Reading",
       href: "/writings/the-social-dilemma-quotes-and-thoughts"
@@ -937,10 +937,11 @@ export const writingArticles = [
           ]
         },
         note: {
-          text: "*I distinctly recall an article by Deliveroo that treated internal practices as a product worthy of research and study. Kudos to the designers at Deliveroo for their insightful work",
+          textBeforeLink: "*I distinctly recall an ",
+          textAfterLink:
+            " that treated internal practices as a product worthy of research and study. Kudos to the designers at Deliveroo for their insightful work.",
           link: {
-            label:
-              "https://medium.com/deliveroo-design/wheres-that-file-how-we-use-figma-covers-to-communicate-efficiently-across-teams-at-deliveroo-fe16c7c165",
+            label: "article by Deliveroo",
             href: "https://medium.com/deliveroo-design/wheres-that-file-how-we-use-figma-covers-to-communicate-efficiently-across-teams-at-deliveroo-fe16c7c165"
           }
         }
@@ -1133,12 +1134,12 @@ export const writingArticles = [
     href: "/writings/the-social-dilemma-quotes-and-thoughts",
     layout: "narrow",
     metadata: {
-      title: "The social Dilemma — Quotes and thoughts - Justin Fang",
+      title: "The Social Dilemma — Quotes and thoughts - Justin Fang",
       description:
         "Thoughts on technology ethics after watching The Social Dilemma, and why product teams need to re-center humanity."
     },
     date: "02.04.2023",
-    title: "The social Dilemma — Quotes and thoughts",
+    title: "The Social Dilemma — Quotes and thoughts",
     category: "Reading",
     hero: {
       src: writingArticleAssets.socialDilemmaHero,

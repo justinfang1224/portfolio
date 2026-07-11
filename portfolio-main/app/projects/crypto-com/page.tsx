@@ -160,9 +160,6 @@ export default function CryptoProjectPage() {
             </div>
 
             <MotionReveal className={styles.actions} delay={80}>
-              <Link className={styles.button} href={cryptoProjectDetail.actions.back.href}>
-                {cryptoProjectDetail.actions.back.label}
-              </Link>
               <Link className={styles.button} href={cryptoProjectDetail.actions.next.href}>
                 {cryptoProjectDetail.actions.next.label}
               </Link>
@@ -170,7 +167,7 @@ export default function CryptoProjectPage() {
           </div>
         </div>
       </main>
-      <Footer width="content" />
+      <Footer />
     </>
   );
 }

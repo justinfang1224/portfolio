@@ -60,6 +60,8 @@
   --color-background-contrast: #FFFFFF;
   --color-surface-card-primary: #F7F7F7;
   --color-surface-card-secondary: #F0F0F0;
+  --color-status-positive: #66DC16;
+  --color-status-warning: #FFD600;
   --color-button-secondary-default: #F5F5F5;
   --color-button-secondary-hover: #EEEEEE;
   --color-button-secondary-pressed: #E0E0E0;

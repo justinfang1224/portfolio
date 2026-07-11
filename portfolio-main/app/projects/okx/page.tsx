@@ -196,9 +196,6 @@ export default function OkxProjectPage() {
             </div>
 
             <MotionReveal className={styles.actions} delay={80}>
-              <Link className={styles.button} href={okxProjectDetail.actions.back.href}>
-                {okxProjectDetail.actions.back.label}
-              </Link>
               <Link className={styles.button} href={okxProjectDetail.actions.next.href}>
                 {okxProjectDetail.actions.next.label}
               </Link>
@@ -206,7 +203,7 @@ export default function OkxProjectPage() {
           </div>
         </div>
       </main>
-      <Footer width="content" />
+      <Footer />
     </>
   );
 }

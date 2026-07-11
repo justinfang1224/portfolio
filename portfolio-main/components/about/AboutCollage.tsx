@@ -23,9 +23,9 @@ export function AboutCollage() {
     }
 
     const handlePointerDown = (event: PointerEvent) => {
-      const selectedCard = collageRef.current?.querySelector<HTMLElement>(`.${styles.selected}`);
+      const collage = collageRef.current;
 
-      if (selectedCard?.contains(event.target as Node)) {
+      if (collage?.contains(event.target as Node)) {
         return;
       }
 
@@ -159,6 +159,7 @@ export function AboutCollage() {
                 <Image
                   alt={image.alt}
                   height={251}
+                  priority
                   sizes="(max-width: 767px) 150px, 188px"
                   src={image.src}
                   width={188}

@@ -169,11 +169,16 @@
 }
 
 .note a {
-  color: inherit;
+  color: var(--color-content-primary);
   overflow-wrap: anywhere;
   text-decoration: underline;
+  text-decoration-style: dotted;
   text-decoration-thickness: max(1px, 0.08em);
   text-underline-offset: var(--spacing-4);
+}
+
+.note a:hover {
+  text-decoration-style: solid;
 }
 
 .note a:focus-visible {

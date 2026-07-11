@@ -138,6 +138,11 @@
   width: 100%;
 }
 
+.favoriteCardPreview {
+  max-width: 304px;
+  width: 100%;
+}
+
 .writingPreview {
   overflow: hidden;
 }

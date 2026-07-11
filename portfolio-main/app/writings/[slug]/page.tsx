@@ -112,11 +112,11 @@ function ArticleSection({ section, index }: { index: number; section: ArticleSec
           {"list" in section ? <ArticleList list={section.list} /> : null}
           {"note" in section ? (
             <p className={styles.note}>
-              {section.note.text}{" "}
+              {section.note.textBeforeLink}
               <a href={section.note.link.href} rel="noreferrer" target="_blank">
                 {section.note.link.label}
               </a>
-              .
+              {section.note.textAfterLink}
             </p>
           ) : null}
         </div>
@@ -170,7 +170,7 @@ export default async function WritingArticlePage({ params }: { params: PageParam
           </nav>
         </MotionReveal>
       </main>
-      <Footer width={isNarrowLayout ? "content" : "text"} />
+      <Footer />
     </>
   );
 }

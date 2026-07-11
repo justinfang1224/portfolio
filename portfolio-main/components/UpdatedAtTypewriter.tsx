@@ -40,6 +40,13 @@ function splitLeadingEmoji(value: string) {
   const trimmedValue = value.trim();
   const firstSpaceIndex = trimmedValue.indexOf(" ");
 
+  if (!/^\p{Extended_Pictographic}/u.test(trimmedValue)) {
+    return {
+      dateText: trimmedValue,
+      emoji: ""
+    };
+  }
+
   if (firstSpaceIndex === -1) {
     return {
       dateText: "",
@@ -118,9 +125,11 @@ export function UpdatedAtTypewriter({ value }: UpdatedAtTypewriterProps) {
 
   return (
     <p aria-label={value} className={styles.updated}>
-      <span aria-hidden="true" className={styles.updatedEmoji}>
-        {emoji}
-      </span>
+      {emoji ? (
+        <span aria-hidden="true" className={styles.updatedEmoji}>
+          {emoji}
+        </span>
+      ) : null}
       <span aria-hidden="true" className={styles.updatedText}>
         {typedText}
       </span>

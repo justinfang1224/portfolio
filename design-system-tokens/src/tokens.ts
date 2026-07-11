@@ -89,6 +89,8 @@ export const color = {
   "background-contrast": "#FFFFFF",
   "surface-card-primary": "#F7F7F7",
   "surface-card-secondary": "#F0F0F0",
+  "status-positive": "#66DC16",
+  "status-warning": "#FFD600",
   "button-secondary-default": "#F5F5F5",
   "button-secondary-hover": "#EEEEEE",
   "button-secondary-pressed": "#E0E0E0",

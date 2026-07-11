@@ -28,7 +28,7 @@ export function WritingList({
   entries = writings,
   index = "03",
   sectionId = "writings",
-  title = "Writings ✍🏻"
+  title = "Writings"
 }: WritingListProps = {}) {
   const titleId = `${sectionId}-title`;
 

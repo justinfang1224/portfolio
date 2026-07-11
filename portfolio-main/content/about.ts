@@ -53,27 +53,40 @@ export const aboutCollageImages = [
 
 export const aboutIntro = {
   index: "01",
-  title: "Hello visitors.",
+  title: "More about me",
   company: {
     href: "https://crypto.com",
     label: "Crypto.com"
   },
+  city: {
+    href: "https://www.google.com/maps/search/?api=1&query=Taipei%2C%20Taiwan",
+    label: "Taipei"
+  },
+  discipline: {
+    href: "https://www.polyu.edu.hk/sd/study/ug-programmes/ba-hons-scheme-in-design/communication-design/",
+    label: "Communication Design"
+  },
   school: {
     href: "https://www.polyu.edu.hk/sd/",
-    label: "PolyU School of Design"
+    label: "PolyU"
   },
   paragraphs: [
-    "Aside from work, he’s likely training for his next marathon, reading books, or fixing his portfolio site (a never-ending project). Feel free to hit him up :)"
+    "During my time in college, a product design internship introduces me to the fast-evolving tech industry. And I became fascinated by the beauty of designing things that bridge human behavior and computers, which is when I decided to dedicate myself to this path. Over the past 3+ years, I’ve been in the Fintech and Web3 space, aimed at shaping the future of personal finance.",
+    "Beyond tech & design, I lean into a broad appreciation spending my time with books, movies, nature (see my favorites here), and everything between culture & humanities."
   ],
   socialLabel: "Find me",
   socialLinks: [
     {
-      href: "https://www.instagram.com/justinfang1224",
-      label: "Instagram"
-    },
-    {
       href: "https://www.linkedin.com/in/justinfang-1224",
       label: "Linkedin"
+    },
+    {
+      href: "/Resume_2026.pdf",
+      label: "Resume"
+    },
+    {
+      href: "https://www.instagram.com/justinfang1224",
+      label: "Instagram"
     },
     {
       href: "mailto:jenhung.work@gmail.com",
@@ -84,19 +97,19 @@ export const aboutIntro = {
 
 export const aboutExperience = {
   index: "02",
-  title: "Experience",
+  title: "Career",
   entries: [
     {
       company: "Crypto.com",
       companyHref: "https://crypto.com",
-      date: "2024.10 - Present",
+      date: "2024.10 - Today",
       details: [
         "Owned the design for payment features (Credit card, Debit card), built the 0 to 1 launch of a flagship cryptocurrency credit card, driving $30.5M in spend, and a 2x increase in app downloads within the first week.",
         "Currently leading the end-to-end design for LLM-powered conversational search feature in the crypto.com app that serves 1M+ users."
       ],
       logoAlt: "Crypto.com logo",
       logoSrc: "/about/logo-crypto.png",
-      role: "Product designer",
+      role: "Senior Product designer",
       team: "Card & AI"
     },
     {
@@ -108,7 +121,7 @@ export const aboutExperience = {
       ],
       logoAlt: "OKX logo",
       logoSrc: "/about/logo-okx.png",
-      role: "Graduate product designer",
+      role: "Product designer",
       team: "Asset"
     },
     {
@@ -174,35 +187,32 @@ export const aboutFavorites = {
         title: "Matrix"
       },
       {
-        href: "https://www.imdb.com/title/tt0108432/",
-        meta: "1993 ‧ Romance ‧ 1h 12m",
-        title: "海がきこえる"
+        href: "https://www.imdb.com/title/tt1605783/",
+        meta: "2011 ‧ Romance ‧ 1h 34m",
+        title: "Midnight in Paris"
       }
     ]
   },
-  bookstore: {
-    href: "https://www.google.com/maps?sca_esv=51ecd411621d9ffb&rlz=1C5GCCM_en&biw=1920&bih=867&output=search&q=mount+zero+bookstore&source=lnms&fbs=ADc_l-aLatiB7C12mZDdksjkLrU3GGcV_JT6MYLbFCAtswDkEyeJPqoVwhaCXbf69bCbqQVt0cxEWSxISRL8eOKibcKVn1d28r98K_FbU_u59efpsWzUl25c9QFNWm3cLcczA2NjxDUCgbgrCq80m7d2WtYaB_mQIMErzYPKhlmibLSKJKXYxjjleZTWxt93a4pzVd35-Akq9r8tmoE-ZWA2vo0Y8bRhCm8ZZH2YlLaSGYRAT4Cd5K0&entry=mc&ved=1t:200715&ictx=111",
-    label: "Bookstore",
-    mapImageAlt: "Map preview centered on Mount Zero Books in Hong Kong",
-    mapImageSrc: "/about/favorite-map-mount-zero-latest.png",
-    mapTitle: "Open Mount Zero Books in Google Maps"
+  travel: {
+    href: "https://www.google.com/maps/place/Bali,+Indonesia",
+    imageAlt: "A beach scene in Bali, Indonesia",
+    imageSrc: "/about/favorite-travel-bali.png",
+    label: "Travel",
+    location: "Indonesia",
+    title: "Bali"
   },
   music: {
     artist: "Yorushika",
     href: "https://open.spotify.com/track/5j7ixaLeGTGSv4DzKs0pCM?si=a25e78a9a43e4b06",
     label: "Music",
-    recordAlt: "Black vinyl record",
-    recordLabelAlt: "Album art on the vinyl record label",
-    recordLabelSrc: "/about/favorite-record-label.png",
-    recordSrc: "/about/favorite-record.png",
     title: "ただ君に晴れ"
   },
   apps: {
-    label: "Apps",
+    label: "App",
     items: [
       {
         alt: "Readwise app icon",
-        href: "https://cursor.com/agents",
+        href: "https://cursor.com/",
         src: "/about/favorite-app-1.png"
       },
       {
@@ -222,7 +232,7 @@ export const aboutFavorites = {
       },
       {
         alt: "Cursor app icon",
-        href: "https://cursor.com/home",
+        href: "https://luma.com/",
         src: "/about/favorite-app-5.png"
       },
       {

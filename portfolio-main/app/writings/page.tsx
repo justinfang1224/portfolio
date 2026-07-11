@@ -52,11 +52,8 @@ export default function WritingsPage() {
           })}
         </section>
 
-        <MotionReveal delay={60}>
-          <p className={styles.note}>{writingsPage.note}</p>
-        </MotionReveal>
       </main>
-      <Footer width="text" />
+      <Footer />
     </>
   );
 }

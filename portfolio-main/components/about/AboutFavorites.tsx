@@ -1,7 +1,7 @@
 import { Tag } from "@/components/Tag";
 import { ArrowUpRightIcon } from "@/components/icons";
 import { aboutFavorites } from "@/content/about";
-import { InteractiveVinylRecord } from "./InteractiveVinylRecord";
+import { FavoriteTravelCard } from "./FavoriteTravelCard";
 import styles from "./AboutFavorites.module.css";
 
 function ArrowLink({ href, label }: { href: string; label: string }) {
@@ -67,37 +67,17 @@ export function AboutFavorites() {
       </div>
 
       <div className={styles.bottomRow}>
-        <article className={`${styles.card} ${styles.smallCard} ${styles.mapCard}`}>
-          <a
-            aria-label={aboutFavorites.bookstore.mapTitle}
-            className={styles.mapPreviewLink}
-            href={aboutFavorites.bookstore.href}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <img
-              alt={aboutFavorites.bookstore.mapImageAlt}
-              className={styles.mapPreview}
-              src={aboutFavorites.bookstore.mapImageSrc}
-            />
-          </a>
-          <Tag variant="contrast">{aboutFavorites.bookstore.label}</Tag>
-          <ArrowLink href={aboutFavorites.bookstore.href} label="Open bookstore location in Maps" />
-        </article>
+        <FavoriteTravelCard {...aboutFavorites.travel} />
 
         <article className={`${styles.card} ${styles.smallCard} ${styles.musicCard}`}>
           <Tag>{aboutFavorites.music.label}</Tag>
-          <InteractiveVinylRecord
-            artist={aboutFavorites.music.artist}
-            labelAlt={aboutFavorites.music.recordLabelAlt}
-            labelSrc={aboutFavorites.music.recordLabelSrc}
-            title={aboutFavorites.music.title}
-          />
-          <div className={styles.musicCopy}>
-            <h3>{aboutFavorites.music.title}</h3>
-            <p>{aboutFavorites.music.artist}</p>
+          <div className={styles.musicBody}>
+            <div className={styles.musicCopy}>
+              <h3>{aboutFavorites.music.title}</h3>
+              <p>{aboutFavorites.music.artist}</p>
+            </div>
+            <ArrowLink href={aboutFavorites.music.href} label="Open music favorite on Spotify" />
           </div>
-          <ArrowLink href={aboutFavorites.music.href} label="Open music favorite on Spotify" />
         </article>
 
         <article className={`${styles.card} ${styles.smallCard} ${styles.appsCard}`}>
@@ -127,17 +107,21 @@ export function AboutFavorites() {
                         <img alt={app.alt} src={app.src} />
                       </a>
                     ) : (
-                      <span
+                      <a
                         className={[
                           styles.appLogo,
                           app.src.endsWith("favorite-app-6.png") ? styles.spotifyAppLogo : ""
                         ]
                           .filter(Boolean)
                           .join(" ")}
+                        href={app.href}
                         key={`${groupIndex}-${app.src}`}
+                        rel="noopener noreferrer"
+                        tabIndex={-1}
+                        target="_blank"
                       >
                         <img alt="" src={app.src} />
-                      </span>
+                      </a>
                     )
                   ))}
                 </div>

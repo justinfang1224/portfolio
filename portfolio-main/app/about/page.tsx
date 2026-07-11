@@ -54,24 +54,29 @@ export default function AboutPage() {
             </h1>
             <div className={styles.prose}>
               <p>
-                Justin Fang (b.2000), a Taiwanese product designer specializing in digital design
-                and product development. He is currently working with{" "}
-                <a href={aboutIntro.company.href} rel="noreferrer" target="_blank">
-                  {aboutIntro.company.label}
+                I was born in{" "}
+                <a href={aboutIntro.city.href} rel="noreferrer" target="_blank">
+                  {aboutIntro.city.label}
                 </a>
-                .
+                , a city cradled by perpetual rains in Taiwan.
               </p>
               <p>
-                Since graduating from{" "}
+                In 2017, I visited Hong Kong for the first time and felt drawn to the city&apos;s
+                distinct energy. That connection brought me back to study{" "}
+                {aboutIntro.discipline.label} at{" "}
                 <a href={aboutIntro.school.href} rel="noreferrer" target="_blank">
                   {aboutIntro.school.label}
-                </a>{" "}
-                in Hong Kong, Justin has worked in the Fintech industry (Banking, Web3.0) for over
-                4 years, contributing to various exciting projects across web and mobile platforms.
+                </a>
+                , where I focused on visual &amp; graphic work, and I eventually decided to stay and
+                build my career here.
               </p>
-              {aboutIntro.paragraphs.map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
-              ))}
+              <p>{aboutIntro.paragraphs[0]}</p>
+              <p>
+                Beyond tech &amp; design, I lean into a broad appreciation spending my time with
+                books, movies, nature (
+                <a href="#about-favorites-title">see my favorites here</a>), and everything between
+                culture &amp; humanities.
+              </p>
             </div>
             <div className={styles.socials}>
               <p>{aboutIntro.socialLabel} →</p>
@@ -129,6 +134,7 @@ export default function AboutPage() {
             aria-labelledby="about-favorites-title"
             className={styles.timelineSection}
             delay={180}
+            id="favorites"
           >
             <SectionHeader
               index={aboutFavorites.index}
@@ -139,7 +145,7 @@ export default function AboutPage() {
           </MotionReveal>
         </div>
       </main>
-      <Footer width="text" />
+      <Footer />
     </>
   );
 }

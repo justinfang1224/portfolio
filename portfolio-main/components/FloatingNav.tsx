@@ -3,17 +3,34 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { type CSSProperties, type MouseEvent, useEffect, useState } from "react";
+import { aboutCollageImages } from "@/content/about";
 import { AboutIcon, HomeIcon, WorkIcon, WritingIcon } from "./icons";
 import styles from "./FloatingNav.module.css";
 
 const navItems = [
   { id: "home", label: "Home", href: "/", icon: HomeIcon },
-  { id: "projects", label: "Projects", href: "/#projects", icon: WorkIcon },
+  { id: "projects", label: "Projects", href: "/projects", icon: WorkIcon },
   { id: "writings", label: "Writings", href: "/writings", icon: WritingIcon },
   { id: "about", label: "About", href: "/about", icon: AboutIcon }
 ] as const;
 
 type NavItemId = (typeof navItems)[number]["id"];
+
+let hasPreloadedAboutHero = false;
+
+function preloadAboutHeroImages() {
+  if (hasPreloadedAboutHero || typeof window === "undefined") {
+    return;
+  }
+
+  hasPreloadedAboutHero = true;
+
+  aboutCollageImages.forEach(({ src }) => {
+    const image = new window.Image();
+    image.decoding = "async";
+    image.src = src;
+  });
+}
 
 function getActiveItemFromLocation(pathname: string): NavItemId {
   if (pathname === "/about") {
@@ -82,6 +99,29 @@ export function FloatingNav() {
     };
   }, [pathname]);
 
+  useEffect(() => {
+    if (pathname === "/about") {
+      return;
+    }
+
+    const preload = () => preloadAboutHeroImages();
+    const supportsIdleCallback = "requestIdleCallback" in window;
+    const idleCallbackId = supportsIdleCallback
+      ? window.requestIdleCallback(preload, { timeout: 2500 })
+      : undefined;
+    const timeoutId = supportsIdleCallback ? undefined : window.setTimeout(preload, 1200);
+
+    return () => {
+      if (idleCallbackId !== undefined) {
+        window.cancelIdleCallback(idleCallbackId);
+      }
+
+      if (timeoutId !== undefined) {
+        window.clearTimeout(timeoutId);
+      }
+    };
+  }, [pathname]);
+
   return (
     <header className={styles.header}>
       <nav
@@ -101,6 +141,8 @@ export function FloatingNav() {
               href={href}
               key={id}
               onClick={(event) => handleNavClick(event, id)}
+              onFocus={id === "about" ? preloadAboutHeroImages : undefined}
+              onPointerEnter={id === "about" ? preloadAboutHeroImages : undefined}
             >
               <Icon aria-hidden="true" className={styles.icon} strokeWidth={1.8} />
             </Link>

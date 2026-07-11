@@ -106,9 +106,9 @@
 .updated {
   color: var(--color-content-tertiary);
   font-family: var(--font-family-base);
-  font-size: var(--typography-body-medium-font-size);
-  font-weight: var(--typography-body-medium-font-weight);
-  line-height: var(--typography-body-medium-line-height);
+  font-size: var(--typography-body-large-font-size);
+  font-weight: var(--typography-body-large-font-weight);
+  line-height: var(--typography-body-large-line-height);
   margin: 0;
 }
 

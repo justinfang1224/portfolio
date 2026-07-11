@@ -237,6 +237,11 @@
   height: 430px;
 }
 
+.collage:not(.expanded) .card {
+  flex-basis: 207px;
+  height: 276px;
+}
+
 .expanded:hover .card:not(:hover),
 .expanded .card {
   opacity: 1;
@@ -358,13 +363,15 @@
   }
 
   .backBody {
+    font-size: var(--typography-caption-font-size);
+    line-height: var(--typography-caption-line-height);
     line-clamp: 6;
     -webkit-line-clamp: 6;
   }
 
   .expanded .selected .backBody {
-    line-clamp: 9;
-    -webkit-line-clamp: 9;
+    line-clamp: 10;
+    -webkit-line-clamp: 10;
   }
 
   .backTitle {
@@ -378,6 +385,11 @@
     flex-basis: 150px;
     height: 200px;
     margin-right: -48px;
+  }
+
+  .collage:not(.expanded) .card {
+    flex-basis: 165px;
+    height: 220px;
   }
 
   .expanded {
@@ -450,12 +462,12 @@
   }
 
   .expanded .stacked {
-    transform: translate3d(var(--stack-shift-x), 90px, -42px) scale(0.5)
+    transform: translate3d(var(--stack-shift-x), 66px, -42px) scale(0.5)
       rotate(var(--card-rotation)) var(--card-flip-rotation);
   }
 
   .expanded .stacked:hover {
-    transform: translate3d(var(--stack-shift-x), 82px, -42px) scale(0.5)
+    transform: translate3d(var(--stack-shift-x), 58px, -42px) scale(0.5)
       rotate(var(--card-rotation)) var(--card-flip-rotation);
     z-index: 9;
   }
@@ -537,12 +549,12 @@
   }
 
   .expanded .stacked {
-    transform: translate3d(var(--stack-shift-x), 86px, -42px) scale(0.5)
+    transform: translate3d(var(--stack-shift-x), 62px, -42px) scale(0.5)
       rotate(var(--card-rotation)) var(--card-flip-rotation);
   }
 
   .expanded .stacked:hover {
-    transform: translate3d(var(--stack-shift-x), 78px, -42px) scale(0.5)
+    transform: translate3d(var(--stack-shift-x), 54px, -42px) scale(0.5)
       rotate(var(--card-rotation)) var(--card-flip-rotation);
   }
 
@@ -578,7 +590,7 @@
 
   .expanded .stacked,
   .expanded .stacked:hover {
-    transform: translate3d(var(--stack-shift-x), 78px, 0) scale(0.5)
+    transform: translate3d(var(--stack-shift-x), 54px, 0) scale(0.5)
       rotate(var(--card-rotation)) var(--card-flip-rotation);
   }
 
