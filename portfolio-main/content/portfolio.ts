@@ -7,7 +7,7 @@ export const assetUrls = {
 } as const;
 
 export const cryptoProjectAssets = {
-  hero: "/images/projects/crypto-com/hero.png",
+  hero: "/images/projects/credit-card-cover.png",
   researchData: "/images/projects/crypto-com/research-data.png",
   originalCardHome: "/images/projects/crypto-com/original-card-home.png",
   invisibleCashback: "/images/projects/crypto-com/invisible-cashback.png",
@@ -89,7 +89,6 @@ export const profile = {
       logoSrc: "/about/logo-bowtie.png"
     }
   ],
-  updatedAt: "🪚 Updated Mar 25, 2026",
   ctas: [
     { label: "Email me", href: "mailto:jenhung.work@gmail.com", openInNewTab: false },
     { label: "CV →", href: "/Resume_2026.pdf", openInNewTab: true }
@@ -119,7 +118,7 @@ export const projects = [
       "Building the 0 → 1 of a crypto-based credit card for the U.S market. Centralizing rewards within the experience, driving 3M+ card spend within the first 6 months.",
     tags: ["0 → 1", "Payment"],
     image: assetUrls.projectCard,
-    alt: "Crypto.com credit card mobile experience shown on a phone.",
+    alt: "Crypto.com credit card app on two phones: an Obsidian card application and the credit card balance home.",
     imageClassName: "projectImagePhone",
     detailHref: "/projects/crypto-com",
     status: "active"
@@ -129,7 +128,7 @@ export const projects = [
     description: "Design enhancement that led to a 18.3% increase in conversion",
     tags: ["Feature improvement", "Payment"],
     image: assetUrls.depositExperience,
-    alt: "OKX deposit experience interface displayed in a browser.",
+    alt: "OKX web deposit page beside a deposit details card, shown on a light background.",
     imageClassName: "projectImageBrowser",
     detailHref: "/projects/okx",
     status: "active"
@@ -152,7 +151,7 @@ export const cryptoProjectDetail = {
   newsHref: "https://crypto.com/sg/company-news/creditcardus",
   hero: {
     image: cryptoProjectAssets.hero,
-    alt: "Crypto.com credit card mobile interface on a dark phone screen."
+    alt: "Crypto.com credit card app on two phones: an Obsidian card application and the credit card balance home."
   },
   navItems: [
     { id: "intro", label: "Intro" },
@@ -374,7 +373,7 @@ export const okxProjectDetail = {
   newsHref: "https://www.okx.com/help/how-do-i-make-a-deposit-web",
   hero: {
     image: okxProjectAssets.hero,
-    alt: "OKX deposit experience product screens on a light background."
+    alt: "OKX web deposit page beside a deposit details card, shown on a light background."
   },
   navItems: [
     { id: "intro", label: "Intro" },

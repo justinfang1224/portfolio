@@ -189,10 +189,97 @@
 .featuredCard {
   background: var(--color-content-primary);
   border-radius: var(--spacing-24);
+  cursor: grab;
   height: 412px;
   overflow: hidden;
   position: relative;
+  touch-action: none;
+  user-select: none;
   width: 100%;
+}
+
+.featuredCardDragging {
+  cursor: grabbing;
+}
+
+.featuredCardDragging .featuredImageInteractive.featuredImageActive:hover,
+.featuredCard:active .featuredImageInteractive.featuredImageActive:hover,
+.featuredCardDragging a:focus-visible .featuredImageInteractive.featuredImageActive {
+  transform: none;
+}
+
+.featuredSlide {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  transition: transform 320ms var(--motion-fade-ease);
+  width: 100%;
+  will-change: transform;
+}
+
+.featuredSlide a,
+.featuredSlide > span {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.featuredDragLayer {
+  cursor: inherit;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  touch-action: none;
+  width: 100%;
+  z-index: 3;
+}
+
+.featuredDragLayer:focus-visible {
+  outline: 2px solid var(--color-background-contrast);
+  outline-offset: -6px;
+}
+
+.featuredSlideCurrent,
+.featuredSlideNext,
+.featuredSlideOutgoingBackward,
+.featuredSlideOutgoingForward,
+.featuredSlidePrev {
+  pointer-events: auto;
+  visibility: visible;
+}
+
+.featuredSlideCurrent {
+  transform: translate3d(0, 0, 0);
+  z-index: 2;
+}
+
+.featuredSlideNext {
+  transform: translate3d(0, 100%, 0);
+  z-index: 0;
+}
+
+.featuredSlidePrev {
+  transform: translate3d(0, -100%, 0);
+  z-index: 0;
+}
+
+.featuredSlideOutgoingForward {
+  transform: translate3d(0, -100%, 0);
+  z-index: 1;
+}
+
+.featuredSlideOutgoingBackward {
+  transform: translate3d(0, 100%, 0);
+  z-index: 1;
+}
+
+.featuredSlideHidden {
+  pointer-events: none;
+  transform: translate3d(0, 100%, 0);
+  visibility: hidden;
+  z-index: 0;
 }
 
 .featuredImage {
@@ -201,26 +288,15 @@
   left: -4px;
   max-width: none;
   object-fit: cover;
-  opacity: 1;
   position: absolute;
   top: 0;
-  transform: translate3d(0, 100%, 0);
-  transition:
-    opacity 320ms var(--motion-fade-ease),
-    transform 320ms var(--motion-fade-ease);
+  transition: transform 320ms var(--motion-fade-ease);
   width: 804px;
-  will-change: transform, opacity;
-}
-
-.featuredImageActive {
-  opacity: 1;
-  transform: translate3d(0, 0, 0);
-  z-index: 1;
 }
 
 .featuredImageInteractive.featuredImageActive:hover,
 .featuredCard a:focus-visible .featuredImageInteractive.featuredImageActive {
-  transform: translate3d(0, 0, 0) scale(1.1);
+  transform: scale(1.1);
 }
 
 .featuredCard a:focus-visible {
@@ -232,35 +308,11 @@
   outline-offset: -6px;
 }
 
-.featuredImagePreviousForward {
-  opacity: 1;
-  transform: translate3d(0, -100%, 0);
-  z-index: 1;
-}
-
-.featuredImagePreviousBackward {
-  opacity: 1;
-  transform: translate3d(0, 100%, 0);
-  z-index: 1;
-}
-
-.featuredImageInactiveBefore {
-  opacity: 1;
-  transform: translate3d(0, -100%, 0);
-  z-index: 0;
-}
-
-.featuredImageInactiveAfter {
-  opacity: 1;
-  transform: translate3d(0, 100%, 0);
-  z-index: 0;
-}
-
 .lockedBadge {
   left: var(--spacing-24);
   position: absolute;
   top: var(--spacing-20);
-  z-index: 1;
+  z-index: 4;
 }
 
 .slideIndicator {
@@ -268,11 +320,12 @@
   display: flex;
   gap: calc(var(--spacing-12) / 2);
   left: var(--spacing-20);
+  opacity: 0.8;
   position: absolute;
   top: 50%;
   transform: translateY(-50%) rotate(90deg);
   transform-origin: left center;
-  z-index: 1;
+  z-index: 4;
 }
 
 .slideIndicator button {
@@ -303,6 +356,27 @@
 .slideIndicator .activeSlide {
   background: color-mix(in srgb, var(--color-background-contrast) 80%, transparent);
   width: var(--spacing-24);
+}
+
+.slideIndicatorOnLight {
+  opacity: 0.2;
+}
+
+.slideIndicatorOnLight button {
+  background: color-mix(in srgb, #000000 20%, transparent);
+}
+
+.slideIndicatorOnLight button:hover,
+.slideIndicatorOnLight button:focus-visible {
+  background: color-mix(in srgb, #000000 56%, transparent);
+}
+
+.slideIndicatorOnLight button:focus-visible {
+  outline-color: #000000;
+}
+
+.slideIndicatorOnLight .activeSlide {
+  background: color-mix(in srgb, #000000 80%, transparent);
 }
 
 .writings {
@@ -419,6 +493,7 @@
 
   .featuredCard {
     aspect-ratio: 796 / 412;
+    border-radius: var(--spacing-16);
     height: auto;
   }
 
@@ -435,29 +510,31 @@
 @media (prefers-reduced-motion: reduce) {
   .avatarButton,
   .featuredImage,
+  .featuredSlide,
   .slideIndicator button,
   .writingLink,
   .writingArrow {
     transition: none;
   }
 
-  .featuredImage,
-  .featuredImageActive,
-  .featuredImageInactiveAfter,
-  .featuredImageInactiveBefore,
-  .featuredImagePreviousBackward,
-  .featuredImagePreviousForward {
+  .featuredSlideCurrent,
+  .featuredSlideHidden,
+  .featuredSlideNext,
+  .featuredSlideOutgoingBackward,
+  .featuredSlideOutgoingForward,
+  .featuredSlidePrev {
     transform: translate3d(0, 0, 0);
   }
 
-  .featuredImageActive {
+  .featuredSlideCurrent {
     opacity: 1;
   }
 
-  .featuredImageInactiveAfter,
-  .featuredImageInactiveBefore,
-  .featuredImagePreviousBackward,
-  .featuredImagePreviousForward {
+  .featuredSlideHidden,
+  .featuredSlideNext,
+  .featuredSlideOutgoingBackward,
+  .featuredSlideOutgoingForward,
+  .featuredSlidePrev {
     opacity: 0;
   }
 

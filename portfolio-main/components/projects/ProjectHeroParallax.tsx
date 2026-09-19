@@ -5,8 +5,10 @@ import { useEffect, useRef } from "react";
 type ProjectHeroParallaxProps = {
   alt: string;
   className?: string;
+  height?: number;
   imageClassName?: string;
   src: string;
+  width?: number;
 };
 
 const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
@@ -16,8 +18,10 @@ const HERO_MAX_SCROLL_SCALE = 1.25;
 export function ProjectHeroParallax({
   alt,
   className,
+  height = 1258,
   imageClassName,
-  src
+  src,
+  width = 624
 }: ProjectHeroParallaxProps) {
   const frameRef = useRef<HTMLDivElement | null>(null);
   const imageRef = useRef<HTMLImageElement | null>(null);
@@ -68,10 +72,10 @@ export function ProjectHeroParallax({
       <img
         alt={alt}
         className={imageClassName}
-        height="1258"
+        height={height}
         ref={imageRef}
         src={src}
-        width="624"
+        width={width}
       />
     </div>
   );

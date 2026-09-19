@@ -54,8 +54,10 @@ export default function OkxProjectPage() {
           <ProjectHeroParallax
             alt={okxProjectDetail.hero.alt}
             className={styles.heroMedia}
+            height={2640}
             imageClassName={styles.heroImage}
             src={okxProjectDetail.hero.image}
+            width={3980}
           />
         </MotionReveal>
 

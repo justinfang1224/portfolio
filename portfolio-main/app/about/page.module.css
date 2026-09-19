@@ -170,6 +170,11 @@
     padding-top: 128px;
   }
 
+  .hero {
+    overflow: visible;
+    width: 100%;
+  }
+
   .content {
     gap: var(--spacing-64);
   }

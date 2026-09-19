@@ -377,6 +377,7 @@
 
   .projectMedia {
     aspect-ratio: 796 / 528;
+    border-radius: var(--spacing-16);
     height: auto;
   }
 

@@ -17,21 +17,20 @@
 
 .heroMedia {
   height: 100%;
-  left: 50%;
+  left: 0;
   overflow: hidden;
   position: absolute;
   top: 0;
-  transform: translateX(-50%);
-  width: min(624px, 72vw);
+  width: 100%;
 }
 
 .heroImage {
-  height: 125%;
+  height: 140%;
   left: 0;
   object-fit: cover;
-  object-position: center top;
+  object-position: center;
   position: absolute;
-  top: -14%;
+  top: -20%;
   transform: translate3d(0, 0, 0) scale(1);
   width: 100%;
   will-change: transform;
@@ -342,7 +341,7 @@
   }
 
   .heroMedia {
-    width: min(420px, 92vw);
+    width: 100%;
   }
 
   .caseStudyShell {

@@ -7,6 +7,7 @@ import type {
 } from "react";
 import { useEffect, useRef, useState } from "react";
 import { Badge } from "@/components/Badge";
+import { Carousel } from "@/components/Carousel";
 import { aboutCollageImages } from "@/content/about";
 import styles from "./AboutCollage.module.css";
 
@@ -118,17 +119,19 @@ export function AboutCollage() {
   };
 
   return (
-    <div
-      aria-label="About Justin photo collage"
-      className={[
-        styles.collage,
-        selectedIndex !== null ? styles.expanded : "",
-        selectedIndex !== null ? styles[`selected${selectedIndex + 1}`] : ""
-      ]
-        .filter(Boolean)
-        .join(" ")}
-      ref={collageRef}
-    >
+    <>
+      <div
+        aria-label="About Justin photo collage"
+        className={[
+          styles.collage,
+          styles.desktopCollage,
+          selectedIndex !== null ? styles.expanded : "",
+          selectedIndex !== null ? styles[`selected${selectedIndex + 1}`] : ""
+        ]
+          .filter(Boolean)
+          .join(" ")}
+        ref={collageRef}
+      >
       {aboutCollageImages.map((image, index) => {
         const isSelected = selectedIndex === index;
         const showCustomCursor = hoveredSelectedIndex === index && isSelected;
@@ -184,6 +187,10 @@ export function AboutCollage() {
           </button>
         );
       })}
-    </div>
+      </div>
+      <div aria-label="About Justin photo collage" className={styles.mobileCarousel}>
+        <Carousel corner={12} sink={0} />
+      </div>
+    </>
   );
 }

@@ -53,8 +53,10 @@ export default function CryptoProjectPage() {
           <ProjectHeroParallax
             alt={cryptoProjectDetail.hero.alt}
             className={styles.heroMedia}
+            height={3240}
             imageClassName={styles.heroImage}
             src={cryptoProjectDetail.hero.image}
+            width={5760}
           />
         </MotionReveal>
 

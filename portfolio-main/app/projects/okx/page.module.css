@@ -17,21 +17,20 @@
 
 .heroMedia {
   height: 100%;
-  left: 50%;
+  left: 0;
   overflow: hidden;
   position: absolute;
   top: 0;
-  transform: translateX(-50%);
-  width: min(881px, 76.8vw);
+  width: 100%;
 }
 
 .heroImage {
-  height: 994px;
+  height: 140%;
   left: 0;
   object-fit: cover;
-  object-position: center top;
+  object-position: center;
   position: absolute;
-  top: -329px;
+  top: -20%;
   transform: translate3d(0, 0, 0) scale(1);
   width: 100%;
   will-change: transform;
@@ -319,6 +318,7 @@
 }
 
 .imageFrame {
+  border: 1px solid var(--color-border-primary);
   border-radius: 12px;
 }
 
@@ -372,12 +372,7 @@
   }
 
   .heroMedia {
-    width: min(608px, 105.6vw);
-  }
-
-  .heroImage {
-    height: 688px;
-    top: -224px;
+    width: 100%;
   }
 
   .caseStudyShell {

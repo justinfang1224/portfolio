@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { assetUrls, profile } from "@/content/portfolio";
+import { getLastUpdatedLabel } from "@/lib/get-last-updated";
 import { Button } from "./Button";
 import styles from "./HeroIntro.module.css";
 import { MotionReveal } from "./MotionReveal";
@@ -66,7 +67,7 @@ export function HeroIntro() {
               ))}
             </p>
           </div>
-          <UpdatedAtTypewriter value={profile.updatedAt} />
+          <UpdatedAtTypewriter value={getLastUpdatedLabel()} />
         </div>
       </div>
       <div className={styles.actions} aria-label="Hero actions">

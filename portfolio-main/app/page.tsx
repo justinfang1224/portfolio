@@ -7,6 +7,7 @@ import { MotionReveal } from "@/components/MotionReveal";
 import { UpdatedAtTypewriter } from "@/components/UpdatedAtTypewriter";
 import { ArrowUpRightIcon } from "@/components/icons";
 import { profile, writings } from "@/content/portfolio";
+import { getLastUpdatedLabel } from "@/lib/get-last-updated";
 import { HomeFeaturedCarousel } from "./HomeFeaturedCarousel";
 import styles from "./page.module.css";
 import { ProfileAvatarToggle } from "./ProfileAvatarToggle";
@@ -62,7 +63,7 @@ export default function Home() {
         </MotionReveal>
 
         <MotionReveal as="section" aria-label="Introduction" className={styles.introSection}>
-          <UpdatedAtTypewriter value="📌 Updated on July 1, 2026" />
+          <UpdatedAtTypewriter value={getLastUpdatedLabel()} />
           <div className={styles.prose}>
             <p>
               I&apos;m a Product designer in the field of financial technology. In the past two
@@ -87,7 +88,7 @@ export default function Home() {
             <p>
               I consider myself a designer at heart and enjoy building products with taste. Very
               recently, I start shipping things myself with the assistance of code & AI, including
-              this site, you are looking at <span className={styles.version}>v.7.2.0</span>.
+              this site, you are looking at <span className={styles.version}>v7.2.1</span>.
             </p>
           </div>
         </MotionReveal>
