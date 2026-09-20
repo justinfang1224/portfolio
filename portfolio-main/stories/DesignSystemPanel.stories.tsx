@@ -15,6 +15,7 @@ import { ProjectHeroParallax } from "@/components/projects/ProjectHeroParallax";
 import { ProjectSectionRail } from "@/components/projects/ProjectSectionRail";
 import { SectionTitle } from "@/components/SectionTitle";
 import { Tag } from "@/components/Tag";
+import { TermExplain } from "@/components/TermExplain";
 import { WritingList } from "@/components/WritingList";
 import { DesignSystemTabs } from "../.storybook/design-system/DesignSystemTabs";
 import styles from "./DesignSystemPanel.module.css";
@@ -267,6 +268,15 @@ export const Overview: Story = {
                   <Tag>Label two</Tag>
                   <Tag variant="contrast">Contrast label</Tag>
                 </div>
+              </ComponentCard>
+              <ComponentCard
+                description="Inline terminology hint that slides a dashed caption chip up on hover and mirrors that motion on dismiss."
+                title="TermExplain"
+              >
+                <p className={styles.previewCopy}>
+                  Designed trading experience for{" "}
+                  <TermExplain explanation="A global multi-asset trading platform">Crypto.com</TermExplain>.
+                </p>
               </ComponentCard>
               <ComponentCard description="Numbered section label and heading pair." title="SectionTitle">
                 <SectionTitle index="01" title="Section title" />

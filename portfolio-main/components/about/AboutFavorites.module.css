@@ -324,25 +324,25 @@
 }
 
 .appCarousel {
+  cursor: grab;
   height: 46px;
   inset-inline: 0;
   overflow: hidden;
   position: absolute;
   top: 61px;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.appCarousel[data-held="true"] {
+  cursor: grabbing;
 }
 
 .appTrack {
-  --app-strip-distance: 348px;
-
-  animation: appStripScroll 8.8s linear infinite;
   display: flex;
   gap: var(--spacing-16);
   width: max-content;
   will-change: transform;
-}
-
-.appCarousel:hover .appTrack {
-  animation-play-state: paused;
 }
 
 .appGroup {
@@ -392,12 +392,6 @@
 .appLogo:hover img,
 .appLogo:focus-visible img {
   transform: scale(1.1);
-}
-
-@keyframes appStripScroll {
-  to {
-    transform: translateX(calc(var(--app-strip-distance) * -1));
-  }
 }
 
 @media (max-width: 767px) {
@@ -473,10 +467,6 @@
   .arrowLink,
   .travelImage {
     transition: none;
-  }
-
-  .appTrack {
-    animation: none;
   }
 
   .appLogo:hover,

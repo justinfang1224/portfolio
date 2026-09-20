@@ -1,6 +1,7 @@
 import { Tag } from "@/components/Tag";
 import { ArrowUpRightIcon } from "@/components/icons";
 import { aboutFavorites } from "@/content/about";
+import { FavoriteAppsCarousel } from "./FavoriteAppsCarousel";
 import { FavoriteTravelCard } from "./FavoriteTravelCard";
 import styles from "./AboutFavorites.module.css";
 
@@ -19,8 +20,6 @@ function ArrowLink({ href, label }: { href: string; label: string }) {
 }
 
 export function AboutFavorites() {
-  const appItems = aboutFavorites.apps.items;
-
   return (
     <div className={styles.favorites}>
       <div className={styles.topRow}>
@@ -82,52 +81,7 @@ export function AboutFavorites() {
 
         <article className={`${styles.card} ${styles.smallCard} ${styles.appsCard}`}>
           <Tag>{aboutFavorites.apps.label}</Tag>
-          <div className={styles.appCarousel} aria-label="Favorite apps carousel">
-            <div className={styles.appTrack}>
-              {[0, 1].map((groupIndex) => (
-                <div
-                  aria-hidden={groupIndex === 1 ? "true" : undefined}
-                  className={styles.appGroup}
-                  key={groupIndex}
-                >
-                  {appItems.map((app) => (
-                    groupIndex === 0 ? (
-                      <a
-                        className={[
-                          styles.appLogo,
-                          app.src.endsWith("favorite-app-6.png") ? styles.spotifyAppLogo : ""
-                        ]
-                          .filter(Boolean)
-                          .join(" ")}
-                        href={app.href}
-                        key={`${groupIndex}-${app.src}`}
-                        rel="noopener noreferrer"
-                        target="_blank"
-                      >
-                        <img alt={app.alt} src={app.src} />
-                      </a>
-                    ) : (
-                      <a
-                        className={[
-                          styles.appLogo,
-                          app.src.endsWith("favorite-app-6.png") ? styles.spotifyAppLogo : ""
-                        ]
-                          .filter(Boolean)
-                          .join(" ")}
-                        href={app.href}
-                        key={`${groupIndex}-${app.src}`}
-                        rel="noopener noreferrer"
-                        tabIndex={-1}
-                        target="_blank"
-                      >
-                        <img alt="" src={app.src} />
-                      </a>
-                    )
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
+          <FavoriteAppsCarousel items={aboutFavorites.apps.items} />
         </article>
       </div>
     </div>

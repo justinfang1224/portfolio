@@ -1,0 +1,117 @@
+.root {
+  --term-explain-duration: 520ms;
+  --term-explain-ease: cubic-bezier(0.22, 1.55, 0.36, 1);
+  --term-explain-fade: 200ms;
+  --term-explain-gap: var(--spacing-4);
+  --term-explain-hidden-y: 10px;
+  cursor: help;
+  display: inline-flex;
+  outline: none;
+  position: relative;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+.asChild {
+  cursor: inherit;
+}
+
+.term {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 3px;
+}
+
+.panel {
+  align-items: center;
+  background: var(--color-background-primary);
+  border: 1px dashed var(--color-border-primary);
+  border-radius: var(--spacing-12);
+  bottom: calc(100% + var(--term-explain-gap));
+  box-sizing: border-box;
+  color: var(--color-content-primary);
+  display: inline-flex;
+  font-family: var(--font-family-base);
+  font-size: var(--typography-caption-font-size);
+  font-weight: var(--typography-button-font-weight);
+  justify-content: center;
+  left: 50%;
+  line-height: var(--typography-caption-line-height);
+  opacity: 0;
+  padding: var(--spacing-4) var(--spacing-8);
+  pointer-events: none;
+  position: absolute;
+  transform: translate3d(-50%, var(--term-explain-hidden-y), 0) scale(0.96);
+  transform-origin: center bottom;
+  transition:
+    opacity var(--term-explain-fade) ease,
+    transform var(--term-explain-duration) var(--term-explain-ease),
+    visibility 0s linear var(--term-explain-duration);
+  visibility: hidden;
+  white-space: nowrap;
+  z-index: 5;
+}
+
+.root:hover .panel,
+.root:focus-visible .panel,
+.root:focus-within .panel,
+:global(a:is(:hover, :focus-visible)) > .root > .panel {
+  opacity: 1;
+  transform: translate3d(-50%, 0, 0) scale(1);
+  transition:
+    opacity var(--term-explain-fade) ease,
+    transform var(--term-explain-duration) var(--term-explain-ease),
+    visibility 0s;
+  visibility: visible;
+}
+
+.root:focus-visible {
+  border-radius: var(--spacing-4);
+  outline: 2px solid var(--color-content-primary);
+  outline-offset: 4px;
+}
+
+.asChild:focus-visible {
+  outline: none;
+}
+
+@media (hover: none) {
+  .root:hover .panel,
+  :global(a:hover) > .root > .panel {
+    opacity: 0;
+    transform: translate3d(-50%, var(--term-explain-hidden-y), 0) scale(0.96);
+    transition:
+      opacity var(--term-explain-fade) ease,
+      transform var(--term-explain-duration) var(--term-explain-ease),
+      visibility 0s linear var(--term-explain-duration);
+    visibility: hidden;
+  }
+
+  .root:focus-visible .panel,
+  .root:focus-within .panel,
+  :global(a:focus-visible) > .root > .panel {
+    opacity: 1;
+    transform: translate3d(-50%, 0, 0) scale(1);
+    transition:
+      opacity var(--term-explain-fade) ease,
+      transform var(--term-explain-duration) var(--term-explain-ease),
+      visibility 0s;
+    visibility: visible;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel,
+  .root:hover .panel,
+  .root:focus-visible .panel,
+  .root:focus-within .panel,
+  :global(a:is(:hover, :focus-visible)) > .root > .panel {
+    transition: opacity 120ms ease, visibility 120ms;
+    transform: translate3d(-50%, 0, 0) scale(1);
+  }
+
+  .panel {
+    transform: translate3d(-50%, 0, 0) scale(1);
+  }
+}
