@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { CopyEmailLink } from "@/components/CopyEmailLink";
 import { FloatingNav } from "@/components/FloatingNav";
 import { Footer } from "@/components/Footer";
 import { AboutCollage } from "@/components/about/AboutCollage";
 import { AboutFavorites } from "@/components/about/AboutFavorites";
 import { AboutTimeline } from "@/components/about/AboutTimeline";
 import { MotionReveal } from "@/components/MotionReveal";
+import { TermExplain } from "@/components/TermExplain";
 import { aboutEducation, aboutExperience, aboutFavorites, aboutIntro } from "@/content/about";
 import styles from "./page.module.css";
 
@@ -74,29 +76,36 @@ export default function AboutPage() {
               <p>
                 Beyond tech &amp; design, I lean into a broad appreciation spending my time with
                 books, movies, nature (
-                <a href="#about-favorites-title">see my favorites here</a>), and everything between
-                culture &amp; humanities.
+                <TermExplain asChild explanation="❤️">
+                  <a href="#about-favorites-title">see my favorites</a>
+                </TermExplain>
+                ), and everything between culture &amp; humanities.
               </p>
             </div>
             <div className={styles.socials}>
               <p>{aboutIntro.socialLabel} →</p>
               <div className={styles.socialLinks}>
-                {aboutIntro.socialLinks.map((link, index) => (
-                  <span className={styles.socialItem} key={link.label}>
-                    <a
-                      href={link.href}
-                      rel={link.href.startsWith("mailto:") ? undefined : "noreferrer"}
-                      target={link.href.startsWith("mailto:") ? undefined : "_blank"}
-                    >
-                      {link.label}
-                    </a>
-                    {index < aboutIntro.socialLinks.length - 1 ? (
-                      <span aria-hidden="true" className={styles.socialSeparator}>
-                        •
-                      </span>
-                    ) : null}
-                  </span>
-                ))}
+                {aboutIntro.socialLinks.map((link, index) => {
+                  const isEmail = link.href.startsWith("mailto:");
+                  const emailAddress = isEmail ? link.href.replace(/^mailto:/, "") : null;
+
+                  return (
+                    <span className={styles.socialItem} key={link.label}>
+                      {emailAddress ? (
+                        <CopyEmailLink email={emailAddress}>{link.label}</CopyEmailLink>
+                      ) : (
+                        <a href={link.href} rel="noreferrer" target="_blank">
+                          {link.label}
+                        </a>
+                      )}
+                      {index < aboutIntro.socialLinks.length - 1 ? (
+                        <span aria-hidden="true" className={styles.socialSeparator}>
+                          •
+                        </span>
+                      ) : null}
+                    </span>
+                  );
+                })}
               </div>
             </div>
           </MotionReveal>

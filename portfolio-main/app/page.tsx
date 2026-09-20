@@ -4,6 +4,7 @@ import { Button } from "@/components/Button";
 import { FloatingNav } from "@/components/FloatingNav";
 import { Footer } from "@/components/Footer";
 import { MotionReveal } from "@/components/MotionReveal";
+import { TermExplain } from "@/components/TermExplain";
 import { UpdatedAtTypewriter } from "@/components/UpdatedAtTypewriter";
 import { ArrowUpRightIcon } from "@/components/icons";
 import { profile, writings } from "@/content/portfolio";
@@ -16,12 +17,21 @@ function CompanyLink({
   company
 }: {
   company: {
+    explanation?: string;
     href: string;
     label: string;
     logoAlt: string;
     logoSrc: string;
   };
 }) {
+  const label = company.explanation ? (
+    <TermExplain asChild explanation={company.explanation}>
+      <span>{company.label}</span>
+    </TermExplain>
+  ) : (
+    <span>{company.label}</span>
+  );
+
   return (
     <a className={styles.companyLink} href={company.href} rel="noreferrer" target="_blank">
       <Image
@@ -32,7 +42,7 @@ function CompanyLink({
         src={company.logoSrc}
         width={16}
       />
-      <span>{company.label}</span>
+      {label}
     </a>
   );
 }

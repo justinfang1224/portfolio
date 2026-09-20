@@ -72,7 +72,7 @@ export const aboutIntro = {
   },
   paragraphs: [
     "During my time in college, a product design internship introduces me to the fast-evolving tech industry. And I became fascinated by the beauty of designing things that bridge human behavior and computers, which is when I decided to dedicate myself to this path. Over the past 3+ years, I’ve been in the Fintech and Web3 space, aimed at shaping the future of personal finance.",
-    "Beyond tech & design, I lean into a broad appreciation spending my time with books, movies, nature (see my favorites here), and everything between culture & humanities."
+    "Beyond tech & design, I lean into a broad appreciation spending my time with books, movies, nature (see my favorites), and everything between culture & humanities."
   ],
   socialLabel: "Find me",
   socialLinks: [

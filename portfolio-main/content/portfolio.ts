@@ -72,7 +72,8 @@ export const profile = {
     href: "https://crypto.com",
     label: "Crypto.com",
     logoAlt: "Crypto.com logo",
-    logoSrc: "/about/logo-crypto.png"
+    logoSrc: "/about/logo-crypto.png",
+    explanation: "A global multi-asset trading platform"
   },
   introPreviousPrefix: "Prev. design (at) ",
   introPreviousCompanies: [
@@ -80,13 +81,15 @@ export const profile = {
       href: "https://www.okx.com/",
       label: "OKX",
       logoAlt: "OKX logo",
-      logoSrc: "/about/logo-okx.png"
+      logoSrc: "/about/logo-okx.png",
+      explanation: "A cool global crypto retail exchange"
     },
     {
       href: "https://www.bowtie.com.hk/en?srsltid=AfmBOorLNss2RM4YUt0s_BRDbfNqXQhNsybJnFXTGldIuzR3nxJBBU5y",
       label: "Bowtie",
       logoAlt: "Bowtie logo",
-      logoSrc: "/about/logo-bowtie.png"
+      logoSrc: "/about/logo-bowtie.png",
+      explanation: "Hong Kong’s 0 agent virtual insurance platform"
     }
   ],
   ctas: [

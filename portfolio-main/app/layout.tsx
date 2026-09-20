@@ -14,6 +14,18 @@ export const metadata: Metadata = {
     icon: [{ url: "/icon.png", type: "image/png" }],
     shortcut: "/icon.png",
     apple: "/icon.png"
+  },
+  openGraph: {
+    title: "Justin Fang",
+    description:
+      "Product designer in financial technology and web3 experiences.",
+    type: "website"
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Justin Fang",
+    description:
+      "Product designer in financial technology and web3 experiences."
   }
 };
 
