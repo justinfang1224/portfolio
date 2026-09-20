@@ -69,9 +69,7 @@ export default function Home() {
               I&apos;m a Product designer in the field of financial technology. In the past two
               years, I&apos;ve designed web3.0 trading experience for{" "}
               <CompanyLink company={profile.introCompany} />. Specifically building in the domain
-              of{" "}
-              <span className={styles.underlined}>credit card</span>,{" "}
-              <span className={styles.underlined}>platform AI</span>, and{" "}
+              of credit card, platform AI, and{" "}
               <span className={styles.underlined}>prediction markets</span> in a highly
               fast-paced environment.
             </p>

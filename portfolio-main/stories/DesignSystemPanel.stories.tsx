@@ -244,10 +244,11 @@ export const Overview: Story = {
           summary: "Core reusable pieces for actions, labels, chips, and section headers.",
           children: (
             <div className={styles.grid}>
-              <ComponentCard description="Secondary pill action used across hero and section CTAs." title="Button">
+              <ComponentCard description="Secondary pill and text actions in medium and small sizes." title="Button">
                 <div className={styles.previewRow}>
                   <Button>Primary action</Button>
-                  <Button>Secondary action</Button>
+                  <Button size="s">Small action</Button>
+                  <Button variant="text">Text action</Button>
                 </div>
               </ComponentCard>
               <ComponentCard description="Small and large status indicators for project state." title="Badge">

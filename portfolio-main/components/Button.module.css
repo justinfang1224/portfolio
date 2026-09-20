@@ -32,3 +32,37 @@
   outline: 2px solid var(--color-content-primary);
   outline-offset: 2px;
 }
+
+.sizeS {
+  font-size: var(--typography-caption-font-size);
+  line-height: var(--typography-caption-line-height);
+  min-height: var(--spacing-24);
+  padding: var(--spacing-4) var(--spacing-8);
+}
+
+.text {
+  background: transparent;
+  color: var(--color-content-secondary);
+  font-size: var(--typography-body-small-font-size);
+  font-weight: var(--typography-body-small-font-weight);
+  gap: var(--spacing-4);
+  line-height: var(--typography-body-small-line-height);
+  min-height: 0;
+  padding: 0;
+  transition: color 160ms ease;
+}
+
+.text:hover,
+.text:active {
+  background: transparent;
+  color: var(--color-content-primary);
+  transform: none;
+}
+
+.text.sizeS {
+  font-size: var(--typography-caption-font-size);
+  font-weight: var(--typography-caption-font-weight);
+  line-height: var(--typography-caption-line-height);
+  min-height: 0;
+  padding: 0;
+}

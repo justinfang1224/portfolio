@@ -1,5 +1,5 @@
 .footer {
-  align-items: flex-start;
+  align-items: center;
   border-top: 0;
   color: var(--color-content-tertiary);
   display: flex;
@@ -9,6 +9,7 @@
   justify-content: space-between;
   line-height: var(--typography-body-small-line-height);
   margin: 84px auto 0;
+  min-height: var(--spacing-24);
   padding-bottom: 0;
   padding-top: 0;
   width: var(--portfolio-text-column);
@@ -29,6 +30,7 @@
 .meta {
   align-items: center;
   display: flex;
+  gap: var(--spacing-8);
   white-space: pre;
 }
 
@@ -42,55 +44,6 @@
 .time {
   display: inline-block;
   font-variant-numeric: tabular-nums;
-  min-width: 64px;
-}
-
-.themeToggle {
-  -webkit-tap-highlight-color: transparent;
-  align-items: center;
-  appearance: none;
-  background: transparent;
-  border: 0;
-  color: var(--color-content-tertiary);
-  cursor: pointer;
-  display: inline-flex;
-  margin: 0;
-  outline: none;
-  padding: 0;
-}
-
-.themeToggle:hover {
-  color: var(--color-content-primary);
-}
-
-.themeIconStack {
-  display: grid;
-  height: 16px;
-  place-items: center;
-  width: 16px;
-}
-
-.themeIcon {
-  grid-area: 1 / 1;
-  height: 16px;
-  opacity: 0;
-  transform: rotate(-45deg) scale(0.72);
-  transition:
-    opacity var(--motion-theme-duration) var(--motion-theme-ease),
-    transform var(--motion-theme-duration) var(--motion-theme-ease),
-    color var(--motion-theme-duration) var(--motion-theme-ease);
-  width: 16px;
-}
-
-.themeIcon[data-active="true"] {
-  opacity: 1;
-  transform: rotate(0deg) scale(1);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .themeIcon {
-    transition: none;
-  }
 }
 
 @media (max-width: 1199px) {

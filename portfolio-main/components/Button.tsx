@@ -1,21 +1,48 @@
 import Link from "next/link";
 import styles from "./Button.module.css";
-import type { ReactNode } from "react";
+import type { MouseEventHandler, ReactNode } from "react";
+
+type ButtonSize = "m" | "s";
+type ButtonVariant = "secondary" | "text";
 
 type ButtonProps = {
+  "aria-label"?: string;
   children: ReactNode;
   href?: string;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
   openInNewTab?: boolean;
+  size?: ButtonSize;
+  variant?: ButtonVariant;
 };
 
 function isInternalHref(href: string) {
   return href.startsWith("/") || href.startsWith("#");
 }
 
-export function Button({ children, href, openInNewTab = false }: ButtonProps) {
+function buttonClassName(size: ButtonSize, variant: ButtonVariant) {
+  return [
+    styles.button,
+    variant === "text" ? styles.text : undefined,
+    size === "s" ? styles.sizeS : undefined
+  ]
+    .filter(Boolean)
+    .join(" ");
+}
+
+export function Button({
+  "aria-label": ariaLabel,
+  children,
+  href,
+  onClick,
+  openInNewTab = false,
+  size = "m",
+  variant = "secondary"
+}: ButtonProps) {
+  const className = buttonClassName(size, variant);
+
   if (!href) {
     return (
-      <button className={styles.button} type="button">
+      <button aria-label={ariaLabel} className={className} onClick={onClick} type="button">
         {children}
       </button>
     );
@@ -23,7 +50,7 @@ export function Button({ children, href, openInNewTab = false }: ButtonProps) {
 
   if (!openInNewTab && isInternalHref(href)) {
     return (
-      <Link className={styles.button} href={href}>
+      <Link className={className} href={href}>
         {children}
       </Link>
     );
@@ -31,7 +58,7 @@ export function Button({ children, href, openInNewTab = false }: ButtonProps) {
 
   return (
     <a
-      className={styles.button}
+      className={className}
       href={href}
       rel={openInNewTab ? "noopener noreferrer" : undefined}
       target={openInNewTab ? "_blank" : undefined}

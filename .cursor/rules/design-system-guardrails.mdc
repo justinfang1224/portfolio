@@ -1,0 +1,48 @@
+---
+description: Require confirmation before DS breaks, and edit shared library sources for DS guideline changes
+alwaysApply: true
+---
+
+# Design System Guardrails
+
+## Confirm Before Breaking The Design System
+
+Before making any change that would break, bypass, or drift from the design system, **stop and ask the user for confirmation**. Do not apply the change until they approve.
+
+Treat these as DS breaks (non-exhaustive):
+
+- Hard-coding colors, type sizes, weights, spacing, radii, or shadows instead of tokens / CSS variables
+- One-off button, typography, tag, badge, or control styles that duplicate shared components
+- Overriding shared component styles at the call site in a way that creates a new visual variant
+- Introducing a new interaction pattern that conflicts with existing DS patterns
+
+When requesting confirmation, present a markdown table that highlights the break:
+
+| Area | Current DS source | Proposed change | How it breaks DS | Suggested DS-aligned alternative |
+| --- | --- | --- | --- | --- |
+| Button | `portfolio-main/components/Button.tsx` | Custom page-only hover color | Creates a one-off variant not in the library | Add/update the Button variant in the shared component |
+| Typography | `design-system-tokens/tokens/source.json` | Hard-coded `18px` on a page | Bypasses token source of truth | Use the matching type token / class |
+
+Rules for the confirmation step:
+
+- List **every** DS-breaking item in the table before editing
+- Prefer a DS-aligned alternative in the last column
+- If the user approves the break, proceed and note the approved exception in the response
+- If the user rejects, implement only the DS-aligned path
+
+## Edit Design System Guidelines From The Library
+
+When changing DS guidelines or shared visuals (button, typography, color, spacing, tag, badge, section title, etc.), **edit the shared library / source of truth**, not a single page or one-off style.
+
+| Kind of change | Edit here | Do not edit |
+| --- | --- | --- |
+| Tokens (color, type, spacing, etc.) | `design-system-tokens/tokens/source.json`, then regenerate | Generated files or page-local hard-coded values |
+| Shared UI components | `portfolio-main/components/` (e.g. `Button.tsx`, `Tag.tsx`, `Badge.tsx`, `SectionTitle.tsx` + their CSS modules / stories) | Page-level overrides that reimplement the same component |
+| DS docs / Storybook examples | Matching stories under `portfolio-main/components/` or `.storybook/design-system/` | Ad-hoc demo styles on a content page |
+
+Checklist before finishing a DS guideline change:
+
+1. Change the shared component or token source, not a consumer page
+2. Confirm consumers inherit the update without local restyles
+3. Update related stories/docs when the API or visual contract changes
+4. Avoid introducing a parallel “almost the same” style beside the library component
