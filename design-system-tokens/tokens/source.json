@@ -35,36 +35,72 @@
     "201": 201
   },
   "color": {
-    "border": {
-      "primary": "#EDEDED",
-      "secondary": "#F0F0F0"
-    },
-    "content": {
-      "primary": "#111111",
-      "secondary": "#737373",
-      "tertiary": "#B3B3B3",
-      "contrast": "#F9F9F7"
-    },
-    "background": {
-      "primary": "#F7F7F7",
-      "secondary": "#F0F0F0",
-      "contrast": "#FFFFFF"
-    },
-    "surface": {
-      "card": {
-        "primary": "#F7F7F7",
+    "light": {
+      "border": {
+        "primary": "#EDEDED",
         "secondary": "#F0F0F0"
+      },
+      "content": {
+        "primary": "#111111",
+        "secondary": "#737373",
+        "tertiary": "#B3B3B3",
+        "contrast": "#F9F9F7"
+      },
+      "background": {
+        "primary": "#F7F7F7",
+        "secondary": "#F0F0F0",
+        "contrast": "#FFFFFF"
+      },
+      "surface": {
+        "card": {
+          "primary": "#F7F7F7",
+          "secondary": "#F0F0F0"
+        }
+      },
+      "status": {
+        "positive": "#66DC16",
+        "warning": "#FFD600"
+      },
+      "button": {
+        "secondary": {
+          "default": "#F5F5F5",
+          "hover": "#EEEEEE",
+          "pressed": "#E0E0E0"
+        }
       }
     },
-    "status": {
-      "positive": "#66DC16",
-      "warning": "#FFD600"
-    },
-    "button": {
-      "secondary": {
-        "default": "#F5F5F5",
-        "hover": "#EEEEEE",
-        "pressed": "#E0E0E0"
+    "dark": {
+      "border": {
+        "primary": "#2C2C2C",
+        "secondary": "#242424"
+      },
+      "content": {
+        "primary": "#F7F7F7",
+        "secondary": "#A3A3A3",
+        "tertiary": "#8A8A8A",
+        "contrast": "#111111"
+      },
+      "background": {
+        "primary": "#1A1A1A",
+        "secondary": "#222222",
+        "contrast": "#111111"
+      },
+      "surface": {
+        "card": {
+          "primary": "#1A1A1A",
+          "secondary": "#222222"
+        }
+      },
+      "status": {
+        "positive": "#66DC16",
+        "warning": "#FFD600"
+      },
+      "button": {
+        "secondary": {
+          "default": "#1C1C1C",
+          "hover": "#262626",
+          "pressed": "#333333"
+        }
       }
     }
   }

@@ -1,5 +1,5 @@
 import type { Preview } from "@storybook/react";
-import { createElement, type MouseEvent } from "react";
+import { createElement, useEffect, type MouseEvent, type ReactNode } from "react";
 import "../app/globals.css";
 import "./preview.css";
 
@@ -19,7 +19,43 @@ function preventStoryNavigation(event: MouseEvent<HTMLElement>) {
   event.preventDefault();
 }
 
+function ThemeRoot({ children, theme }: { children: ReactNode; theme: string }) {
+  useEffect(() => {
+    const root = document.documentElement;
+
+    if (theme === "light" || theme === "dark") {
+      root.setAttribute("data-theme", theme);
+    } else {
+      root.removeAttribute("data-theme");
+    }
+
+    return () => {
+      root.removeAttribute("data-theme");
+    };
+  }, [theme]);
+
+  return children;
+}
+
 const preview: Preview = {
+  globalTypes: {
+    theme: {
+      description: "Color scheme",
+      toolbar: {
+        title: "Theme",
+        icon: "circlehollow",
+        items: [
+          { value: "light", title: "Light" },
+          { value: "dark", title: "Dark" },
+          { value: "system", title: "System" }
+        ],
+        dynamicTitle: true
+      }
+    }
+  },
+  initialGlobals: {
+    theme: "system"
+  },
   parameters: {
     controls: {
       matchers: {
@@ -46,14 +82,18 @@ const preview: Preview = {
     }
   },
   decorators: [
-    (Story) =>
+    (Story, context) =>
       createElement(
-        "main",
-        {
-          className: "storybook-portfolio-shell",
-          onClickCapture: preventStoryNavigation
-        },
-        createElement(Story)
+        ThemeRoot,
+        { theme: String(context.globals.theme ?? "system") },
+        createElement(
+          "main",
+          {
+            className: "storybook-portfolio-shell",
+            onClickCapture: preventStoryNavigation
+          },
+          createElement(Story)
+        )
       )
   ],
   tags: ["autodocs"]

@@ -2,8 +2,8 @@
 @import "./styles/generated/tokens.css";
 
 :root {
-  --portfolio-page-background: Canvas;
-  --portfolio-nav-active-background: Canvas;
+  --portfolio-page-background: var(--color-background-contrast);
+  --portfolio-nav-active-background: var(--color-background-contrast);
   --portfolio-nav-background: color-mix(in srgb, var(--color-surface-card-primary) 80%, transparent);
   --portfolio-shell: 960px;
   --portfolio-text-column: 796px;
@@ -11,6 +11,8 @@
   --motion-fade-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --motion-reveal-distance: 14px;
   --motion-stagger-step: 60ms;
+  --motion-theme-duration: 420ms;
+  --motion-theme-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 * {
@@ -94,6 +96,28 @@ a {
   opacity: 1;
   transform: translate3d(0, 0, 0);
   will-change: auto;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html[data-theme-transitioning],
+  html[data-theme-transitioning] body {
+    transition:
+      background-color var(--motion-theme-duration) var(--motion-theme-ease),
+      color var(--motion-theme-duration) var(--motion-theme-ease);
+  }
+
+  html[data-theme-transitioning] body *,
+  html[data-theme-transitioning] body *::before,
+  html[data-theme-transitioning] body *::after {
+    transition:
+      background-color var(--motion-theme-duration) var(--motion-theme-ease),
+      color var(--motion-theme-duration) var(--motion-theme-ease),
+      border-color var(--motion-theme-duration) var(--motion-theme-ease),
+      outline-color var(--motion-theme-duration) var(--motion-theme-ease),
+      fill var(--motion-theme-duration) var(--motion-theme-ease),
+      stroke var(--motion-theme-duration) var(--motion-theme-ease),
+      box-shadow var(--motion-theme-duration) var(--motion-theme-ease);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

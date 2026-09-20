@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { LandingSplash } from "@/components/LandingSplash";
 import { RouteFade } from "@/components/RouteFade";
 import { SmoothScroll } from "@/components/SmoothScroll";
+import { colorSchemeScript } from "@/lib/color-scheme";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -22,7 +23,10 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: colorSchemeScript }} />
+      </head>
       <body>
         <LandingSplash />
         <div className="portfolio-content-shell">

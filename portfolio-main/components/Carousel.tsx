@@ -67,8 +67,8 @@ const mix = (a: number, b: number, t: number) => a + (b - a) * t;
    cent off the height. These are photographs with nothing at
    their top or bottom edge, and the card reading as a card
    rather than as a slat is worth the last few rows. */
-const CARD_W = 206;
-const CARD_H = 292;
+const CARD_W = 207;
+const CARD_H = 276;
 
 /* ── the frame, and it is only a frame ─────────────────────
    No box, no clip, no mask. Nothing here hides its overflow,
@@ -105,10 +105,10 @@ const CARD_H = 292;
    a knob would rescale the whole block every time one moved —
    which is the thing the ResizeObserver on the wall and the
    overlay would both do. */
-const STAGE_W = 476;
-const STAGE_H = 340;
+const STAGE_W = 478;
+const STAGE_H = 321;
 
-const ORBIT = 138;
+const ORBIT = 139;
 /* ── how much smaller the back of the ring is ──────────────
    Read as a percentage of the way to half size: 100 puts the
    card at the back at 0.5, which is where this sits. The knob

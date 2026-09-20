@@ -350,12 +350,9 @@
   }
 
   .mobileCarousel {
-    /* Previous shrink was `min(1, column / 476)`. 5× that overflows a
-       phone, so this uses 5× and caps when the front card hits ~90vw. */
-    --carousel-scale: calc(min(min(1, 100vw / 476px) * 5, 90vw / 206px) * 0.5832);
     align-items: center;
     display: flex;
-    height: calc(340px * var(--carousel-scale));
+    height: 321px;
     justify-content: center;
     margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
@@ -365,8 +362,7 @@
 
   .mobileCarousel :global(.car) {
     flex: 0 0 auto;
-    transform: scale(var(--carousel-scale));
-    transform-origin: center center;
+    transform: none;
   }
 
   .collage {

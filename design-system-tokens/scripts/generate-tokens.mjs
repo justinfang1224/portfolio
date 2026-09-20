@@ -41,10 +41,48 @@ const walkColor = (node, pathParts = []) => {
   );
 };
 
-const buildColorCssVars = (tokens) =>
-  walkColor(tokens.color).map(
-    (entry) => `  --color-${entry.name}: ${entry.value};`
+const isThemedColor = (color) =>
+  Boolean(color && typeof color.light === "object" && typeof color.dark === "object");
+
+const colorThemes = (color) =>
+  isThemedColor(color) ? color : { light: color, dark: null };
+
+const hexToRgbChannels = (hex) => {
+  const normalized = hex.replace("#", "");
+  const value =
+    normalized.length === 3
+      ? normalized
+          .split("")
+          .map((channel) => channel + channel)
+          .join("")
+      : normalized;
+  const red = Number.parseInt(value.slice(0, 2), 16);
+  const green = Number.parseInt(value.slice(2, 4), 16);
+  const blue = Number.parseInt(value.slice(4, 6), 16);
+  return `${red}, ${green}, ${blue}`;
+};
+
+const colorDeclarations = (colorNode) => {
+  const lines = walkColor(colorNode).map(
+    (entry) => `--color-${entry.name}: ${entry.value};`
   );
+  const primary = walkColor(colorNode).find((entry) => entry.name === "content-primary");
+
+  if (primary) {
+    lines.push(`--color-content-primary-rgb: ${hexToRgbChannels(primary.value)};`);
+  }
+
+  return lines;
+};
+
+const cssBlock = (selector, declarations, indentLevel = 0) => {
+  const pad = "  ".repeat(indentLevel);
+  return [
+    `${pad}${selector} {`,
+    ...declarations.map((declaration) => `${pad}  ${declaration}`),
+    `${pad}}`
+  ];
+};
 
 const buildSpacingCssVars = (tokens) =>
   Object.entries(tokens.spacing ?? {}).map(
@@ -73,8 +111,17 @@ const buildSpacingTsObject = (tokens) => {
   return lines.join("\n");
 };
 
+const buildColorTsObject = (name, colorNode) => {
+  const lines = [`export const ${name} = {`];
+  for (const entry of walkColor(colorNode)) {
+    lines.push(`  "${entry.name}": "${entry.value}",`);
+  }
+  lines.push("} as const;");
+  return lines.join("\n");
+};
+
 const buildTs = (tokens) => {
-  const colorEntries = walkColor(tokens.color);
+  const themes = colorThemes(tokens.color);
   const lines = [banner, "", "export const meta = {"];
   lines.push(`  name: "${tokens.meta.name}",`);
   lines.push(`  version: "${tokens.meta.version}",`);
@@ -85,12 +132,12 @@ const buildTs = (tokens) => {
   lines.push("");
   lines.push(buildSpacingTsObject(tokens));
   lines.push("");
-  lines.push("export const color = {");
-  for (const entry of colorEntries) {
-    lines.push(`  "${entry.name}": "${entry.value}",`);
-  }
-  lines.push("} as const;");
+  lines.push(buildColorTsObject("color", themes.light));
   lines.push("");
+  if (themes.dark) {
+    lines.push(buildColorTsObject("colorDark", themes.dark));
+    lines.push("");
+  }
   lines.push("export type TypographyTokenName = keyof typeof typography;");
   lines.push("export type SpacingTokenName = keyof typeof spacing;");
   lines.push("export type ColorTokenName = keyof typeof color;");
@@ -106,12 +153,26 @@ const buildTs = (tokens) => {
 };
 
 const buildCss = (tokens) => {
-  const lines = [banner, "", ":root {"];
-  lines.push(`  --font-family-base: ${tokens.meta.fontFamily};`);
-  lines.push(...buildTypographyCssVars(tokens));
-  lines.push(...buildSpacingCssVars(tokens));
-  lines.push(...buildColorCssVars(tokens));
-  lines.push("}");
+  const themes = colorThemes(tokens.color);
+  const lightDeclarations = [
+    "color-scheme: light;",
+    `--font-family-base: ${tokens.meta.fontFamily};`,
+    ...buildTypographyCssVars(tokens).map((line) => line.trim()),
+    ...buildSpacingCssVars(tokens).map((line) => line.trim()),
+    ...colorDeclarations(themes.light)
+  ];
+  const lines = [banner, "", ...cssBlock(":root", lightDeclarations)];
+
+  if (themes.dark) {
+    const darkDeclarations = ["color-scheme: dark;", ...colorDeclarations(themes.dark)];
+    lines.push("");
+    lines.push(...cssBlock('[data-theme="dark"]', darkDeclarations));
+    lines.push("");
+    lines.push("@media (prefers-color-scheme: dark) {");
+    lines.push(...cssBlock(':root:not([data-theme="light"])', darkDeclarations, 1));
+    lines.push("}");
+  }
+
   lines.push("");
   lines.push(
     ".text-heading-1 { font-family: var(--font-family-base); font-size: var(--typography-heading-1-font-size); font-weight: var(--typography-heading-1-font-weight); line-height: var(--typography-heading-1-line-height); }"

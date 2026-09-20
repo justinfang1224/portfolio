@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import type { ReactNode } from "react";
+import { color, colorDark, type ColorTokenName } from "../../design-system-tokens/src/tokens";
 import { aboutFavorites } from "@/content/about";
 import { assetUrls } from "@/content/portfolio";
 import { AboutCollage } from "@/components/about/AboutCollage";
@@ -36,23 +37,7 @@ const placeholderProject = {
   status: "active"
 } satisfies ProjectCardProject;
 
-const colorTokens = [
-  { name: "border-primary", value: "#EDEDED" },
-  { name: "border-secondary", value: "#F0F0F0" },
-  { name: "content-primary", value: "#111111" },
-  { name: "content-secondary", value: "#737373" },
-  { name: "content-tertiary", value: "#B3B3B3" },
-  { name: "content-contrast", value: "#F9F9F7" },
-  { name: "background-primary", value: "#F7F7F7" },
-  { name: "background-secondary", value: "#F0F0F0" },
-  { name: "surface-card-primary", value: "#F7F7F7" },
-  { name: "surface-card-secondary", value: "#F0F0F0" },
-  { name: "status-positive", value: "#66DC16" },
-  { name: "status-warning", value: "#FFD600" },
-  { name: "button-secondary-default", value: "#F5F5F5" },
-  { name: "button-secondary-hover", value: "#EEEEEE" },
-  { name: "button-secondary-pressed", value: "#E0E0E0" }
-] as const;
+const colorTokenNames = Object.keys(color) as ColorTokenName[];
 
 const typographyTokens = [
   { name: "heading-1", size: 40, weight: 500, lineHeight: 48 },
@@ -164,24 +149,55 @@ export const Overview: Story = {
           label: "Tokens",
           summary: "Foundational color, typography, and spacing values used by the portfolio system.",
           children: (
-            <div className={styles.tokenGrid}>
-              <ComponentCard description="Semantic color variables used across surfaces, text, borders, and controls." isLarge title="Color">
-                <div className={styles.tokenList}>
-                  {colorTokens.map((token) => (
-                    <div className={styles.colorToken} key={token.name}>
-                      <div className={styles.tokenMeta}>
-                        <p className={styles.tokenName}>{token.name}</p>
-                        <p className={styles.tokenValue}>{token.value}</p>
-                      </div>
-                      <span
-                        aria-label={`${token.name} color swatch`}
-                        className={styles.swatch}
-                        style={{ background: token.value }}
-                      />
-                    </div>
-                  ))}
+            <div className={styles.stack}>
+              <ComponentCard
+                description="Semantic color variables in light and dark. Swatches use the source values, not the active theme."
+                isLarge
+                title="Color"
+              >
+                <div className={styles.tokenTableWrap}>
+                  <table className={styles.tokenTable}>
+                    <caption className={styles.visuallyHidden}>Color tokens in light and dark mode</caption>
+                    <thead>
+                      <tr>
+                        <th scope="col">Token</th>
+                        <th scope="col">Light</th>
+                        <th scope="col">Dark</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {colorTokenNames.map((name) => (
+                        <tr key={name}>
+                          <th className={styles.tokenName} scope="row">
+                            {name}
+                          </th>
+                          <td>
+                            <span className={styles.tokenValueCell}>
+                              <span
+                                aria-hidden="true"
+                                className={styles.swatch}
+                                style={{ background: color[name] }}
+                              />
+                              <span className={styles.tokenValue}>{color[name]}</span>
+                            </span>
+                          </td>
+                          <td>
+                            <span className={styles.tokenValueCell}>
+                              <span
+                                aria-hidden="true"
+                                className={styles.swatch}
+                                style={{ background: colorDark[name] }}
+                              />
+                              <span className={styles.tokenValue}>{colorDark[name]}</span>
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </ComponentCard>
+              <div className={styles.grid}>
               <ComponentCard description="Text styles with size, weight, and line-height values." isLarge title="Typography">
                 <div className={styles.tokenList}>
                   {typographyTokens.map((token) => (
@@ -218,6 +234,7 @@ export const Overview: Story = {
                   ))}
                 </div>
               </ComponentCard>
+              </div>
             </div>
           )
         },

@@ -96,6 +96,25 @@ export const color = {
   "button-secondary-pressed": "#E0E0E0",
 } as const;
 
+export const colorDark = {
+  "border-primary": "#2C2C2C",
+  "border-secondary": "#242424",
+  "content-primary": "#F7F7F7",
+  "content-secondary": "#A3A3A3",
+  "content-tertiary": "#8A8A8A",
+  "content-contrast": "#111111",
+  "background-primary": "#1A1A1A",
+  "background-secondary": "#222222",
+  "background-contrast": "#111111",
+  "surface-card-primary": "#1A1A1A",
+  "surface-card-secondary": "#222222",
+  "status-positive": "#66DC16",
+  "status-warning": "#FFD600",
+  "button-secondary-default": "#1C1C1C",
+  "button-secondary-hover": "#262626",
+  "button-secondary-pressed": "#333333",
+} as const;
+
 export type TypographyTokenName = keyof typeof typography;
 export type SpacingTokenName = keyof typeof spacing;
 export type ColorTokenName = keyof typeof color;

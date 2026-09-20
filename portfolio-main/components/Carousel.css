@@ -11,7 +11,7 @@
      --lift/--sway  drift amplitudes; JS overwrites per card */
   --bg: var(--color-background-contrast);
   --font-ui: var(--font-family-base);
-  --ink-rgb: 17, 17, 17;
+  --ink-rgb: var(--color-content-primary-rgb);
   --lift: 4px;
   --sway: 1deg;
   --shadow-rgb: 17, 17, 17;
