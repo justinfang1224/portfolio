@@ -231,14 +231,19 @@ export function HomeFeaturedCarousel() {
   const applyDragTransforms = (
     currentIndex: number,
     incomingIndex: number,
-    offset: number
+    offset: number,
+    intent: SlideDirection
   ) => {
     const current = slideAt(currentIndex);
     const incoming = slideAt(incomingIndex);
+    const height = cardRef.current?.clientHeight ?? 1;
+    // Keep the two slides in a vertical strip: the neighbor rides
+    // just above (forward) or below (backward) the active card.
+    const incomingOffset = intent === "forward" ? offset - height : offset + height;
 
     if (incoming) {
       incoming.style.transition = "none";
-      incoming.style.transform = "translate3d(0, 0, 0)";
+      incoming.style.transform = `translate3d(0, ${incomingOffset}px, 0)`;
       incoming.style.visibility = "visible";
       incoming.style.zIndex = "1";
     }
@@ -347,7 +352,7 @@ export function HomeFeaturedCarousel() {
     drag.incomingIndex = incomingIndex;
     drag.intent = intent;
     drag.offset = offset;
-    applyDragTransforms(drag.currentIndex, incomingIndex, offset);
+    applyDragTransforms(drag.currentIndex, incomingIndex, offset, intent);
   };
 
   const onWindowPointerUp = (event: PointerEvent) => {
@@ -383,13 +388,14 @@ export function HomeFeaturedCarousel() {
 
     const current = slideAt(drag.currentIndex);
     const incoming = slideAt(drag.incomingIndex);
+    const incomingRest = drag.intent === "forward" ? -height : height;
 
     if (current) {
       current.style.transform = "translate3d(0, 0, 0)";
     }
 
     if (incoming) {
-      incoming.style.transform = "";
+      incoming.style.transform = `translate3d(0, ${incomingRest}px, 0)`;
     }
 
     if (snapTimerRef.current) {
