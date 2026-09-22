@@ -22,7 +22,8 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: "Secondary pill and text actions in medium and small sizes."
+        component:
+          "Secondary pill and text actions in medium and small sizes. Pill buttons scale to 1.02 on hover and 0.98 on press. Text buttons only change color."
       }
     }
   }
