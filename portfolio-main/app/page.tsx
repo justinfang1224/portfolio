@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/Button";
 import { FloatingNav } from "@/components/FloatingNav";
-import { Footer } from "@/components/Footer";
 import { MotionReveal } from "@/components/MotionReveal";
 import { TermExplain } from "@/components/TermExplain";
 import { UpdatedAtTypewriter } from "@/components/UpdatedAtTypewriter";
@@ -134,7 +133,6 @@ export default function Home() {
           <Button href="/writings">View all →</Button>
         </MotionReveal>
       </main>
-      <Footer />
     </>
   );
 }

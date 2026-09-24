@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { CopyEmailLink } from "@/components/CopyEmailLink";
 import { FloatingNav } from "@/components/FloatingNav";
-import { Footer } from "@/components/Footer";
 import { AboutCollage } from "@/components/about/AboutCollage";
 import { AboutFavorites } from "@/components/about/AboutFavorites";
 import { AboutTimeline } from "@/components/about/AboutTimeline";
@@ -154,7 +153,6 @@ export default function AboutPage() {
           </MotionReveal>
         </div>
       </main>
-      <Footer />
     </>
   );
 }

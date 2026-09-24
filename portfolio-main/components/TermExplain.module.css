@@ -1,7 +1,7 @@
 .root {
-  --term-explain-duration: 520ms;
-  --term-explain-ease: cubic-bezier(0.22, 1.55, 0.36, 1);
-  --term-explain-fade: 200ms;
+  --term-explain-duration: 160ms;
+  --term-explain-ease: cubic-bezier(0.23, 1, 0.32, 1);
+  --term-explain-fade: 160ms;
   --term-explain-gap: var(--spacing-4);
   --term-explain-hidden-y: 10px;
   cursor: help;

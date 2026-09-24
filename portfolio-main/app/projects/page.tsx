@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { FloatingNav } from "@/components/FloatingNav";
-import { Footer } from "@/components/Footer";
 import { ProjectsIndex } from "./ProjectsIndex";
 
 export const metadata: Metadata = {
@@ -16,7 +15,6 @@ export default function ProjectsPage() {
       <Suspense fallback={null}>
         <ProjectsIndex />
       </Suspense>
-      <Footer />
     </>
   );
 }

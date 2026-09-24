@@ -25,6 +25,14 @@ html {
   scroll-behavior: auto;
 }
 
+html:not([data-landing-splash="entered"]),
+html:not([data-landing-splash="entered"]) body {
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: none;
+}
+
 body {
   background: var(--portfolio-page-background);
   display: flex;

@@ -1,0 +1,8 @@
+.preview {
+  width: 100%;
+}
+
+.preview :global(footer) {
+  margin-top: 0;
+  width: 100%;
+}

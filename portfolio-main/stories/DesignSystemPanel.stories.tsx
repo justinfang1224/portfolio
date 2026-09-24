@@ -9,6 +9,7 @@ import { FavoriteTravelCard } from "@/components/about/FavoriteTravelCard";
 import { Badge } from "@/components/Badge";
 import { Button } from "@/components/Button";
 import { FloatingNav } from "@/components/FloatingNav";
+import { Footer } from "@/components/Footer";
 import { MotionReveal } from "@/components/MotionReveal";
 import { ProjectCard, type ProjectCardProject } from "@/components/ProjectCard";
 import { ProjectHeroParallax } from "@/components/projects/ProjectHeroParallax";
@@ -315,6 +316,15 @@ export const Overview: Story = {
                   </div>
                 </div>
               </ComponentCard>
+              <ComponentCard
+                description="Site-wide footer with copyright, Hong Kong time, and the text theme toggle."
+                isLarge
+                title="Footer"
+              >
+                <div className={styles.footerPreview}>
+                  <Footer />
+                </div>
+              </ComponentCard>
             </div>
           )
         },
@@ -334,7 +344,7 @@ export const Overview: Story = {
                 </div>
               </ComponentCard>
               <div className={styles.grid}>
-                <ComponentCard description="Timeline rows for experience and education entries." isLarge title="AboutTimeline">
+                <ComponentCard description="Timeline rows for experience and education entries." isLarge title="List column">
                   <AboutTimeline entries={placeholderTimelineEntries} />
                 </ComponentCard>
                 <ComponentCard description="Interactive image collage from the About page." isLarge title="AboutCollage">

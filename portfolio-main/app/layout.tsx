@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { DesignSystemAudit } from "@/components/dev/DesignSystemAudit";
+import { Footer } from "@/components/Footer";
 import { LandingSplash } from "@/components/LandingSplash";
 import { RouteFade } from "@/components/RouteFade";
 import { SmoothScroll } from "@/components/SmoothScroll";
@@ -35,7 +37,7 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html data-landing-splash="playing" lang="en" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: colorSchemeScript }} />
       </head>
@@ -43,9 +45,13 @@ export default function RootLayout({
         <LandingSplash />
         <div className="portfolio-content-shell">
           <SmoothScroll>
-            <RouteFade>{children}</RouteFade>
+            <RouteFade>
+              {children}
+              <Footer />
+            </RouteFade>
           </SmoothScroll>
         </div>
+        {process.env.NODE_ENV === "development" ? <DesignSystemAudit /> : null}
       </body>
     </html>
   );

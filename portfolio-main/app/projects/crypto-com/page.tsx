@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { FloatingNav } from "@/components/FloatingNav";
-import { Footer } from "@/components/Footer";
 import { MotionReveal } from "@/components/MotionReveal";
+import { ProjectCaseMedia, ProjectCaseMediaItem } from "@/components/projects/ProjectCaseMedia";
 import { ProjectHeroParallax } from "@/components/projects/ProjectHeroParallax";
 import { ProjectSectionRail } from "@/components/projects/ProjectSectionRail";
 import { RollingMetricValue } from "@/components/projects/RollingMetricValue";
@@ -138,23 +138,19 @@ export default function CryptoProjectPage() {
                     }
 
                     return (
-                      <figure
-                        className={
-                          block.images.length > 1 ? styles.imageGrid : styles.imageBlock
-                        }
+                      <ProjectCaseMedia
+                        className={styles.imageBlock}
                         key={`${section.id}-image-${blockIndex}`}
                       >
                         {block.images.map((image) => (
-                          <div className={styles.imageItem} key={image.src}>
-                            <div className={styles.imageFrame}>
-                              <img alt={image.alt} className={styles.caseImage} src={image.src} />
-                            </div>
-                            {"caption" in image && image.caption ? (
-                              <figcaption className={styles.caption}>{image.caption}</figcaption>
-                            ) : null}
-                          </div>
+                          <ProjectCaseMediaItem
+                            alt={image.alt}
+                            caption={"caption" in image ? image.caption : undefined}
+                            key={image.src}
+                            src={image.src}
+                          />
                         ))}
-                      </figure>
+                      </ProjectCaseMedia>
                     );
                   })}
                 </MotionReveal>
@@ -169,7 +165,6 @@ export default function CryptoProjectPage() {
           </div>
         </div>
       </main>
-      <Footer />
     </>
   );
 }

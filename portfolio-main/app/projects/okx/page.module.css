@@ -189,8 +189,7 @@
   line-height: var(--typography-heading-2-line-height);
 }
 
-.metric span,
-.caption {
+.metric span {
   color: var(--color-content-tertiary);
   font-family: Inter, var(--font-family-base);
   font-size: var(--typography-body-medium-font-size);
@@ -236,14 +235,8 @@
 
 .section > .proseBlock + .proseBlock,
 .section > .proseBlock + .imageBlock,
-.section > .proseBlock + .imageGrid,
-.section > .proseBlock + .placeholderFrame,
 .section > .imageBlock + .proseBlock,
-.section > .imageBlock + .imageBlock,
-.section > .imageBlock + .imageGrid,
-.section > .imageGrid + .proseBlock,
-.section > .imageGrid + .imageBlock,
-.section > .imageGrid + .imageGrid {
+.section > .imageBlock + .imageBlock {
   margin-top: 52px;
 }
 
@@ -281,75 +274,8 @@
   text-underline-offset: 3px;
 }
 
-.imageBlock,
-.imageGrid {
-  display: flex;
-  gap: 24px;
-  margin: 0;
-  width: 100%;
-}
-
 .imageBlock {
-  align-items: center;
-  flex-direction: column;
-}
-
-.imageGrid {
-  align-items: flex-start;
-}
-
-.imageItem {
-  align-items: center;
-  display: flex;
-  flex: 1 1 0;
-  flex-direction: column;
-  gap: 24px;
-  min-width: 0;
   width: 100%;
-}
-
-.imageFrame,
-.videoFrame {
-  background: var(--color-surface-card-primary);
-  height: 361px;
-  overflow: hidden;
-  position: relative;
-  width: 100%;
-}
-
-.imageFrame {
-  border: 1px solid var(--color-border-primary);
-  border-radius: 12px;
-}
-
-.videoFrame {
-  border: 1px solid var(--color-border-primary);
-  border-radius: 24px;
-  height: 441px;
-}
-
-.caseImage {
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  width: 100%;
-}
-
-.caseVideo {
-  display: block;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  width: 100%;
-}
-
-.imageGrid .caseImage {
-  object-fit: contain;
-}
-
-.caption {
-  margin: 0;
-  text-align: center;
 }
 
 .actions {
@@ -400,7 +326,6 @@
   }
 
   .metrics,
-  .imageGrid,
   .actions {
     align-items: flex-start;
     flex-direction: column;
@@ -408,19 +333,6 @@
 
   .metrics {
     gap: 24px;
-  }
-
-  .imageFrame,
-  .videoFrame {
-    height: auto;
-  }
-
-  .imageFrame {
-    aspect-ratio: 632 / 361;
-  }
-
-  .videoFrame {
-    aspect-ratio: 632 / 441;
   }
 }
 

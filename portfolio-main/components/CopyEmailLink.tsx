@@ -13,6 +13,13 @@ const DEFAULT_HINT = "Copy email";
 const COPIED_HINT = "Copied ✅";
 const COPIED_DURATION_MS = 2000;
 
+function shouldOpenMailClient() {
+  return (
+    window.matchMedia("(max-width: 767px)").matches ||
+    window.matchMedia("(hover: none)").matches
+  );
+}
+
 async function copyText(value: string) {
   if (navigator.clipboard?.writeText) {
     await navigator.clipboard.writeText(value);
@@ -43,6 +50,10 @@ export function CopyEmailLink({ children = "Email", className, email }: CopyEmai
   }, []);
 
   async function handleClick(event: MouseEvent<HTMLAnchorElement>) {
+    if (shouldOpenMailClient()) {
+      return;
+    }
+
     event.preventDefault();
 
     try {

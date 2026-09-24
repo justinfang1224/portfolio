@@ -21,6 +21,7 @@ const finalIconIndex = welcomeIcons.length - 1;
 type SplashPhase = "entering" | "exiting";
 
 function revealPortfolio() {
+  window.scrollTo(0, 0);
   document.documentElement.dataset.landingSplash = "entered";
   window.dispatchEvent(new CustomEvent("portfolio:splash-complete"));
 }

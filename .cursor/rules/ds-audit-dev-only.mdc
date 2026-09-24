@@ -1,0 +1,34 @@
+---
+description: Keep the design-system highlighter as a local testing tool and never ship it to production
+alwaysApply: true
+---
+
+# Design System Audit Tool (Dev Only)
+
+The DS highlighter (`DesignSystemAudit`, the **dev menu**, the **DS identifier** switch, `data-ds-component` markers, and `dsMarker`) is a **local testing tool**. It is not a product feature.
+
+## Never Ship To Production
+
+On any **commit**, **push**, or **deploy** (including Vercel production):
+
+- Do not treat this tool as something that should appear on the live site
+- Do not remove, weaken, or bypass the `process.env.NODE_ENV === "development"` gates
+- Do not mount `DesignSystemAudit` unconditionally in `portfolio-main/app/layout.tsx` or any other layout/page
+- Do not add production-facing UI, routes, or feature flags that turn the highlighter on for visitors
+- Do not copy the overlay, toggle, or highlight styles into shared production components
+
+## Required Gates
+
+These must stay in place:
+
+| Surface | Required gate |
+| --- | --- |
+| Overlay mount | [`portfolio-main/app/layout.tsx`](portfolio-main/app/layout.tsx) renders `<DesignSystemAudit />` only when `process.env.NODE_ENV === "development"` |
+| Component markers | [`portfolio-main/lib/ds-marker.ts`](portfolio-main/lib/ds-marker.ts) returns `{}` unless `NODE_ENV` is `"development"` |
+| Overlay UI | Lives under [`portfolio-main/components/dev/`](portfolio-main/components/dev/) and is imported only behind the layout gate |
+
+Next production builds set `NODE_ENV` to `"production"`, so the overlay and `data-ds-component` attributes must compile out. If a change would make either appear in a production bundle or on the live site, stop and revert it.
+
+## Marker Usage
+
+When marking a shared design-system component for the audit tool, use `dsMarker("Name")` on the component root. Do not hard-code `data-ds-component` on pages, and do not add markers that skip the `dsMarker` development check.

@@ -3,5 +3,6 @@ export {
   CircleUser as AboutIcon,
   FileText as WritingIcon,
   House as HomeIcon,
-  PenTool as WorkIcon
+  PenTool as WorkIcon,
+  Settings as SettingsIcon
 } from "lucide-react";

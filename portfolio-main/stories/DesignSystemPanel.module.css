@@ -98,6 +98,15 @@
   margin: 0 auto;
 }
 
+.footerPreview {
+  width: 100%;
+}
+
+.footerPreview :global(footer) {
+  margin-top: 0;
+  width: 100%;
+}
+
 .sectionMock {
   display: grid;
   gap: 16px;

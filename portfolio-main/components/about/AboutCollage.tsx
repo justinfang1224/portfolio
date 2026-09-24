@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import { Badge } from "@/components/Badge";
 import { Carousel } from "@/components/Carousel";
 import { aboutCollageImages } from "@/content/about";
+import { dsMarker } from "@/lib/ds-marker";
 import styles from "./AboutCollage.module.css";
 
 export function AboutCollage() {
@@ -131,6 +132,7 @@ export function AboutCollage() {
           .filter(Boolean)
           .join(" ")}
         ref={collageRef}
+        {...dsMarker("AboutCollage")}
       >
       {aboutCollageImages.map((image, index) => {
         const isSelected = selectedIndex === index;
@@ -188,7 +190,11 @@ export function AboutCollage() {
         );
       })}
       </div>
-      <div aria-label="About Justin photo collage" className={styles.mobileCarousel}>
+      <div
+        aria-label="About Justin photo collage"
+        className={styles.mobileCarousel}
+        {...dsMarker("AboutCollage")}
+      >
         <Carousel corner={12} sink={0} />
       </div>
     </>

@@ -8,6 +8,7 @@ import {
   resolveColorScheme,
   type ResolvedColorScheme
 } from "@/lib/color-scheme";
+import { dsMarker } from "@/lib/ds-marker";
 import { Button } from "./Button";
 import styles from "./Footer.module.css";
 
@@ -59,7 +60,7 @@ export function Footer() {
   const isDark = colorScheme === "dark";
 
   return (
-    <footer className={styles.footer}>
+    <footer className={styles.footer} {...dsMarker("Footer")}>
       <p className={styles.copyright}>© 2026  •  Jenhung.work@gmail.com</p>
       <div className={styles.meta}>
         <p className={styles.location}>

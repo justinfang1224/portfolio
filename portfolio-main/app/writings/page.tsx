@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { FloatingNav } from "@/components/FloatingNav";
-import { Footer } from "@/components/Footer";
 import { ArrowUpRightIcon } from "@/components/icons";
 import { MotionReveal } from "@/components/MotionReveal";
 import { writingsPage } from "@/content/portfolio";
@@ -53,7 +52,6 @@ export default function WritingsPage() {
         </section>
 
       </main>
-      <Footer />
     </>
   );
 }

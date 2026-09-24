@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { type CSSProperties, type MouseEvent, useEffect, useState } from "react";
 import { aboutCollageImages } from "@/content/about";
+import { dsMarker } from "@/lib/ds-marker";
 import { AboutIcon, HomeIcon, WorkIcon, WritingIcon } from "./icons";
 import styles from "./FloatingNav.module.css";
 
@@ -123,7 +124,7 @@ export function FloatingNav() {
   }, [pathname]);
 
   return (
-    <header className={styles.header}>
+    <header className={styles.header} {...dsMarker("FloatingNav")}>
       <nav
         aria-label="Primary navigation"
         className={styles.nav}

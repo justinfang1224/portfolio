@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Button } from "@/components/Button";
 import { FloatingNav } from "@/components/FloatingNav";
-import { Footer } from "@/components/Footer";
 import { MotionReveal } from "@/components/MotionReveal";
 import { writingArticles } from "@/content/portfolio";
 import styles from "./page.module.css";
@@ -170,7 +169,6 @@ export default async function WritingArticlePage({ params }: { params: PageParam
           </nav>
         </MotionReveal>
       </main>
-      <Footer />
     </>
   );
 }

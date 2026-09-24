@@ -7,6 +7,7 @@ import {
   type ReactElement,
   type ReactNode
 } from "react";
+import { dsMarker } from "@/lib/ds-marker";
 import styles from "./TermExplain.module.css";
 
 type TermExplainProps = {
@@ -47,6 +48,7 @@ export function TermExplain({
       aria-describedby={asChild ? undefined : tooltipId}
       className={[styles.root, asChild ? styles.asChild : "", className].filter(Boolean).join(" ")}
       tabIndex={asChild ? undefined : 0}
+      {...dsMarker("TermExplain")}
     >
       {content}
       <span className={styles.panel} id={tooltipId} role="tooltip">

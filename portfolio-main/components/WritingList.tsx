@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { writings } from "@/content/portfolio";
+import { dsMarker } from "@/lib/ds-marker";
 import { Button } from "./Button";
 import { ArrowUpRightIcon } from "./icons";
 import { MotionReveal } from "./MotionReveal";
@@ -33,7 +34,12 @@ export function WritingList({
   const titleId = `${sectionId}-title`;
 
   return (
-    <section aria-labelledby={titleId} className={styles.section} id={sectionId}>
+    <section
+      aria-labelledby={titleId}
+      className={styles.section}
+      id={sectionId}
+      {...dsMarker("WritingList")}
+    >
       <MotionReveal>
         <SectionTitle id={titleId} index={index} title={title} />
       </MotionReveal>
