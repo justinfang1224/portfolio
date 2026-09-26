@@ -61,9 +61,9 @@ export default function Home() {
           <div className={styles.identityRow}>
             <ProfileAvatarToggle />
             <div className={styles.identityCopy}>
-              <h1 className={styles.name} id="home-title">
+              <h2 className={styles.name} id="home-title">
                 {profile.name}
-              </h1>
+              </h2>
               <p>Senior Product Designer</p>
             </div>
           </div>
@@ -92,7 +92,7 @@ export default function Home() {
             <p>
               I consider myself a designer at heart and enjoy building products with taste. Very
               recently, I start shipping things myself with the assistance of code & AI, including
-              this site, you are looking at <span className={styles.version}>v7.2.2</span>.
+              this site, you are looking at <span className={styles.version}>v7.3.0</span>.
             </p>
           </div>
         </MotionReveal>

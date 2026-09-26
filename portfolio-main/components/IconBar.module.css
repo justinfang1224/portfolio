@@ -7,7 +7,7 @@
   align-items: center;
   background: var(--color-background-contrast);
   border-radius: 36px;
-  box-shadow: 0 2px 6px color-mix(in srgb, var(--color-content-tertiary) 8%, transparent);
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--color-content-tertiary) 16%, transparent);
   color: var(--color-content-primary);
   display: inline-flex;
   flex-direction: row;
