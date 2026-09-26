@@ -1,0 +1,80 @@
+/*
+ * Ported from Bencho GlassIconBar CSS (MIT — bencho.dev/licence).
+ * Hard-coded glass fills remapped to portfolio design-system tokens.
+ */
+
+.nav {
+  align-items: center;
+  background: var(--color-background-contrast);
+  border-radius: 36px;
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--color-content-tertiary) 8%, transparent);
+  color: var(--color-content-primary);
+  display: inline-flex;
+  flex-direction: row;
+  gap: var(--spacing-8);
+  isolation: isolate;
+  justify-content: center;
+  padding: var(--spacing-4);
+  pointer-events: auto;
+  position: relative;
+}
+
+.nav::before {
+  border: 1px solid var(--color-border-primary);
+  border-radius: inherit;
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: 3;
+}
+
+.nav[data-orientation="vertical"] {
+  flex-direction: column;
+}
+
+.item {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 36px;
+  color: var(--color-content-tertiary);
+  cursor: pointer;
+  display: grid;
+  flex: 0 0 36px;
+  height: 36px;
+  justify-items: center;
+  padding: var(--spacing-8);
+  place-items: center;
+  position: relative;
+  text-decoration: none;
+  width: 36px;
+  z-index: 1;
+}
+
+.item:hover {
+  background: var(--color-background-primary);
+}
+
+.item[data-active="true"] {
+  color: var(--color-content-primary);
+}
+
+.item:focus-visible {
+  outline: 2px solid var(--color-content-primary);
+  outline-offset: 2px;
+}
+
+.icon {
+  display: block;
+  flex: 0 0 auto;
+  height: 20px;
+  width: 20px;
+}
+
+.divider {
+  background: var(--color-border-primary);
+  flex: 0 0 1px;
+  height: 16px;
+  width: 1px;
+}

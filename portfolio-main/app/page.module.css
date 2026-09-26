@@ -118,7 +118,7 @@
 }
 
 .prose {
-  color: var(--color-content-secondary);
+  color: var(--color-content-primary);
   font-family: var(--font-family-base);
   font-size: var(--typography-body-large-font-size);
   font-weight: var(--typography-body-large-font-weight);
@@ -135,17 +135,11 @@
 }
 
 .prose a,
-.underlined,
 .version {
   color: var(--color-content-primary);
   text-decoration: underline;
   text-decoration-style: dotted;
   text-underline-offset: 3px;
-}
-
-.underlined,
-.version {
-  color: var(--color-content-secondary);
 }
 
 .prose a:hover {
@@ -189,11 +183,14 @@
 .featuredCard {
   background: var(--color-content-primary);
   border-radius: var(--spacing-24);
+  clip-path: inset(0 round var(--spacing-24));
   cursor: grab;
   height: 412px;
+  isolation: isolate;
   overflow: hidden;
   position: relative;
   touch-action: none;
+  transform: translateZ(0);
   user-select: none;
   width: 100%;
 }
@@ -215,7 +212,6 @@
   top: 0;
   transition: transform 320ms var(--motion-fade-ease);
   width: 100%;
-  will-change: transform;
 }
 
 .featuredSlide a,
@@ -284,14 +280,15 @@
 
 .featuredImage {
   display: block;
-  height: 449px;
+  height: calc(100% + 8px);
   left: -4px;
   max-width: none;
   object-fit: cover;
+  object-position: center;
   position: absolute;
-  top: 0;
+  top: -4px;
   transition: transform 320ms var(--motion-fade-ease);
-  width: 804px;
+  width: calc(100% + 8px);
 }
 
 .featuredImageInteractive.featuredImageActive:hover,
@@ -494,12 +491,8 @@
   .featuredCard {
     aspect-ratio: 796 / 412;
     border-radius: var(--spacing-16);
+    clip-path: inset(0 round var(--spacing-16));
     height: auto;
-  }
-
-  .featuredImage {
-    height: 109%;
-    width: 101%;
   }
 
   .slideIndicator {

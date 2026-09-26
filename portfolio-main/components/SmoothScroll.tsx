@@ -2,6 +2,7 @@
 
 import Lenis from "lenis";
 import { type ReactNode, useEffect } from "react";
+import { registerLenis } from "@/lib/scroll-reset";
 
 type SmoothScrollProps = {
   children: ReactNode;
@@ -32,6 +33,7 @@ export function SmoothScroll({ children }: SmoothScrollProps) {
         stopInertiaOnNavigate: true,
         wheelMultiplier: 0.9
       });
+      registerLenis(lenis);
     };
 
     if (document.documentElement.dataset.landingSplash === "entered") {
@@ -42,6 +44,7 @@ export function SmoothScroll({ children }: SmoothScrollProps) {
 
     return () => {
       window.removeEventListener("portfolio:splash-complete", start);
+      registerLenis(null);
       lenis?.destroy();
     };
   }, []);

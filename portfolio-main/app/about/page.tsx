@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { CopyEmailLink } from "@/components/CopyEmailLink";
-import { FloatingNav } from "@/components/FloatingNav";
 import { AboutCollage } from "@/components/about/AboutCollage";
 import { AboutFavorites } from "@/components/about/AboutFavorites";
 import { AboutTimeline } from "@/components/about/AboutTimeline";
@@ -37,7 +36,6 @@ function SectionHeader({
 export default function AboutPage() {
   return (
     <>
-      <FloatingNav />
       <main className={styles.main}>
         <MotionReveal as="section" aria-label="About photo collage" className={styles.hero}>
           <AboutCollage />

@@ -1,21 +1,11 @@
 "use client";
 
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  type CSSProperties,
-  type MouseEventHandler,
-  type PointerEvent as ReactPointerEvent,
-  type TransitionEvent
-} from "react";
+import { useCallback, useEffect, useRef, useState, type TransitionEvent } from "react";
 import { Button } from "@/components/Button";
 import { SettingsIcon } from "@/components/icons";
 import styles from "./DesignSystemAudit.module.css";
 
 const STORAGE_KEY = "portfolio-ds-audit";
-const DRAG_THRESHOLD_PX = 4;
 const MENU_GAP_PX = 8;
 
 type HighlightBox = {
@@ -28,25 +18,23 @@ type HighlightBox = {
 
 type StoredState = {
   enabled: boolean;
-  x: number | null;
-  y: number | null;
+  grid: boolean;
 };
 
 function readStoredState(): StoredState {
   try {
     const raw = sessionStorage.getItem(STORAGE_KEY);
     if (!raw) {
-      return { enabled: false, x: null, y: null };
+      return { enabled: false, grid: false };
     }
 
     const parsed = JSON.parse(raw) as Partial<StoredState>;
     return {
       enabled: Boolean(parsed.enabled),
-      x: typeof parsed.x === "number" ? parsed.x : null,
-      y: typeof parsed.y === "number" ? parsed.y : null
+      grid: Boolean(parsed.grid)
     };
   } catch {
-    return { enabled: false, x: null, y: null };
+    return { enabled: false, grid: false };
   }
 }
 
@@ -91,73 +79,31 @@ function collectHighlights(): HighlightBox[] {
 
 export function DesignSystemAudit() {
   const [enabled, setEnabled] = useState(false);
+  const [gridEnabled, setGridEnabled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [menuRendered, setMenuRendered] = useState(false);
   const [menuShown, setMenuShown] = useState(false);
   const [menuAbove, setMenuAbove] = useState(false);
-  const [position, setPosition] = useState<{ x: number; y: number } | null>(null);
-  const [dragging, setDragging] = useState(false);
   const [highlights, setHighlights] = useState<HighlightBox[]>([]);
   const [hydrated, setHydrated] = useState(false);
-  const dragRef = useRef<{
-    moved: boolean;
-    offsetX: number;
-    offsetY: number;
-    pointerId: number;
-    startX: number;
-    startY: number;
-  } | null>(null);
   const menuShownRef = useRef(false);
   const rootRef = useRef<HTMLDivElement | null>(null);
   const triggerRef = useRef<HTMLDivElement | null>(null);
 
-  const clampPosition = useCallback((x: number, y: number) => {
-    const trigger = triggerRef.current;
-    const width = trigger?.offsetWidth ?? 34;
-    const height = trigger?.offsetHeight ?? 36;
-    const maxX = Math.max(0, window.innerWidth - width);
-    const maxY = Math.max(0, window.innerHeight - height);
-
-    return {
-      x: Math.min(Math.max(0, x), maxX),
-      y: Math.min(Math.max(0, y), maxY)
-    };
-  }, []);
-
   useEffect(() => {
     const stored = readStoredState();
     setEnabled(stored.enabled);
-    if (stored.x !== null && stored.y !== null) {
-      setPosition(clampPosition(stored.x, stored.y));
-    }
+    setGridEnabled(stored.grid);
     setHydrated(true);
-  }, [clampPosition]);
+  }, []);
 
   useEffect(() => {
-    const handleResize = () => {
-      setPosition((current) => {
-        if (!current) {
-          return current;
-        }
-        return clampPosition(current.x, current.y);
-      });
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [clampPosition]);
-
-  useEffect(() => {
-    if (!hydrated || dragging) {
+    if (!hydrated) {
       return;
     }
 
-    writeStoredState({
-      enabled,
-      x: position?.x ?? null,
-      y: position?.y ?? null
-    });
-  }, [dragging, enabled, hydrated, position]);
+    writeStoredState({ enabled, grid: gridEnabled });
+  }, [enabled, gridEnabled, hydrated]);
 
   const refreshHighlights = useCallback(() => {
     if (!enabled) {
@@ -315,122 +261,19 @@ export function DesignSystemAudit() {
     };
   }, [menuOpen, updateMenuPlacement]);
 
-  const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
-    if (event.button !== 0) {
-      return;
-    }
-
-    const handle = event.currentTarget;
-    const rect = handle.getBoundingClientRect();
-
-    dragRef.current = {
-      moved: false,
-      offsetX: event.clientX - rect.left,
-      offsetY: event.clientY - rect.top,
-      pointerId: event.pointerId,
-      startX: event.clientX,
-      startY: event.clientY
-    };
-
-    if (handle.setPointerCapture) {
-      handle.setPointerCapture(event.pointerId);
-    }
-  };
-
-  const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
-    const drag = dragRef.current;
-    if (!drag || drag.pointerId !== event.pointerId) {
-      return;
-    }
-
-    const distance = Math.hypot(event.clientX - drag.startX, event.clientY - drag.startY);
-    if (!drag.moved && distance < DRAG_THRESHOLD_PX) {
-      return;
-    }
-
-    drag.moved = true;
-    setDragging(true);
-    setMenuOpen(false);
-    // Allow overshoot while dragging; bounce back on release.
-    setPosition({
-      x: event.clientX - drag.offsetX,
-      y: event.clientY - drag.offsetY
-    });
-  };
-
-  const handlePointerUp = (event: ReactPointerEvent<HTMLDivElement>) => {
-    const drag = dragRef.current;
-    if (!drag || drag.pointerId !== event.pointerId) {
-      return;
-    }
-
-    dragRef.current = null;
-
-    if (event.currentTarget.hasPointerCapture?.(event.pointerId)) {
-      event.currentTarget.releasePointerCapture(event.pointerId);
-    }
-
-    if (!drag.moved) {
-      setDragging(false);
-      setMenuOpen((current) => !current);
-      return;
-    }
-
-    // Enable settle transition first, then clamp on the next frame so it bounces back.
-    setDragging(false);
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        setPosition((current) => {
-          if (!current) {
-            return current;
-          }
-          return clampPosition(current.x, current.y);
-        });
-      });
-    });
-  };
-
-  const handleTriggerClick: MouseEventHandler<HTMLButtonElement> = (event) => {
-    // Pointer open/close is handled on pointerup. A captured pointer never
-    // delivers click to this button; keyboard activation still does (detail 0).
-    if (event.detail > 0) {
-      return;
-    }
-
-    setMenuOpen((current) => !current);
-  };
-
   if (!hydrated) {
     return null;
   }
 
-  const rootStyle: CSSProperties | undefined = position
-    ? { left: position.x, top: position.y, right: "auto" }
-    : undefined;
-
   return (
     <>
-      <div
-        className={[styles.root, dragging ? styles.rootDragging : styles.rootSettling]
-          .filter(Boolean)
-          .join(" ")}
-        data-ds-audit-root
-        ref={rootRef}
-        style={rootStyle}
-      >
-        <div
-          className={styles.trigger}
-          onPointerCancel={handlePointerUp}
-          onPointerDown={handlePointerDown}
-          onPointerMove={handlePointerMove}
-          onPointerUp={handlePointerUp}
-          ref={triggerRef}
-        >
+      <div className={styles.root} data-ds-audit-root ref={rootRef}>
+        <div className={styles.trigger} ref={triggerRef}>
           <Button
             aria-expanded={menuOpen}
             aria-haspopup="true"
             aria-label="Dev menu"
-            onClick={handleTriggerClick}
+            onClick={() => setMenuOpen((current) => !current)}
             size="icon"
           >
             <SettingsIcon aria-hidden="true" strokeWidth={1.8} />
@@ -451,22 +294,51 @@ export function DesignSystemAudit() {
             onTransitionEnd={handleMenuTransitionEnd}
             role="menu"
           >
-            <div className={styles.row}>
-              <p className={styles.rowTitle}>DS identifier</p>
-              <button
-                aria-checked={enabled}
-                aria-label="Toggle DS identifier highlights"
-                className={[styles.switch, enabled ? styles.switchOn : ""].filter(Boolean).join(" ")}
-                onClick={() => setEnabled((current) => !current)}
-                role="switch"
-                type="button"
-              >
-                <span className={styles.switchThumb} />
-              </button>
+            <div className={styles.rows}>
+              <div className={styles.row}>
+                <p className={styles.rowTitle}>DS identifier</p>
+                <button
+                  aria-checked={enabled}
+                  aria-label="Toggle DS identifier highlights"
+                  className={[styles.switch, enabled ? styles.switchOn : ""].filter(Boolean).join(" ")}
+                  onClick={() => setEnabled((current) => !current)}
+                  role="switch"
+                  type="button"
+                >
+                  <span className={styles.switchThumb} />
+                </button>
+              </div>
+              <div className={styles.row}>
+                <p className={styles.rowTitle}>Grid</p>
+                <button
+                  aria-checked={gridEnabled}
+                  aria-label="Toggle layout grid overlay"
+                  className={[styles.switch, gridEnabled ? styles.switchOn : ""].filter(Boolean).join(" ")}
+                  onClick={() => setGridEnabled((current) => !current)}
+                  role="switch"
+                  type="button"
+                >
+                  <span className={styles.switchThumb} />
+                </button>
+              </div>
             </div>
           </div>
         ) : null}
       </div>
+
+      {gridEnabled ? (
+        <div aria-hidden="true" className={styles.gridOverlay}>
+          <div className={styles.gridBaseline} />
+          <div className={styles.gridColumns}>
+            <div className={styles.gridShell}>
+              <span className={styles.gridLabel}>Shell</span>
+              <div className={styles.gridText}>
+                <span className={styles.gridLabel}>Text</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : null}
 
       {enabled
         ? highlights.map((box, index) => (

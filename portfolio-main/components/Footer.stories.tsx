@@ -9,7 +9,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Site-wide footer with copyright, Hong Kong time, and the text theme toggle. Mounted once from the root layout."
+          "Site-wide footer with copyright and Hong Kong time. Mounted once from the root layout."
       }
     }
   }

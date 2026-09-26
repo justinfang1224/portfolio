@@ -5,7 +5,7 @@ alwaysApply: true
 
 # Design System Audit Tool (Dev Only)
 
-The DS highlighter (`DesignSystemAudit`, the **dev menu**, the **DS identifier** switch, `data-ds-component` markers, and `dsMarker`) is a **local testing tool**. It is not a product feature.
+The DS highlighter (`DesignSystemAudit`, the **dev menu**, the **DS identifier** switch, the **Grid** overlay, `data-ds-component` markers, and `dsMarker`) is a **local testing tool**. It is not a product feature.
 
 ## Never Ship To Production
 

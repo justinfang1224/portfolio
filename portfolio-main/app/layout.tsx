@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { DesignSystemAudit } from "@/components/dev/DesignSystemAudit";
+import { FloatingNav } from "@/components/FloatingNav";
 import { Footer } from "@/components/Footer";
 import { LandingSplash } from "@/components/LandingSplash";
 import { RouteFade } from "@/components/RouteFade";
@@ -44,6 +45,7 @@ export default function RootLayout({
       <body>
         <LandingSplash />
         <div className="portfolio-content-shell">
+          <FloatingNav />
           <SmoothScroll>
             <RouteFade>
               {children}

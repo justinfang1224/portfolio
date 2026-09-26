@@ -8,7 +8,8 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: "Primary portfolio navigation with a blurred pill container and active indicator."
+        component:
+          "Primary portfolio navigation using Bencho IconBar (morphing active pill) with design-system color tokens."
       }
     }
   }

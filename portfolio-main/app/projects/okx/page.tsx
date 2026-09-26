@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { FloatingNav } from "@/components/FloatingNav";
 import { MotionReveal } from "@/components/MotionReveal";
 import { ProjectCaseMedia, ProjectCaseMediaItem } from "@/components/projects/ProjectCaseMedia";
 import { ProjectHeroParallax } from "@/components/projects/ProjectHeroParallax";
@@ -48,7 +47,6 @@ function RichParagraph({
 export default function OkxProjectPage() {
   return (
     <>
-      <FloatingNav />
       <main className={styles.main}>
         <MotionReveal as="section" aria-label="OKX deposit experience hero" className={styles.hero}>
           <ProjectHeroParallax

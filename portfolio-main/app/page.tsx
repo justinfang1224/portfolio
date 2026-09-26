@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/Button";
-import { FloatingNav } from "@/components/FloatingNav";
 import { MotionReveal } from "@/components/MotionReveal";
 import { TermExplain } from "@/components/TermExplain";
 import { UpdatedAtTypewriter } from "@/components/UpdatedAtTypewriter";
@@ -56,7 +55,6 @@ export default function Home() {
 
   return (
     <>
-      <FloatingNav />
       <main className={styles.main}>
         <MotionReveal as="section" aria-labelledby="home-title" className={styles.hero}>
           <p className={styles.index}>{profile.sectionIndex}</p>
@@ -78,8 +76,7 @@ export default function Home() {
               I&apos;m a Product designer in the field of financial technology. In the past two
               years, I&apos;ve designed web3.0 trading experience for{" "}
               <CompanyLink company={profile.introCompany} />. Specifically building in the domain
-              of credit card, platform AI, and{" "}
-              <span className={styles.underlined}>prediction markets</span> in a highly
+              of credit card, platform AI, and prediction markets in a highly
               fast-paced environment.
             </p>
             <p>

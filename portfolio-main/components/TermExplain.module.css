@@ -24,32 +24,39 @@
 }
 
 .panel {
-  align-items: center;
   background: var(--color-background-primary);
   border: 1px dashed var(--color-border-primary);
   border-radius: var(--spacing-12);
   bottom: calc(100% + var(--term-explain-gap));
   box-sizing: border-box;
   color: var(--color-content-primary);
-  display: inline-flex;
+  display: block;
   font-family: var(--font-family-base);
   font-size: var(--typography-caption-font-size);
   font-weight: var(--typography-button-font-weight);
-  justify-content: center;
   left: 50%;
   line-height: var(--typography-caption-line-height);
+  max-width: calc(100vw - var(--spacing-24));
   opacity: 0;
-  padding: var(--spacing-4) var(--spacing-8);
+  overflow-wrap: anywhere;
+  padding: var(--spacing-8);
   pointer-events: none;
   position: absolute;
-  transform: translate3d(-50%, var(--term-explain-hidden-y), 0) scale(0.96);
+  text-align: center;
+  transform: translate3d(
+    calc(-50% + var(--term-explain-shift, 0px)),
+    var(--term-explain-hidden-y),
+    0
+  )
+    scale(0.96);
   transform-origin: center bottom;
   transition:
     opacity var(--term-explain-fade) ease,
     transform var(--term-explain-duration) var(--term-explain-ease),
     visibility 0s linear var(--term-explain-duration);
   visibility: hidden;
-  white-space: nowrap;
+  white-space: normal;
+  width: max-content;
   z-index: 5;
 }
 
@@ -58,7 +65,7 @@
 .root:focus-within .panel,
 :global(a:is(:hover, :focus-visible)) > .root > .panel {
   opacity: 1;
-  transform: translate3d(-50%, 0, 0) scale(1);
+  transform: translate3d(calc(-50% + var(--term-explain-shift, 0px)), 0, 0) scale(1);
   transition:
     opacity var(--term-explain-fade) ease,
     transform var(--term-explain-duration) var(--term-explain-ease),
@@ -80,7 +87,12 @@
   .root:hover .panel,
   :global(a:hover) > .root > .panel {
     opacity: 0;
-    transform: translate3d(-50%, var(--term-explain-hidden-y), 0) scale(0.96);
+    transform: translate3d(
+      calc(-50% + var(--term-explain-shift, 0px)),
+      var(--term-explain-hidden-y),
+      0
+    )
+      scale(0.96);
     transition:
       opacity var(--term-explain-fade) ease,
       transform var(--term-explain-duration) var(--term-explain-ease),
@@ -92,7 +104,7 @@
   .root:focus-within .panel,
   :global(a:focus-visible) > .root > .panel {
     opacity: 1;
-    transform: translate3d(-50%, 0, 0) scale(1);
+    transform: translate3d(calc(-50% + var(--term-explain-shift, 0px)), 0, 0) scale(1);
     transition:
       opacity var(--term-explain-fade) ease,
       transform var(--term-explain-duration) var(--term-explain-ease),
@@ -108,10 +120,10 @@
   .root:focus-within .panel,
   :global(a:is(:hover, :focus-visible)) > .root > .panel {
     transition: opacity 120ms ease, visibility 120ms;
-    transform: translate3d(-50%, 0, 0) scale(1);
+    transform: translate3d(calc(-50% + var(--term-explain-shift, 0px)), 0, 0) scale(1);
   }
 
   .panel {
-    transform: translate3d(-50%, 0, 0) scale(1);
+    transform: translate3d(calc(-50% + var(--term-explain-shift, 0px)), 0, 0) scale(1);
   }
 }

@@ -4,6 +4,8 @@ import {
   cloneElement,
   isValidElement,
   useId,
+  useLayoutEffect,
+  useRef,
   type ReactElement,
   type ReactNode
 } from "react";
@@ -29,6 +31,45 @@ export function TermExplain({
   explanation
 }: TermExplainProps) {
   const tooltipId = useId();
+  const rootRef = useRef<HTMLSpanElement>(null);
+
+  useLayoutEffect(() => {
+    const panel = rootRef.current?.querySelector<HTMLElement>("[role='tooltip']");
+
+    if (!panel) {
+      return;
+    }
+
+    const clampPanel = () => {
+      const root = panel.parentElement;
+
+      if (!root) {
+        return;
+      }
+
+      const margin = 12;
+      const viewWidth = document.documentElement.clientWidth;
+      const rootBounds = root.getBoundingClientRect();
+      const center = rootBounds.left + rootBounds.width / 2;
+      const width = panel.offsetWidth;
+      let left = center - width / 2;
+
+      if (left < margin) {
+        left = margin;
+      }
+
+      if (left + width > viewWidth - margin) {
+        left = Math.max(margin, viewWidth - margin - width);
+      }
+
+      panel.style.setProperty("--term-explain-shift", `${left - (center - width / 2)}px`);
+    };
+
+    clampPanel();
+    window.addEventListener("resize", clampPanel);
+
+    return () => window.removeEventListener("resize", clampPanel);
+  }, [explanation]);
 
   const content =
     asChild && isValidElement<DescribedChildProps>(children)
@@ -45,6 +86,7 @@ export function TermExplain({
 
   return (
     <span
+      ref={rootRef}
       aria-describedby={asChild ? undefined : tooltipId}
       className={[styles.root, asChild ? styles.asChild : "", className].filter(Boolean).join(" ")}
       tabIndex={asChild ? undefined : 0}
