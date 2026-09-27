@@ -192,8 +192,7 @@
   line-height: var(--typography-heading-2-line-height);
 }
 
-.metric span,
-.caption {
+.metric span {
   color: var(--color-content-tertiary);
   font-family: Inter, var(--font-family-base);
   font-size: var(--typography-body-medium-font-size);
@@ -239,13 +238,8 @@
 
 .section > .proseBlock + .proseBlock,
 .section > .proseBlock + .imageBlock,
-.section > .proseBlock + .imageGrid,
 .section > .imageBlock + .proseBlock,
-.section > .imageBlock + .imageBlock,
-.section > .imageBlock + .imageGrid,
-.section > .imageGrid + .proseBlock,
-.section > .imageGrid + .imageBlock,
-.section > .imageGrid + .imageGrid {
+.section > .imageBlock + .imageBlock {
   margin-top: 52px;
 }
 
@@ -283,98 +277,8 @@
   text-underline-offset: 3px;
 }
 
-.imageBlock,
-.imageGrid {
-  display: flex;
-  gap: 24px;
-  margin: 0;
-  width: 100%;
-}
-
 .imageBlock {
-  align-items: center;
-  flex-direction: column;
-}
-
-.imageGrid {
-  align-items: flex-start;
-}
-
-.imageItem {
-  align-items: center;
-  display: flex;
-  flex: 1 1 0;
-  flex-direction: column;
-  gap: 24px;
-  min-width: 0;
   width: 100%;
-}
-
-.imageFrame {
-  background: var(--color-surface-card-primary);
-  border: 1px solid var(--color-border-primary);
-  border-radius: 12px;
-  height: 361px;
-  overflow: hidden;
-  position: relative;
-  width: 100%;
-}
-
-.filterAnalysis {
-  height: 413px;
-}
-
-.portalAnalysis {
-  height: 661px;
-}
-
-.earlyDrafts {
-  height: 434px;
-}
-
-.flowchart {
-  height: 330px;
-}
-
-.userTesting {
-  border: 0;
-  border-radius: 12px;
-  height: 352px;
-}
-
-.filterStatusMap {
-  border: 1px solid var(--color-border-primary);
-  height: 446px;
-}
-
-.finalPrototype {
-  border: 1px solid var(--color-border-primary);
-  border-radius: 12px;
-  height: 395px;
-}
-
-.caseImage {
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  width: 100%;
-}
-
-.caseVideo {
-  display: block;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  width: 100%;
-}
-
-.flowchart .caseImage {
-  object-position: center top;
-}
-
-.caption {
-  margin: 0;
-  text-align: center;
 }
 
 .actions {
@@ -426,7 +330,6 @@
   }
 
   .metrics,
-  .imageGrid,
   .actions {
     align-items: flex-start;
     flex-direction: column;
@@ -434,42 +337,6 @@
 
   .metrics {
     gap: 24px;
-  }
-
-  .imageFrame {
-    height: auto;
-  }
-
-  .standard {
-    aspect-ratio: 632 / 361;
-  }
-
-  .filterAnalysis {
-    aspect-ratio: 632 / 413;
-  }
-
-  .portalAnalysis {
-    aspect-ratio: 632 / 661;
-  }
-
-  .earlyDrafts {
-    aspect-ratio: 632 / 434;
-  }
-
-  .flowchart {
-    aspect-ratio: 632 / 330;
-  }
-
-  .userTesting {
-    aspect-ratio: 632 / 352;
-  }
-
-  .filterStatusMap {
-    aspect-ratio: 632 / 446;
-  }
-
-  .finalPrototype {
-    aspect-ratio: 632 / 395;
   }
 }
 

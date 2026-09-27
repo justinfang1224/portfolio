@@ -1,0 +1,206 @@
+.root {
+  position: fixed;
+  right: 16px;
+  top: 16px;
+  z-index: 10000;
+}
+
+.trigger {
+  display: inline-flex;
+}
+
+.menu {
+  background: var(--color-background-contrast);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--spacing-16);
+  min-width: 220px;
+  opacity: 0;
+  padding: var(--spacing-12) var(--spacing-16);
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  transform: scale(0.96);
+  transform-origin: top right;
+  transition:
+    opacity 180ms var(--motion-fade-ease),
+    transform 180ms var(--motion-fade-ease);
+}
+
+.menuShown {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+
+.menuAbove {
+  bottom: calc(100% + 8px);
+  top: auto;
+  transform-origin: bottom right;
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-12);
+}
+
+.row {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacing-16);
+}
+
+.rowTitle {
+  color: var(--color-content-primary);
+  font-family: var(--font-family-base);
+  font-size: var(--typography-body-small-font-size);
+  font-weight: var(--typography-button-font-weight);
+  line-height: var(--typography-body-small-line-height);
+  margin: 0;
+}
+
+.switch {
+  appearance: none;
+  background: var(--color-background-secondary);
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  flex: 0 0 auto;
+  height: var(--spacing-24);
+  padding: 3px;
+  position: relative;
+  width: 40px;
+}
+
+.switchOn {
+  background: var(--color-status-positive);
+  border-color: var(--color-status-positive);
+}
+
+.switch:focus-visible {
+  outline: 2px solid var(--color-content-primary);
+  outline-offset: 2px;
+}
+
+.switchThumb {
+  background: var(--color-background-contrast);
+  border-radius: 999px;
+  display: block;
+  height: 18px;
+  transform: translateX(0);
+  transition: transform 150ms var(--motion-fade-ease);
+  width: 18px;
+}
+
+.switchOn .switchThumb {
+  transform: translateX(16px);
+}
+
+.gridOverlay {
+  inset: 0;
+  pointer-events: none;
+  position: fixed;
+  z-index: 9997;
+}
+
+.gridBaseline {
+  background-image:
+    repeating-linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-content-primary) 10%, transparent) 0,
+      color-mix(in srgb, var(--color-content-primary) 10%, transparent) 1px,
+      transparent 1px,
+      transparent var(--spacing-4)
+    ),
+    repeating-linear-gradient(
+      to right,
+      color-mix(in srgb, var(--color-content-primary) 10%, transparent) 0,
+      color-mix(in srgb, var(--color-content-primary) 10%, transparent) 1px,
+      transparent 1px,
+      transparent var(--spacing-4)
+    );
+  inset: 0;
+  position: absolute;
+}
+
+.gridColumns {
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  position: absolute;
+}
+
+.gridShell {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-status-warning) 72%, transparent);
+  height: 100%;
+  position: relative;
+  width: var(--portfolio-shell);
+}
+
+.gridText {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-content-primary) 32%, transparent);
+  height: 100%;
+  left: 50%;
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  width: var(--portfolio-text-column);
+}
+
+.gridLabel {
+  color: var(--color-content-primary);
+  font-family: var(--font-family-base);
+  font-size: var(--typography-caption-font-size);
+  font-weight: var(--typography-button-font-weight);
+  left: var(--spacing-4);
+  letter-spacing: 0.01em;
+  line-height: var(--typography-caption-line-height);
+  position: absolute;
+  top: var(--spacing-4);
+}
+
+.gridText .gridLabel {
+  color: var(--color-content-secondary);
+}
+
+.highlight {
+  border: 2px solid var(--color-status-positive);
+  box-sizing: border-box;
+  pointer-events: none;
+  position: fixed;
+  z-index: 9998;
+}
+
+.label {
+  background: var(--color-status-positive);
+  color: var(--color-content-primary);
+  font-family: var(--font-family-base);
+  font-size: var(--typography-caption-font-size);
+  font-weight: var(--typography-button-font-weight);
+  left: -2px;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  padding: 2px 6px;
+  pointer-events: none;
+  position: absolute;
+  top: -2px;
+  transform: translateY(-100%);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .switchThumb,
+  .menu {
+    transition: none;
+  }
+
+  .menu {
+    transform: none;
+  }
+
+  .menuShown {
+    transform: none;
+  }
+}

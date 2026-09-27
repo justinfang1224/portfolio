@@ -1,4 +1,5 @@
 import styles from "./Tag.module.css";
+import { dsMarker } from "@/lib/ds-marker";
 import type { ReactNode } from "react";
 
 type TagProps = {
@@ -11,5 +12,9 @@ export function Tag({ children, variant = "default" }: TagProps) {
     .filter(Boolean)
     .join(" ");
 
-  return <span className={className}>{children}</span>;
+  return (
+    <span className={className} {...dsMarker("Tag")}>
+      {children}
+    </span>
+  );
 }

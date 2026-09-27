@@ -1,5 +1,7 @@
 import { Tag } from "@/components/Tag";
 import { ArrowUpRightIcon } from "@/components/icons";
+import { dsMarker } from "@/lib/ds-marker";
+import { CardTilt } from "./CardTilt";
 import styles from "./AboutFavorites.module.css";
 
 type FavoriteTravelCardProps = {
@@ -20,7 +22,11 @@ export function FavoriteTravelCard({
   title
 }: FavoriteTravelCardProps) {
   return (
-    <article className={`${styles.card} ${styles.smallCard} ${styles.travelCard}`}>
+    <CardTilt>
+      <article
+        className={`${styles.card} ${styles.smallCard} ${styles.travelCard}`}
+        {...dsMarker("FavoriteTravelCard")}
+      >
       <Tag>{label}</Tag>
       <a
         aria-label={`Open ${title} in Maps`}
@@ -44,6 +50,7 @@ export function FavoriteTravelCard({
       >
         <ArrowUpRightIcon aria-hidden="true" className={styles.arrowIcon} />
       </a>
-    </article>
+      </article>
+    </CardTilt>
   );
 }

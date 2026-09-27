@@ -15,17 +15,20 @@
   min-height: 34px;
   padding: 8px 16px;
   text-decoration: none;
-  transition: background-color 160ms ease, transform 160ms ease;
+  transition:
+    background-color 150ms var(--motion-fade-ease),
+    transform 150ms var(--motion-fade-ease);
   white-space: nowrap;
 }
 
 .button:hover {
   background: var(--color-button-secondary-hover);
+  transform: scale(1.02);
 }
 
 .button:active {
   background: var(--color-button-secondary-pressed);
-  transform: translateY(1px);
+  transform: scale(0.98);
 }
 
 .button:focus-visible {
@@ -38,6 +41,19 @@
   line-height: var(--typography-caption-line-height);
   min-height: var(--spacing-24);
   padding: var(--spacing-4) var(--spacing-8);
+}
+
+.icon {
+  height: 34px;
+  min-height: 34px;
+  padding: 0;
+  width: 34px;
+}
+
+.icon :global(svg) {
+  flex: 0 0 auto;
+  height: 20px;
+  width: 20px;
 }
 
 .text {
@@ -65,4 +81,15 @@
   line-height: var(--typography-caption-line-height);
   min-height: 0;
   padding: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: none;
+  }
+
+  .button:hover,
+  .button:active {
+    transform: none;
+  }
 }

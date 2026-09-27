@@ -1,10 +1,18 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { type CSSProperties, type MouseEvent, useEffect, useState } from "react";
+import { type MouseEvent, useEffect, useState } from "react";
 import { aboutCollageImages } from "@/content/about";
-import { AboutIcon, HomeIcon, WorkIcon, WritingIcon } from "./icons";
+import {
+  applyColorSchemeWithTransition,
+  COLOR_SCHEME_EVENT,
+  readStoredColorScheme,
+  resolveColorScheme,
+  type ResolvedColorScheme
+} from "@/lib/color-scheme";
+import { dsMarker } from "@/lib/ds-marker";
+import { IconBar } from "./IconBar";
+import { AboutIcon, HomeIcon, MoonIcon, SunIcon, WorkIcon, WritingIcon } from "./icons";
 import styles from "./FloatingNav.module.css";
 
 const navItems = [
@@ -61,13 +69,17 @@ export function FloatingNav() {
   const [activeItem, setActiveItem] = useState<NavItemId>(() =>
     getActiveItemFromLocation(pathname)
   );
-  const activeIndex = Math.max(
-    navItems.findIndex(({ id }) => id === activeItem),
-    0
-  );
+  const [colorScheme, setColorScheme] = useState<ResolvedColorScheme>(() => {
+    if (typeof window === "undefined") {
+      return "light";
+    }
 
-  const handleNavClick = (event: MouseEvent<HTMLAnchorElement>, id: NavItemId) => {
-    setActiveItem(id);
+    return resolveColorScheme(readStoredColorScheme());
+  });
+  const nextScheme: ResolvedColorScheme = colorScheme === "dark" ? "light" : "dark";
+
+  const handleNavClick = (event: MouseEvent<HTMLAnchorElement>, id: string) => {
+    setActiveItem(id as NavItemId);
 
     if (id !== "home" || pathname !== "/") {
       return;
@@ -100,6 +112,19 @@ export function FloatingNav() {
   }, [pathname]);
 
   useEffect(() => {
+    const syncColorScheme = () => {
+      setColorScheme(resolveColorScheme(readStoredColorScheme()));
+    };
+
+    syncColorScheme();
+    window.addEventListener(COLOR_SCHEME_EVENT, syncColorScheme);
+
+    return () => {
+      window.removeEventListener(COLOR_SCHEME_EVENT, syncColorScheme);
+    };
+  }, []);
+
+  useEffect(() => {
     if (pathname === "/about") {
       return;
     }
@@ -123,32 +148,57 @@ export function FloatingNav() {
   }, [pathname]);
 
   return (
-    <header className={styles.header}>
-      <nav
+    <header className={styles.header} {...dsMarker("FloatingNav")}>
+      <IconBar
+        activeId={activeItem}
         aria-label="Primary navigation"
-        className={styles.nav}
-        style={{ "--active-index": activeIndex } as CSSProperties}
-      >
-        <span aria-hidden="true" className={styles.activeIndicator} />
-        {navItems.map(({ id, label, href, icon: Icon }) => {
-          const isActive = activeItem === id;
-
-          return (
-            <Link
-              aria-current={isActive ? "page" : undefined}
-              aria-label={label}
-              className={isActive ? styles.activeItem : styles.item}
-              href={href}
-              key={id}
-              onClick={(event) => handleNavClick(event, id)}
-              onFocus={id === "about" ? preloadAboutHeroImages : undefined}
-              onPointerEnter={id === "about" ? preloadAboutHeroImages : undefined}
-            >
-              <Icon aria-hidden="true" className={styles.icon} strokeWidth={1.8} />
-            </Link>
-          );
-        })}
-      </nav>
+        axis="row"
+        bounce={40}
+        corner={26}
+        dilate={60}
+        items={navItems}
+        onItemClick={handleNavClick}
+        onItemFocus={(id) => {
+          if (id === "about") {
+            preloadAboutHeroImages();
+          }
+        }}
+        onItemPointerEnter={(id) => {
+          if (id === "about") {
+            preloadAboutHeroImages();
+          }
+        }}
+        speed={50}
+        trailing={
+          <button
+            aria-label={nextScheme === "dark" ? "Switch to dark mode" : "Switch to light mode"}
+            className={styles.themeButton}
+            data-state={colorScheme === "dark" ? "sun" : "moon"}
+            onClick={() => {
+              applyColorSchemeWithTransition(nextScheme);
+              setColorScheme(nextScheme);
+            }}
+            type="button"
+          >
+            <MoonIcon
+              aria-hidden="true"
+              className={styles.themeIcon}
+              data-icon="moon"
+              height={20}
+              strokeWidth={2}
+              width={20}
+            />
+            <SunIcon
+              aria-hidden="true"
+              className={styles.themeIcon}
+              data-icon="sun"
+              height={20}
+              strokeWidth={2}
+              width={20}
+            />
+          </button>
+        }
+      />
     </header>
   );
 }

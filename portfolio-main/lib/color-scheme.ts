@@ -32,6 +32,8 @@ export const THEME_TRANSITION_MS = 420;
 
 let themeTransitionTimer: number | undefined;
 
+export const COLOR_SCHEME_EVENT = "portfolio:color-scheme";
+
 export function applyColorScheme(preference: ColorSchemePreference) {
   const root = document.documentElement;
   root.setAttribute("data-theme-preference", preference);
@@ -47,6 +49,8 @@ export function applyColorScheme(preference: ColorSchemePreference) {
   } catch {
     // Private browsing can block storage. The attribute still applies for this visit.
   }
+
+  window.dispatchEvent(new CustomEvent(COLOR_SCHEME_EVENT, { detail: preference }));
 }
 
 export function applyColorSchemeWithTransition(preference: ColorSchemePreference) {

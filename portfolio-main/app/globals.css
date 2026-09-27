@@ -1,5 +1,6 @@
 @import "lenis/dist/lenis.css";
 @import "./styles/generated/tokens.css";
+@import "./styles/transitions-card-tilt.css";
 
 :root {
   --portfolio-page-background: var(--color-background-contrast);
@@ -22,7 +23,16 @@
 html {
   background: var(--portfolio-page-background);
   color: var(--color-content-primary);
+  overflow-anchor: none;
   scroll-behavior: auto;
+}
+
+html:not([data-landing-splash="entered"]),
+html:not([data-landing-splash="entered"]) body {
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: none;
 }
 
 body {
@@ -52,11 +62,12 @@ html[data-landing-splash="entered"] .portfolio-content-shell {
 
 .portfolio-route-fade {
   opacity: 0;
-  transition: opacity 300ms var(--motion-fade-ease);
+  transition: none;
 }
 
 .portfolio-route-fade--visible {
   opacity: 1;
+  transition: opacity 300ms var(--motion-fade-ease);
 }
 
 img,
@@ -136,8 +147,8 @@ a {
     transition: none;
   }
 
-  .portfolio-route-fade {
-    opacity: 1;
+  .portfolio-route-fade,
+  .portfolio-route-fade--visible {
     transition: none;
   }
 }
@@ -147,16 +158,18 @@ a {
     --portfolio-shell: calc(100vw - 64px);
     --portfolio-text-column: min(796px, var(--portfolio-shell));
   }
+
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: clip;
+  }
 }
 
 @media (max-width: 767px) {
   :root {
     --portfolio-shell: calc(100vw - 48px);
     --portfolio-text-column: var(--portfolio-shell);
-  }
-
-  html {
-    overflow-x: clip;
   }
 
   body {

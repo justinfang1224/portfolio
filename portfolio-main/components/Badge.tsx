@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { dsMarker } from "@/lib/ds-marker";
 import styles from "./Badge.module.css";
 
 type BadgeSize = "s" | "l";
@@ -28,6 +29,7 @@ export function Badge({ children, className, size = "s", status = "neutral" }: B
       className={[styles.badge, sizeClass[size], statusClass[status], className]
         .filter(Boolean)
         .join(" ")}
+      {...dsMarker("Badge")}
     >
       {children}
     </span>

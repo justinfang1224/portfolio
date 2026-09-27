@@ -1,6 +1,7 @@
 import { Tag } from "@/components/Tag";
 import { ArrowUpRightIcon } from "@/components/icons";
 import { aboutFavorites } from "@/content/about";
+import { CardTilt } from "./CardTilt";
 import { FavoriteAppsCarousel } from "./FavoriteAppsCarousel";
 import { FavoriteTravelCard } from "./FavoriteTravelCard";
 import styles from "./AboutFavorites.module.css";
@@ -23,7 +24,8 @@ export function AboutFavorites() {
   return (
     <div className={styles.favorites}>
       <div className={styles.topRow}>
-        <article className={`${styles.card} ${styles.largeCard} ${styles.readingCard}`}>
+        <CardTilt>
+          <article className={`${styles.card} ${styles.largeCard} ${styles.readingCard}`}>
           <Tag>{aboutFavorites.reading.label}</Tag>
           <a
             aria-label="Open reading favorite"
@@ -38,7 +40,9 @@ export function AboutFavorites() {
             <ArrowLink href={aboutFavorites.reading.href} label="Open reading favorite" />
           </div>
         </article>
+        </CardTilt>
 
+        <CardTilt>
         <article className={`${styles.card} ${styles.largeCard} ${styles.movieCard}`}>
           <Tag>{aboutFavorites.movies.label}</Tag>
           <ol className={styles.movieList}>
@@ -63,11 +67,13 @@ export function AboutFavorites() {
             <ArrowLink href={aboutFavorites.movies.href} label="Open movie ratings" />
           </div>
         </article>
+        </CardTilt>
       </div>
 
       <div className={styles.bottomRow}>
         <FavoriteTravelCard {...aboutFavorites.travel} />
 
+        <CardTilt>
         <article className={`${styles.card} ${styles.smallCard} ${styles.musicCard}`}>
           <Tag>{aboutFavorites.music.label}</Tag>
           <div className={styles.musicBody}>
@@ -78,11 +84,14 @@ export function AboutFavorites() {
             <ArrowLink href={aboutFavorites.music.href} label="Open music favorite on Spotify" />
           </div>
         </article>
+        </CardTilt>
 
+        <CardTilt>
         <article className={`${styles.card} ${styles.smallCard} ${styles.appsCard}`}>
           <Tag>{aboutFavorites.apps.label}</Tag>
           <FavoriteAppsCarousel items={aboutFavorites.apps.items} />
         </article>
+        </CardTilt>
       </div>
     </div>
   );

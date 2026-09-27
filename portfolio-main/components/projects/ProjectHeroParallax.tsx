@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { dsMarker } from "@/lib/ds-marker";
 
 type ProjectHeroParallaxProps = {
   alt: string;
@@ -68,7 +69,7 @@ export function ProjectHeroParallax({
   }, []);
 
   return (
-    <div className={className} ref={frameRef}>
+    <div className={className} ref={frameRef} {...dsMarker("ProjectHeroParallax")}>
       <img
         alt={alt}
         className={imageClassName}

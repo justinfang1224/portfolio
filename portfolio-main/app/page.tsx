@@ -1,8 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/Button";
-import { FloatingNav } from "@/components/FloatingNav";
-import { Footer } from "@/components/Footer";
 import { MotionReveal } from "@/components/MotionReveal";
 import { TermExplain } from "@/components/TermExplain";
 import { UpdatedAtTypewriter } from "@/components/UpdatedAtTypewriter";
@@ -57,16 +55,15 @@ export default function Home() {
 
   return (
     <>
-      <FloatingNav />
       <main className={styles.main}>
         <MotionReveal as="section" aria-labelledby="home-title" className={styles.hero}>
           <p className={styles.index}>{profile.sectionIndex}</p>
           <div className={styles.identityRow}>
             <ProfileAvatarToggle />
             <div className={styles.identityCopy}>
-              <h1 className={styles.name} id="home-title">
+              <h2 className={styles.name} id="home-title">
                 {profile.name}
-              </h1>
+              </h2>
               <p>Senior Product Designer</p>
             </div>
           </div>
@@ -79,8 +76,7 @@ export default function Home() {
               I&apos;m a Product designer in the field of financial technology. In the past two
               years, I&apos;ve designed web3.0 trading experience for{" "}
               <CompanyLink company={profile.introCompany} />. Specifically building in the domain
-              of credit card, platform AI, and{" "}
-              <span className={styles.underlined}>prediction markets</span> in a highly
+              of credit card, platform AI, and prediction markets in a highly
               fast-paced environment.
             </p>
             <p>
@@ -96,7 +92,7 @@ export default function Home() {
             <p>
               I consider myself a designer at heart and enjoy building products with taste. Very
               recently, I start shipping things myself with the assistance of code & AI, including
-              this site, you are looking at <span className={styles.version}>v7.2.2</span>.
+              this site, you are looking at <span className={styles.version}>v7.3.0</span>.
             </p>
           </div>
         </MotionReveal>
@@ -134,7 +130,6 @@ export default function Home() {
           <Button href="/writings">View all →</Button>
         </MotionReveal>
       </main>
-      <Footer />
     </>
   );
 }

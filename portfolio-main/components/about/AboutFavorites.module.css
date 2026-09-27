@@ -12,6 +12,32 @@
   width: 100%;
 }
 
+.topRow > :global(.t-tilt) {
+  display: flex;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.bottomRow > :global(.t-tilt):has(.travelCard) {
+  display: flex;
+  flex: 0 0 304px;
+}
+
+.bottomRow > :global(.t-tilt):has(.musicCard) {
+  display: flex;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.bottomRow > :global(.t-tilt):has(.appsCard) {
+  display: flex;
+  flex: 0 0 140px;
+}
+
+:global(.t-tilt) > .card {
+  width: 100%;
+}
+
 .card {
   background: var(--color-background-contrast);
   border: 1px solid var(--color-border-primary);
@@ -41,6 +67,7 @@
 
 .readingCard {
   align-items: center;
+  container-type: size;
 }
 
 .readingCard > span {
@@ -50,13 +77,15 @@
 .readingImageFrame {
   color: inherit;
   display: block;
-  height: 238px;
+  flex: 0 0 auto;
+  height: auto;
+  max-width: 100%;
   overflow: hidden;
   position: relative;
   text-decoration: none;
   transform: scale(1);
   transition: transform 180ms ease;
-  width: 185px;
+  width: auto;
 }
 
 .readingImageFrame:hover,
@@ -71,12 +100,14 @@
 }
 
 .readingImageFrame img {
-  height: 100%;
-  inset: 0;
-  max-width: none;
+  display: block;
+  height: auto;
+  inset: auto;
+  max-height: min(238px, 74cqh);
+  max-width: min(100%, 52cqw);
   object-fit: contain;
-  position: absolute;
-  width: 100%;
+  position: static;
+  width: auto;
 }
 
 .cardAction {
@@ -400,6 +431,13 @@
     flex-direction: column;
   }
 
+  .topRow > :global(.t-tilt),
+  .bottomRow > :global(.t-tilt),
+  .bottomRow > :global(.t-tilt):has(.travelCard) {
+    flex: 0 1 auto;
+    width: 100%;
+  }
+
   .largeCard,
   .smallCard,
   .travelCard,
@@ -417,20 +455,7 @@
   }
 
   .travelCard {
-    gap: var(--spacing-36);
-    height: auto;
-    justify-content: flex-start;
     min-height: auto;
-  }
-
-  .travelLink {
-    bottom: auto;
-    position: static;
-    width: calc(100% - 64px);
-  }
-
-  .readingImageFrame {
-    width: 180px;
   }
 
   .movieItem {

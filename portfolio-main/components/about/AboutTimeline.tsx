@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { dsMarker } from "@/lib/ds-marker";
 import styles from "./AboutTimeline.module.css";
 
 type TimelineEntry = {
@@ -43,7 +44,7 @@ export function AboutTimeline({
   };
 
   return (
-    <div className={styles.list}>
+    <div className={styles.list} {...dsMarker("List column")}>
       {entries.map((entry) => {
         const entryId = `${entry.company}-${entry.date}`.toLowerCase().replace(/[^a-z0-9]+/g, "-");
         const detailsId = `${entryId}-details`;

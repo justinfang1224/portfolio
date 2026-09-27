@@ -1,3 +1,7 @@
+.routeFallback {
+  min-height: 100svh;
+}
+
 .main {
   align-items: flex-start;
   display: flex;

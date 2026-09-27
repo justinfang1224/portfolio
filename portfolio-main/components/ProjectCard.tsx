@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { dsMarker } from "@/lib/ds-marker";
 import { Badge } from "./Badge";
 import { MotionReveal } from "./MotionReveal";
 import { Tag } from "./Tag";
@@ -41,7 +42,7 @@ export function ProjectCard({ delay = 0, project }: ProjectCardProps) {
   );
 
   return (
-    <MotionReveal as="article" className={styles.card} delay={delay}>
+    <MotionReveal as="article" className={styles.card} delay={delay} {...dsMarker("ProjectCard")}>
       {project.detailHref ? (
         <Link
           aria-label={`Open case study: ${project.title}`}

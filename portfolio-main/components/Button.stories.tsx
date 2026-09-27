@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { SettingsIcon } from "./icons";
 import { Button } from "./Button";
 
 const meta = {
@@ -12,7 +13,7 @@ const meta = {
   argTypes: {
     size: {
       control: "inline-radio",
-      options: ["m", "s"]
+      options: ["m", "s", "icon"]
     },
     variant: {
       control: "inline-radio",
@@ -22,7 +23,8 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: "Secondary pill and text actions in medium and small sizes."
+        component:
+          "Secondary pill and text actions in medium, small, and icon sizes. Pill buttons scale to 1.02 on hover and 0.98 on press. Text buttons only change color."
       }
     }
   }
@@ -48,6 +50,14 @@ export const Sizes: Story = {
       <Button size="s">Placeholder</Button>
     </div>
   )
+};
+
+export const Icon: Story = {
+  args: {
+    "aria-label": "Settings",
+    children: <SettingsIcon aria-hidden="true" strokeWidth={1.8} />,
+    size: "icon"
+  }
 };
 
 export const Text: Story = {

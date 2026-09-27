@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { dsMarker } from "@/lib/ds-marker";
 import styles from "./ProjectSectionRail.module.css";
 
 type ProjectSectionRailProps = {
@@ -76,6 +77,7 @@ export function ProjectSectionRail({ items }: ProjectSectionRailProps) {
       aria-hidden={!isVisible}
       aria-label="Project sections"
       className={`${styles.rail} ${isVisible ? styles.railVisible : ""}`}
+      {...dsMarker("ProjectSectionRail")}
     >
       <nav className={styles.nav}>
         {items.map((item) => {

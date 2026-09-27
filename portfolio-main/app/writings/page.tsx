@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { FloatingNav } from "@/components/FloatingNav";
-import { Footer } from "@/components/Footer";
 import { ArrowUpRightIcon } from "@/components/icons";
 import { MotionReveal } from "@/components/MotionReveal";
 import { writingsPage } from "@/content/portfolio";
@@ -15,7 +13,6 @@ export const metadata: Metadata = {
 export default function WritingsPage() {
   return (
     <>
-      <FloatingNav />
       <main className={styles.main}>
         <MotionReveal as="section" aria-labelledby="writings-page-title" className={styles.hero}>
           <p className={styles.index}>{writingsPage.index}</p>
@@ -53,7 +50,6 @@ export default function WritingsPage() {
         </section>
 
       </main>
-      <Footer />
     </>
   );
 }

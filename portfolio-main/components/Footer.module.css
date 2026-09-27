@@ -27,18 +27,14 @@
   white-space: pre;
 }
 
-.meta {
-  align-items: center;
-  display: flex;
-  gap: var(--spacing-8);
-  white-space: pre;
-}
-
 .location {
   color: var(--color-content-tertiary);
   font-size: inherit;
   font-weight: inherit;
   line-height: inherit;
+  margin-left: auto;
+  text-align: right;
+  white-space: pre;
 }
 
 .time {
@@ -64,11 +60,14 @@
   }
 
   .footer {
+    align-items: flex-start;
     flex-direction: column;
     gap: var(--spacing-8);
   }
 
   .location {
+    margin-left: 0;
+    text-align: left;
     white-space: pre-wrap;
   }
 }
