@@ -271,7 +271,7 @@ export function DesignSystemAudit() {
         <div className={styles.trigger} ref={triggerRef}>
           <Button
             aria-expanded={menuOpen}
-            aria-haspopup="true"
+            aria-haspopup="menu"
             aria-label="Dev menu"
             onClick={() => setMenuOpen((current) => !current)}
             size="icon"
