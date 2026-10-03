@@ -8,8 +8,7 @@
   width: var(--portfolio-text-column);
 }
 
-.hero,
-.introSection,
+.intro,
 .workSection,
 .writings {
   align-items: flex-start;
@@ -18,8 +17,15 @@
   width: 100%;
 }
 
-.hero {
+.intro {
+  gap: var(--spacing-36);
+}
+
+.identity {
+  display: flex;
+  flex-direction: column;
   gap: var(--spacing-24);
+  width: 100%;
 }
 
 .index {
@@ -29,46 +35,6 @@
   font-weight: var(--typography-caption-font-weight);
   line-height: var(--typography-caption-line-height);
   margin: 0;
-}
-
-.identityRow {
-  align-items: center;
-  display: flex;
-  gap: var(--spacing-24);
-}
-
-.avatarButton {
-  appearance: none;
-  background: transparent;
-  border: 0;
-  border-radius: 50%;
-  cursor: pointer;
-  display: block;
-  flex: 0 0 auto;
-  height: 64px;
-  padding: 0;
-  transition: transform 160ms ease;
-  width: 64px;
-}
-
-.avatarButton:hover {
-  transform: scale(1.05);
-}
-
-.avatarButton:active {
-  transform: scale(0.96);
-}
-
-.avatarButton:focus-visible {
-  outline: 2px solid var(--color-content-primary);
-  outline-offset: 4px;
-}
-
-.avatar {
-  border-radius: 50%;
-  display: block;
-  height: 64px;
-  width: 64px;
 }
 
 .identityCopy {
@@ -93,36 +59,30 @@
   line-height: var(--typography-heading-2-line-height);
 }
 
-.identityCopy p {
+.identityCopy p,
+.role {
   color: var(--color-content-secondary);
   font-size: var(--typography-body-medium-font-size);
   font-weight: var(--typography-body-medium-font-weight);
   line-height: var(--typography-body-medium-line-height);
 }
 
-.introSection {
-  gap: var(--spacing-24);
-}
-
-.updated,
-.workEyebrow {
-  font-family: var(--font-family-base);
+.role {
   margin: 0;
 }
 
-.updated {
-  color: var(--color-content-tertiary);
-  font-size: var(--typography-body-large-font-size);
-  font-weight: var(--typography-body-large-font-weight);
-  line-height: var(--typography-body-large-line-height);
+.roleSeparator {
+  white-space: pre;
 }
 
-.prose {
+.prose,
+.closing {
   color: var(--color-content-primary);
   font-family: var(--font-family-base);
   font-size: var(--typography-body-large-font-size);
   font-weight: var(--typography-body-large-font-weight);
   line-height: var(--typography-body-large-line-height);
+  margin: 0;
   width: 100%;
 }
 
@@ -131,7 +91,13 @@
 }
 
 .prose p + p {
-  margin-top: var(--spacing-24);
+  margin-top: var(--typography-body-large-line-height);
+}
+
+.introActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-12);
 }
 
 .prose a,
@@ -171,13 +137,6 @@
 
 .workSection {
   gap: var(--spacing-24);
-}
-
-.workEyebrow {
-  color: var(--color-content-secondary);
-  font-size: var(--typography-body-large-font-size);
-  font-weight: var(--typography-body-large-font-weight);
-  line-height: var(--typography-body-large-line-height);
 }
 
 .featuredCard {
@@ -482,12 +441,6 @@
     width: var(--portfolio-text-column);
   }
 
-  .identityRow {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: var(--spacing-16);
-  }
-
   .featuredCard {
     aspect-ratio: 796 / 412;
     border-radius: var(--spacing-16);
@@ -501,7 +454,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .avatarButton,
   .featuredImage,
   .featuredSlide,
   .slideIndicator button,
@@ -533,11 +485,6 @@
 
   .writingLink:hover,
   .writingLink:hover .writingArrow {
-    transform: none;
-  }
-
-  .avatarButton:hover,
-  .avatarButton:active {
     transform: none;
   }
 }

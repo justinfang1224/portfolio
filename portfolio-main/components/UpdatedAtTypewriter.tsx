@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import styles from "./HeroIntro.module.css";
 
 type UpdatedAtTypewriterProps = {
+  inline?: boolean;
   value: string;
 };
 
@@ -60,7 +61,7 @@ function splitLeadingEmoji(value: string) {
   };
 }
 
-export function UpdatedAtTypewriter({ value }: UpdatedAtTypewriterProps) {
+export function UpdatedAtTypewriter({ inline = false, value }: UpdatedAtTypewriterProps) {
   const { dateText, emoji } = useMemo(() => splitLeadingEmoji(value), [value]);
   const [shouldStartTyping, setShouldStartTyping] = useState(false);
   const [visibleLength, setVisibleLength] = useState(0);
@@ -124,7 +125,10 @@ export function UpdatedAtTypewriter({ value }: UpdatedAtTypewriterProps) {
   const isTyping = visibleLength < dateText.length;
 
   return (
-    <p aria-label={value} className={styles.updated}>
+    <span
+      aria-label={value}
+      className={[styles.updated, inline ? styles.inline : undefined].filter(Boolean).join(" ")}
+    >
       {emoji ? (
         <span aria-hidden="true" className={styles.updatedEmoji}>
           {emoji}
@@ -137,6 +141,6 @@ export function UpdatedAtTypewriter({ value }: UpdatedAtTypewriterProps) {
         aria-hidden="true"
         className={`${styles.typeCursor} ${isTyping ? styles.typeCursorActive : ""}`}
       />
-    </p>
+    </span>
   );
 }

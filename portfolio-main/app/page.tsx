@@ -9,7 +9,6 @@ import { profile, writings } from "@/content/portfolio";
 import { getLastUpdatedLabel } from "@/lib/get-last-updated";
 import { HomeFeaturedCarousel } from "./HomeFeaturedCarousel";
 import styles from "./page.module.css";
-import { ProfileAvatarToggle } from "./ProfileAvatarToggle";
 
 function CompanyLink({
   company
@@ -56,28 +55,29 @@ export default function Home() {
   return (
     <>
       <main className={styles.main}>
-        <MotionReveal as="section" aria-labelledby="home-title" className={styles.hero}>
-          <p className={styles.index}>{profile.sectionIndex}</p>
-          <div className={styles.identityRow}>
-            <ProfileAvatarToggle />
+        <MotionReveal as="section" aria-labelledby="home-title" className={styles.intro}>
+          <div className={styles.identity}>
+            <p className={styles.index}>{profile.sectionIndex}</p>
             <div className={styles.identityCopy}>
               <h2 className={styles.name} id="home-title">
                 {profile.name}
               </h2>
-              <p>Senior Product Designer</p>
+              <p className={styles.role}>
+                Senior Product Designer
+                <span aria-hidden="true" className={styles.roleSeparator}>
+                  {"  •  "}
+                </span>
+                <UpdatedAtTypewriter inline value={getLastUpdatedLabel()} />
+              </p>
             </div>
           </div>
-        </MotionReveal>
-
-        <MotionReveal as="section" aria-label="Introduction" className={styles.introSection}>
-          <UpdatedAtTypewriter value={getLastUpdatedLabel()} />
           <div className={styles.prose}>
             <p>
               I&apos;m a Product designer in the field of financial technology. In the past two
               years, I&apos;ve designed web3.0 trading experience for{" "}
               <CompanyLink company={profile.introCompany} />. Specifically building in the domain
-              of credit card, platform AI, and prediction markets in a highly
-              fast-paced environment.
+              of Credit card, Platform AI, and prediction markets in a highly fast-paced
+              environment.
             </p>
             <p>
               Before that I was a designer (at){" "}
@@ -89,20 +89,20 @@ export default function Home() {
               ))}
               .
             </p>
-            <p>
-              I consider myself a designer at heart and enjoy building products with taste. Very
-              recently, I start shipping things myself with the assistance of code & AI, including
-              this site, you are looking at <span className={styles.version}>v7.3.0</span>.
-            </p>
+          </div>
+          <p className={styles.closing}>
+            I consider myself a designer at heart and enjoy building products with taste. Very
+            recently, I start shipping things myself with the assistance of code & AI, including
+            this site, you are looking at <span className={styles.version}>v7.3.0</span>.
+          </p>
+          <div className={styles.introActions}>
+            <Button href="/about">About me</Button>
+            <Button href="/projects">All work →</Button>
           </div>
         </MotionReveal>
 
-        <MotionReveal as="section" aria-labelledby="featured-work-title" className={styles.workSection} id="projects">
-          <p className={styles.workEyebrow} id="featured-work-title">
-            🌐 Peek into my recent work ↓
-          </p>
+        <MotionReveal as="section" aria-label="Featured work" className={styles.workSection} id="projects">
           <HomeFeaturedCarousel />
-          <Button href="/projects">View work →</Button>
         </MotionReveal>
 
         <MotionReveal as="section" aria-labelledby="writings-title" className={styles.writings} id="writings">

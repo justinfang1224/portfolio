@@ -2,7 +2,7 @@ import { execFileSync } from "node:child_process";
 import { unstable_noStore as noStore } from "next/cache";
 
 const DISPLAY_TIME_ZONE = "Asia/Hong_Kong";
-const DATE_PREFIX = "📌 Updated on";
+const DATE_PREFIX = "📌";
 
 function runGit(args: string[]) {
   try {
@@ -16,14 +16,17 @@ function runGit(args: string[]) {
 }
 
 function formatUpdatedOn(date: Date) {
-  const formatted = new Intl.DateTimeFormat("en-US", {
+  const parts = new Intl.DateTimeFormat("en-US", {
     day: "numeric",
     month: "short",
     timeZone: DISPLAY_TIME_ZONE,
     year: "numeric"
-  }).format(date);
+  }).formatToParts(date);
+  const month = parts.find((part) => part.type === "month")?.value ?? "";
+  const day = parts.find((part) => part.type === "day")?.value ?? "";
+  const year = parts.find((part) => part.type === "year")?.value ?? "";
 
-  return `${DATE_PREFIX} ${formatted}`;
+  return `${DATE_PREFIX} ${month} ${day} ${year}`;
 }
 
 function getLastUpdatedDate() {
