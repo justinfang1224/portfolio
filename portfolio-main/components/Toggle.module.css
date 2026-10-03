@@ -1,0 +1,50 @@
+.toggle {
+  --toggle-thumb: 20px;
+  appearance: none;
+  background: var(--color-button-secondary-hover);
+  border: 0;
+  border-radius: var(--spacing-12);
+  cursor: pointer;
+  flex: 0 0 auto;
+  height: 24px;
+  padding: 0;
+  position: relative;
+  touch-action: none;
+  width: 48px;
+}
+
+.toggle:focus-visible {
+  outline: 2px solid var(--color-content-primary);
+  outline-offset: 2px;
+}
+
+.toggle:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+
+.blobs {
+  inset: 0;
+  position: absolute;
+}
+
+.thumb {
+  background: var(--color-background-contrast);
+  border-radius: 50%;
+  height: var(--toggle-thumb);
+  left: 0;
+  margin-top: calc(var(--toggle-thumb) / -2);
+  position: absolute;
+  top: 50%;
+  width: var(--toggle-thumb);
+}
+
+:global(html[data-theme="dark"]) .thumb {
+  background: var(--color-content-primary);
+}
+
+@media (prefers-color-scheme: dark) {
+  :global(html:not([data-theme="light"])) .thumb {
+    background: var(--color-content-primary);
+  }
+}

@@ -92,10 +92,7 @@
 
 .navPreview :global(header) {
   position: static;
-}
-
-.navPreview :global(nav) {
-  margin: 0 auto;
+  width: 100%;
 }
 
 .footerPreview {

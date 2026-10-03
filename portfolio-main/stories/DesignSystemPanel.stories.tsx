@@ -16,6 +16,7 @@ import { ProjectHeroParallax } from "@/components/projects/ProjectHeroParallax";
 import { ProjectSectionRail } from "@/components/projects/ProjectSectionRail";
 import { SectionTitle } from "@/components/SectionTitle";
 import { Tag } from "@/components/Tag";
+import { Toggle } from "@/components/Toggle";
 import { TermExplain } from "@/components/TermExplain";
 import { WritingList } from "@/components/WritingList";
 import { DesignSystemTabs } from "../.storybook/design-system/DesignSystemTabs";
@@ -246,11 +247,23 @@ export const Overview: Story = {
           summary: "Core reusable pieces for actions, labels, chips, and section headers.",
           children: (
             <div className={styles.grid}>
-              <ComponentCard description="Secondary pill and text actions in medium and small sizes." title="Button">
+              <ComponentCard description="Secondary pill, outline, and text actions in medium and small sizes." title="Button">
                 <div className={styles.previewRow}>
                   <Button>Primary action</Button>
                   <Button size="s">Small action</Button>
+                  <Button variant="outline" aria-label="Open menu">
+                    Menu
+                  </Button>
                   <Button variant="text">Text action</Button>
+                </div>
+              </ComponentCard>
+              <ComponentCard
+                description="48×24 switch. The thumb lengthens as it moves."
+                title="Toggle"
+              >
+                <div className={styles.previewRow}>
+                  <Toggle aria-label="Dark mode" checked={false} onChange={() => undefined} />
+                  <Toggle aria-label="Dark mode on" checked onChange={() => undefined} />
                 </div>
               </ComponentCard>
               <ComponentCard description="Small and large status indicators for project state." title="Badge">
@@ -288,11 +301,11 @@ export const Overview: Story = {
         {
           id: "navigation",
           label: "Navigation",
-          summary: "Portfolio navigation patterns with pill states and lightweight motion.",
+          summary: "Portfolio navigation with a menu button, theme switch, and in-page rails.",
           children: (
             <div className={styles.grid}>
               <ComponentCard
-                description="Primary icon dock styled with the same blurred pill container as the site."
+                description="Column-width header with a menu button and theme switch."
                 isLarge
                 title="FloatingNav"
               >

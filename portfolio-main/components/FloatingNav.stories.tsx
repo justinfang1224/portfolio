@@ -9,7 +9,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Primary portfolio navigation using Bencho IconBar (morphing active pill) with design-system color tokens."
+          "Column-width header. The outline menu button stays at the left and spreads into Home, Projects, Writings, and About. Away from the home page, a matching back button eases in beside it and returns to the previous page. The theme switch sits on the right."
       }
     }
   }

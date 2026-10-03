@@ -3,9 +3,16 @@ import { CopyEmailLink } from "@/components/CopyEmailLink";
 import { AboutCollage } from "@/components/about/AboutCollage";
 import { AboutFavorites } from "@/components/about/AboutFavorites";
 import { AboutTimeline } from "@/components/about/AboutTimeline";
+import { NameBadge } from "@/components/about/NameBadge";
 import { MotionReveal } from "@/components/MotionReveal";
 import { TermExplain } from "@/components/TermExplain";
-import { aboutEducation, aboutExperience, aboutFavorites, aboutIntro } from "@/content/about";
+import {
+  aboutEducation,
+  aboutExperience,
+  aboutFavorites,
+  aboutIntro,
+  aboutSnaps
+} from "@/content/about";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
@@ -37,9 +44,9 @@ export default function AboutPage() {
   return (
     <>
       <main className={styles.main}>
-        <MotionReveal as="section" aria-label="About photo collage" className={styles.hero}>
-          <AboutCollage />
-        </MotionReveal>
+        <section aria-label="Name badge" className={styles.badge}>
+          <NameBadge />
+        </section>
 
         <div className={styles.content}>
           <MotionReveal
@@ -109,9 +116,23 @@ export default function AboutPage() {
 
           <MotionReveal
             as="section"
+            aria-labelledby="about-snaps-title"
+            className={styles.snapsSection}
+            delay={60}
+          >
+            <SectionHeader
+              index={aboutSnaps.index}
+              title={aboutSnaps.title}
+              titleId="about-snaps-title"
+            />
+            <AboutCollage />
+          </MotionReveal>
+
+          <MotionReveal
+            as="section"
             aria-labelledby="about-experience-title"
             className={styles.timelineSection}
-            delay={60}
+            delay={80}
           >
             <SectionHeader
               index={aboutExperience.index}

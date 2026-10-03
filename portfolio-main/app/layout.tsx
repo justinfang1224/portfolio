@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { BadgePresence } from "@/components/about/badgePresence";
+import { NameBadgeLayer } from "@/components/about/NameBadgeLayer";
+import { NameBadgePreload } from "@/components/about/NameBadgePreload";
+import { SiteAnalytics } from "@/components/analytics/SiteAnalytics";
 import { DesignSystemAudit } from "@/components/dev/DesignSystemAudit";
 import { FloatingNav } from "@/components/FloatingNav";
 import { Footer } from "@/components/Footer";
@@ -55,20 +59,29 @@ export default function RootLayout({
   return (
     <html data-landing-splash="playing" lang="en" suppressHydrationWarning>
       <head>
+        <link rel="preload" href="/about/badge-card.glb" as="fetch" crossOrigin="anonymous" />
+        <link rel="preload" href="/about/badge-portrait.png" as="image" />
         <script dangerouslySetInnerHTML={{ __html: colorSchemeScript }} />
       </head>
       <body>
+        <NameBadgePreload />
         <LandingSplash />
-        <div className="portfolio-content-shell">
-          <FloatingNav />
-          <SmoothScroll>
-            <RouteFade>
-              {children}
-              <Footer />
-            </RouteFade>
-          </SmoothScroll>
-        </div>
+        <BadgePresence>
+          <div className="portfolio-content-shell">
+            <FloatingNav />
+            <SmoothScroll>
+              <RouteFade>
+                <NameBadgeLayer />
+                {children}
+                <Footer />
+              </RouteFade>
+            </SmoothScroll>
+          </div>
+        </BadgePresence>
         {process.env.NODE_ENV === "development" ? <DesignSystemAudit /> : null}
+        {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ? (
+          <SiteAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
+        ) : null}
       </body>
     </html>
   );

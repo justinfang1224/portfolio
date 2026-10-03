@@ -17,14 +17,14 @@ const meta = {
     },
     variant: {
       control: "inline-radio",
-      options: ["secondary", "text"]
+      options: ["secondary", "text", "outline"]
     }
   },
   parameters: {
     docs: {
       description: {
         component:
-          "Secondary pill and text actions in medium, small, and icon sizes. Pill buttons scale to 1.02 on hover and 0.98 on press. Text buttons only change color."
+          "Secondary pill, outline, and text actions in medium, small, and icon sizes. Pill and outline buttons scale to 1.02 on hover and 0.98 on press. Text buttons only change color. Every press plays the Bencho off tone."
       }
     }
   }
@@ -67,11 +67,22 @@ export const Text: Story = {
   }
 };
 
+export const Outline: Story = {
+  args: {
+    "aria-label": "Open menu",
+    children: <SettingsIcon aria-hidden="true" height={18} strokeWidth={1.75} width={18} />,
+    variant: "outline"
+  }
+};
+
 export const Group: Story = {
   render: () => (
     <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 12 }}>
       <Button>Primary action</Button>
       <Button size="s">Small action</Button>
+      <Button variant="outline" aria-label="Open menu">
+        <SettingsIcon aria-hidden="true" height={18} strokeWidth={1.75} width={18} />
+      </Button>
       <Button variant="text">Text action</Button>
     </div>
   )

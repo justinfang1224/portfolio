@@ -256,6 +256,57 @@ const write = (el: HTMLElement, sp: Spot, angle: number) => {
   el.style.zIndex = String(sp.z);
 };
 
+/* ── the desktop fan ───────────────────────────────────────
+   The ring reads as three pictures: the front card and the
+   two beside it. The other two sit further back on the
+   circle, which puts them closer to the middle in screen
+   space, so the front row covers them.
+
+   The fan keeps the same five pictures and the same swipe,
+   but lays the resting positions in a row — two to each
+   side of the front card — so every photo is on screen
+   before anyone touches it. A card only ducks behind the
+   middle while it is wrapping from one end to the other,
+   and it does that through the centre, where both ends of
+   the wrap are the same spot, so it does not teleport. */
+const FAN_EDGE = (N - 1) / 2;
+const FAN_SPACING = 96;
+
+const smooth = (t: number) => {
+  const p = clamp(t, 0, 1);
+  return p * p * (3 - 2 * p);
+};
+
+const wrapStep = (raw: number) => raw - N * Math.round(raw / N);
+
+const spotFan = (i: number, turn: number, spacing: number, depth: number): Spot => {
+  const wrapped = wrapStep(i - turn);
+  const ad = Math.abs(wrapped);
+  const edgeScale = 1 - clamp(depth, 0, DEPTH_MAX) / 200;
+  const sign = Math.sign(wrapped) || 1;
+
+  if (ad <= FAN_EDGE) {
+    const t = ad / FAN_EDGE;
+    return {
+      x: wrapped * spacing,
+      y: -t * 12,
+      s: mix(1, edgeScale, t),
+      z: Math.round(mix(100, 24, t))
+    };
+  }
+
+  const t = smooth((ad - FAN_EDGE) / 0.5);
+  return {
+    x: sign * mix(FAN_EDGE * spacing, 0, t),
+    y: mix(-12, -36, t),
+    s: mix(edgeScale, edgeScale * 0.72, t),
+    z: Math.round(mix(24, 2, t))
+  };
+};
+
+const fanFrameWidth = (spacing: number) =>
+  Math.ceil(spacing * (N - 1) + CARD_W + 40);
+
 const out = (t: number) => 1 - (1 - t) ** 4;
 
 /* ── inlined from ./spring ──────────────────────── */
@@ -444,7 +495,11 @@ export function Carousel({
      for the places the carousel is a PICTURE rather than a
      control — the Pro sheet, today — where it has to carry
      itself because nobody is going to touch it. */
-  spin = 0
+  spin = 0,
+  /* ring: the mobile pile, three pictures reading at rest.
+     fan: the same cards opened into a row so all five show. */
+  layout = "ring",
+  spacing = FAN_SPACING
 }: {
   orbit?: number;
   depth?: number;
@@ -453,10 +508,14 @@ export function Carousel({
   sink?: number;
   settle?: number;
   spin?: number;
+  layout?: "ring" | "fan";
+  spacing?: number;
 } = {}) {
   const still = stillness();
 
+  const rootRef = useRef<HTMLDivElement | null>(null);
   const slots = useRef<(HTMLDivElement | null)[]>([]);
+  const [fanSpacing, setFanSpacing] = useState(spacing);
   /* ── where the ring is, and it is a REF ──────────────────
      A continuous position in card-steps: 0 puts the first
      card at the front, 1.5 is halfway between the second and
@@ -474,14 +533,43 @@ export function Carousel({
   const [held, setHeld] = useState(false);
   const [flippedName, setFlippedName] = useState<string | null>(null);
 
+  const spread = layout === "fan" ? fanSpacing : spacing;
+
   const paint = useCallback(() => {
-    slots.current.forEach((el, i) =>
-      el && write(el, spotOf(i, turn.current, orbit, depth), ANGLE[i % ANGLE.length]));
-  }, [orbit, depth]);
+    slots.current.forEach((el, i) => {
+      if (!el) return;
+      const spot = layout === "fan"
+        ? spotFan(i, turn.current, spread, depth)
+        : spotOf(i, turn.current, orbit, depth);
+      write(el, spot, ANGLE[i % ANGLE.length]);
+    });
+  }, [layout, orbit, depth, spread]);
 
   /* placed on mount, and again whenever a knob changes the
      arithmetic under it */
   useLayoutEffect(paint, [paint]);
+
+  /* Fit the fan to the column it sits in. A fixed spread that
+     looks right at 796px overflows the narrower desktop
+     widths, and one tuned for those widths leaves the wide
+     column looking sparse. */
+  useLayoutEffect(() => {
+    if (layout !== "fan") return;
+    const parent = rootRef.current?.parentElement;
+    if (!parent) return;
+
+    const measure = () => {
+      const available = parent.clientWidth;
+      if (available < CARD_W) return;
+      const next = clamp(Math.floor((available - CARD_W - 40) / (N - 1)), 84, 132);
+      setFanSpacing((current) => (current === next ? current : next));
+    };
+
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(parent);
+    return () => observer.disconnect();
+  }, [layout]);
 
   useEffect(() => () => cancelAnimationFrame(raf.current), []);
 
@@ -602,7 +690,22 @@ export function Carousel({
     /* A tap, not a swipe: flip only the card at the front of
        the ring, the same one sitting in the middle. Side cards
        can be seen but are not the one being read. */
-    if (g.shot && g.shot === frontShotName()) {
+    if (!g.shot) return;
+
+    if (layout === "fan" && g.shot !== frontShotName()) {
+      const index = SHOTS.findIndex((shot) => shot.name === g.shot);
+      if (index < 0) return;
+      const current = Math.round(turn.current);
+      const currentIndex = ((current % N) + N) % N;
+      let delta = index - currentIndex;
+      if (delta > N / 2) delta -= N;
+      if (delta < -N / 2) delta += N;
+      setFlippedName(null);
+      glide(current + delta);
+      return;
+    }
+
+    if (g.shot === frontShotName()) {
       setFlippedName((current) => (current === g.shot ? null : g.shot));
     }
   };
@@ -615,9 +718,11 @@ export function Carousel({
   };
 
   const r = clamp(corner, 0, 40);
+  const frameW = layout === "fan" ? fanFrameWidth(spread) : STAGE_W;
+  const frameH = layout === "fan" ? 348 : STAGE_H;
 
   return (
-    <div className="car" style={{ width: STAGE_W, height: STAGE_H }}>
+    <div className="car" ref={rootRef} style={{ width: frameW, height: frameH }}>
       <div
         className="car-track"
         data-held={held}

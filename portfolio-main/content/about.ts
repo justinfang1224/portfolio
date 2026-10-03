@@ -51,6 +51,19 @@ export const aboutCollageImages = [
   }
 ] as const;
 
+export const aboutBadge = {
+  email: "Jenhung.work@gmail.com",
+  job: "Product designer",
+  location: "Hong Kong",
+  name: "Justin Fang",
+  photo: "/about/badge-portrait.png"
+} as const;
+
+export const aboutSnaps = {
+  index: "02",
+  title: "Snaps"
+} as const;
+
 export const aboutIntro = {
   index: "01",
   title: "More about me",
@@ -96,7 +109,7 @@ export const aboutIntro = {
 } as const;
 
 export const aboutExperience = {
-  index: "02",
+  index: "03",
   title: "Career",
   entries: [
     {
@@ -141,7 +154,7 @@ export const aboutExperience = {
 } as const;
 
 export const aboutEducation = {
-  index: "03",
+  index: "04",
   title: "Education",
   entries: [
     {
@@ -164,7 +177,7 @@ export const aboutEducation = {
 } as const;
 
 export const aboutFavorites = {
-  index: "04",
+  index: "05",
   title: "Favorites  ‧  2026",
   reading: {
     href: "https://www.setmargins.press/books/who-can-afford-to-be-critical/",
@@ -177,9 +190,9 @@ export const aboutFavorites = {
     label: "Movie",
     entries: [
       {
-        href: "https://www.imdb.com/title/tt5726616/",
-        meta: "2017 · Romance · 2h 10m",
-        title: "Call me by your name"
+        href: "https://www.imdb.com/title/tt0381681/",
+        meta: "2004 · Romance · 1h 20m",
+        title: "Before sunset"
       },
       {
         href: "https://www.imdb.com/title/tt0133093/",
@@ -187,9 +200,9 @@ export const aboutFavorites = {
         title: "Matrix"
       },
       {
-        href: "https://www.imdb.com/title/tt1605783/",
-        meta: "2011 ‧ Romance ‧ 1h 34m",
-        title: "Midnight in Paris"
+        href: "https://www.imdb.com/title/tt5726616/",
+        meta: "2017 · Romance · 2h 10m",
+        title: "Call me by your name"
       }
     ]
   },

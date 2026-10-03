@@ -1,0 +1,123 @@
+.stage {
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: fixed;
+  visibility: hidden;
+  z-index: 1;
+}
+
+.stage[data-show="true"] {
+  opacity: 1;
+  visibility: visible;
+}
+
+.slot {
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+.poster {
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
+/* Placement follows the badge camera frame: the card sits 53% down the slot and spans 46% of it. */
+
+.strap {
+  background: var(--color-content-primary);
+  height: 53%;
+  left: 50%;
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  width: var(--spacing-16);
+}
+
+.card {
+  aspect-ratio: 1.22 / 0.76;
+  background: var(--color-surface-card-primary);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--spacing-16);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  left: 50%;
+  padding: var(--spacing-16);
+  position: absolute;
+  top: 53%;
+  transform: translateX(-50%);
+  width: 46%;
+}
+
+.identity {
+  align-items: flex-start;
+  display: flex;
+  gap: var(--spacing-16);
+  justify-content: space-between;
+}
+
+.name {
+  color: var(--color-content-primary);
+  font-family: var(--font-family-base);
+  font-size: var(--typography-heading-3-font-size);
+  font-weight: var(--typography-heading-3-font-weight);
+  line-height: var(--typography-heading-3-line-height);
+  margin: 0;
+}
+
+.photo {
+  aspect-ratio: 1;
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--spacing-12);
+  flex: 0 0 auto;
+  object-fit: cover;
+  width: 28%;
+}
+
+.rows {
+  color: var(--color-content-primary);
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-family-base);
+  font-size: var(--typography-caption-font-size);
+  font-weight: var(--typography-caption-font-weight);
+  gap: var(--spacing-8);
+  line-height: var(--typography-caption-line-height);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.rows li {
+  align-items: center;
+  display: flex;
+  gap: var(--spacing-8);
+  min-width: 0;
+}
+
+.rows li span {
+  flex: 0 0 auto;
+}
+
+.stage canvas {
+  display: block;
+  height: 100%;
+  pointer-events: none;
+  touch-action: none;
+  width: 100%;
+}
+
+.srOnly {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}

@@ -1,7 +1,9 @@
 "use client";
 
+import { animate } from "motion/react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { type MouseEvent, useEffect, useState } from "react";
+import { type MouseEvent, useEffect, useId, useRef, useState } from "react";
 import { aboutCollageImages } from "@/content/about";
 import {
   applyColorSchemeWithTransition,
@@ -11,8 +13,9 @@ import {
   type ResolvedColorScheme
 } from "@/lib/color-scheme";
 import { dsMarker } from "@/lib/ds-marker";
-import { IconBar } from "./IconBar";
-import { AboutIcon, HomeIcon, MoonIcon, SunIcon, WorkIcon, WritingIcon } from "./icons";
+import { Button } from "./Button";
+import { AboutIcon, HomeIcon, MenuIcon, ReplyIcon, WorkIcon, WritingIcon } from "./icons";
+import { Toggle } from "./Toggle";
 import styles from "./FloatingNav.module.css";
 
 const navItems = [
@@ -23,6 +26,17 @@ const navItems = [
 ] as const;
 
 type NavItemId = (typeof navItems)[number]["id"];
+
+const PANEL_WIDTH = 196;
+const PANEL_HEIGHT = 172;
+const SINK_MS = 60;
+
+const shellSpring = {
+  type: "spring" as const,
+  stiffness: 420,
+  damping: 30,
+  mass: 0.5
+};
 
 let hasPreloadedAboutHero = false;
 
@@ -40,35 +54,17 @@ function preloadAboutHeroImages() {
   });
 }
 
-function getActiveItemFromLocation(pathname: string): NavItemId {
-  if (pathname === "/about") {
-    return "about";
-  }
-
-  if (pathname.startsWith("/projects")) {
-    return "projects";
-  }
-
-  if (pathname.startsWith("/writings")) {
-    return "writings";
-  }
-
-  if (typeof window !== "undefined") {
-    const hash = window.location.hash.replace("#", "");
-
-    if (hash === "projects" || hash === "writings") {
-      return hash;
-    }
-  }
-
-  return "home";
-}
-
 export function FloatingNav() {
   const pathname = usePathname();
-  const [activeItem, setActiveItem] = useState<NavItemId>(() =>
-    getActiveItemFromLocation(pathname)
-  );
+  const menuId = useId();
+  const menuRef = useRef<HTMLDivElement>(null);
+  const shellRef = useRef<HTMLDivElement>(null);
+  const menuOpenRef = useRef(false);
+  const sinkTimer = useRef<number | undefined>(undefined);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [shellOn, setShellOn] = useState(false);
+  const [sinking, setSinking] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
   const [colorScheme, setColorScheme] = useState<ResolvedColorScheme>(() => {
     if (typeof window === "undefined") {
       return "light";
@@ -76,10 +72,38 @@ export function FloatingNav() {
 
     return resolveColorScheme(readStoredColorScheme());
   });
-  const nextScheme: ResolvedColorScheme = colorScheme === "dark" ? "light" : "dark";
 
-  const handleNavClick = (event: MouseEvent<HTMLAnchorElement>, id: string) => {
-    setActiveItem(id as NavItemId);
+  menuOpenRef.current = menuOpen;
+
+  const showShell = () => {
+    if (shellRef.current) {
+      shellRef.current.style.opacity = "1";
+    }
+
+    setSinking(false);
+    setShellOn(true);
+    setMenuOpen(true);
+  };
+
+  const closeMenu = () => {
+    window.clearTimeout(sinkTimer.current);
+    setSinking(false);
+    setMenuOpen(false);
+  };
+
+  const openMenu = () => {
+    if (reducedMotion) {
+      showShell();
+      return;
+    }
+
+    setSinking(true);
+    window.clearTimeout(sinkTimer.current);
+    sinkTimer.current = window.setTimeout(showShell, SINK_MS);
+  };
+
+  const handleNavClick = (event: MouseEvent<HTMLAnchorElement>, id: NavItemId) => {
+    closeMenu();
 
     if (id !== "home" || pathname !== "/") {
       return;
@@ -96,20 +120,90 @@ export function FloatingNav() {
   };
 
   useEffect(() => {
-    const updateActiveItem = () => {
-      setActiveItem(getActiveItemFromLocation(pathname));
-    };
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setReducedMotion(media.matches);
 
-    // Defer pathname sync to the next frame so hash-based routes
-    // (e.g. "/#projects") can settle before deriving active state.
-    const frameId = window.requestAnimationFrame(updateActiveItem);
-    window.addEventListener("hashchange", updateActiveItem);
+    sync();
+    media.addEventListener("change", sync);
+
+    return () => media.removeEventListener("change", sync);
+  }, []);
+
+  useEffect(() => {
+    return () => window.clearTimeout(sinkTimer.current);
+  }, []);
+
+  useEffect(() => {
+    const shell = shellRef.current;
+
+    if (!shell || (!menuOpen && !shellOn)) {
+      return;
+    }
+
+    let cancelled = false;
+    const animation = animate(
+      shell,
+      {
+        width: menuOpen ? PANEL_WIDTH : "100%",
+        height: menuOpen ? PANEL_HEIGHT : "100%",
+        opacity: 1
+      },
+      reducedMotion
+        ? { duration: 0 }
+        : {
+            width: shellSpring,
+            height: shellSpring,
+            opacity: { duration: 0 }
+          }
+    );
+
+    animation.then(() => {
+      if (cancelled || menuOpenRef.current) {
+        return;
+      }
+
+      shell.style.opacity = "0";
+      setShellOn(false);
+    });
 
     return () => {
-      window.cancelAnimationFrame(frameId);
-      window.removeEventListener("hashchange", updateActiveItem);
+      cancelled = true;
+      animation.stop();
     };
+  }, [menuOpen, reducedMotion, shellOn]);
+
+  useEffect(() => {
+    closeMenu();
+    // Close whenever the route changes, including the first paint.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
+
+  useEffect(() => {
+    if (!menuOpen) {
+      return;
+    }
+
+    const handlePointerDown = (event: PointerEvent) => {
+      if (!menuRef.current?.contains(event.target as Node)) {
+        closeMenu();
+      }
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeMenu();
+        menuRef.current?.querySelector("button")?.focus();
+      }
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [menuOpen]);
 
   useEffect(() => {
     const syncColorScheme = () => {
@@ -149,56 +243,85 @@ export function FloatingNav() {
 
   return (
     <header className={styles.header} {...dsMarker("FloatingNav")}>
-      <IconBar
-        activeId={activeItem}
-        aria-label="Primary navigation"
-        axis="row"
-        bounce={40}
-        corner={26}
-        dilate={60}
-        items={navItems}
-        onItemClick={handleNavClick}
-        onItemFocus={(id) => {
-          if (id === "about") {
-            preloadAboutHeroImages();
-          }
-        }}
-        onItemPointerEnter={(id) => {
-          if (id === "about") {
-            preloadAboutHeroImages();
-          }
-        }}
-        speed={50}
-        trailing={
-          <button
-            aria-label={nextScheme === "dark" ? "Switch to dark mode" : "Switch to light mode"}
-            className={styles.themeButton}
-            data-state={colorScheme === "dark" ? "sun" : "moon"}
-            onClick={() => {
-              applyColorSchemeWithTransition(nextScheme);
-              setColorScheme(nextScheme);
-            }}
-            type="button"
+      <div className={styles.bar}>
+        <div className={styles.controls}>
+          <div className={styles.lead}>
+            <div
+              className={styles.menuSlot}
+              data-open={menuOpen ? "true" : undefined}
+              data-shell={shellOn ? "true" : undefined}
+              data-sink={sinking ? "true" : undefined}
+              ref={menuRef}
+            >
+            <div
+              aria-hidden={shellOn ? undefined : true}
+              className={styles.shell}
+              ref={shellRef}
+            >
+              <nav aria-label="Primary" className={styles.menu} id={menuId} inert={menuOpen ? undefined : true}>
+                {navItems.map((item, index) => (
+                  <Link
+                    className={styles.menuLink}
+                    href={item.href}
+                    key={item.id}
+                    onClick={(event) => handleNavClick(event, item.id)}
+                    onFocus={() => {
+                      if (item.id === "about") {
+                        preloadAboutHeroImages();
+                      }
+                    }}
+                    onPointerEnter={() => {
+                      if (item.id === "about") {
+                        preloadAboutHeroImages();
+                      }
+                    }}
+                    style={{ transitionDelay: menuOpen ? `${30 + index * 22}ms` : "0ms" }}
+                  >
+                    <item.icon aria-hidden="true" className={styles.menuIcon} strokeWidth={1.75} />
+                    {item.label}
+                  </Link>
+                ))}
+              </nav>
+            </div>
+            <div className={styles.face} inert={menuOpen ? true : undefined}>
+              <Button
+                aria-controls={menuId}
+                aria-expanded={menuOpen}
+                aria-haspopup="menu"
+                aria-label={menuOpen ? "Close menu" : "Open menu"}
+                onClick={() => (menuOpen ? closeMenu() : openMenu())}
+                variant="outline"
+              >
+                <MenuIcon aria-hidden="true" height={18} strokeWidth={1.75} width={18} />
+              </Button>
+            </div>
+            </div>
+          </div>
+          <div
+            aria-hidden={pathname === "/" ? true : undefined}
+            className={styles.backSlot}
+            data-show={pathname !== "/" ? "true" : undefined}
+            inert={pathname === "/" ? true : undefined}
           >
-            <MoonIcon
-              aria-hidden="true"
-              className={styles.themeIcon}
-              data-icon="moon"
-              height={20}
-              strokeWidth={2}
-              width={20}
-            />
-            <SunIcon
-              aria-hidden="true"
-              className={styles.themeIcon}
-              data-icon="sun"
-              height={20}
-              strokeWidth={2}
-              width={20}
-            />
-          </button>
-        }
-      />
+            <div className={styles.backPad}>
+              <div className={styles.backMotion}>
+                <Button aria-label="Go back" onClick={() => window.history.back()} variant="outline">
+                  <ReplyIcon aria-hidden="true" height={18} strokeWidth={1.75} width={18} />
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <Toggle
+          aria-label="Dark mode"
+          checked={colorScheme === "dark"}
+          onChange={(checked) => {
+            const nextScheme: ResolvedColorScheme = checked ? "dark" : "light";
+            applyColorSchemeWithTransition(nextScheme);
+            setColorScheme(nextScheme);
+          }}
+        />
+      </div>
     </header>
   );
 }
