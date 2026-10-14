@@ -11,7 +11,8 @@
 
 .badge {
   height: 536px;
-  margin-top: calc(var(--about-badge-offset) * -1);
+  margin-top: calc(var(--spacing-100) * -1);
+  min-width: var(--portfolio-min-width);
   position: relative;
   width: var(--portfolio-text-column);
   z-index: 1;
@@ -162,28 +163,11 @@
   color: var(--color-content-primary);
 }
 
-@media (max-width: 1199px) {
-  .main {
-    --portfolio-shell: calc(100vw - 64px);
-    width: var(--portfolio-shell);
-  }
-
-  .badge,
-  .content {
-    width: min(100%, var(--portfolio-text-column));
-  }
-}
-
 @media (max-width: 767px) {
   .main {
     --about-badge-offset: 128px;
-    --portfolio-shell: calc(100vw - 48px);
     gap: var(--spacing-56);
     padding-top: var(--about-badge-offset);
-  }
-
-  .badge {
-    height: 460px;
   }
 
   .snapsSection {

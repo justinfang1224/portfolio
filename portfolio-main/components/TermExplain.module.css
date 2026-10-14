@@ -26,7 +26,7 @@
 .panel {
   background: var(--color-background-primary);
   border: 1px dashed var(--color-border-primary);
-  border-radius: var(--spacing-12);
+  border-radius: var(--spacing-48);
   bottom: calc(100% + var(--term-explain-gap));
   box-sizing: border-box;
   color: var(--color-content-primary);

@@ -12,9 +12,6 @@ export const CARD_CENTER_Y = CARD.top - CARD.height / 2;
 
 const FRAME_W = 803;
 const FRAME_H = 500;
-const TEX_SCALE = 4;
-const TEX_W = FRAME_W * TEX_SCALE;
-const TEX_H = FRAME_H * TEX_SCALE;
 
 export type BadgePalette = {
   background: string;
@@ -30,31 +27,20 @@ export type BadgePalette = {
 
 export function readBadgePalette(): BadgePalette {
   const styles = getComputedStyle(document.documentElement);
-  const pick = (name: string) => styles.getPropertyValue(name).trim();
-  const text = pick("--color-content-primary");
-  const contrast = pick("--color-content-contrast");
-  const darkInk = isLightColor(text) ? contrast : text;
+  const pick = (name: string, fallback: string) => styles.getPropertyValue(name).trim() || fallback;
+  const text = pick("--color-content-primary", "#111111");
 
   return {
-    card: pick("--color-surface-card-primary"),
-    background: pick("--color-background-contrast"),
-    fontFamily: pick("--font-family-base") || "Inter, Helvetica, Arial, sans-serif",
-    line: pick("--color-border-primary"),
-    muted: pick("--color-content-tertiary"),
-    photoFill: pick("--color-surface-card-secondary"),
-    shadow: darkInk,
+    background: pick("--color-background-contrast", "#FFFFFF"),
+    card: pick("--color-surface-card-primary", "#F7F7F7"),
+    fontFamily: pick("--font-family-base", '"SF Pro Text", "SF Pro Display", Helvetica, Arial, sans-serif'),
+    line: pick("--color-border-primary", "#EDEDED"),
+    muted: pick("--color-content-tertiary", "#B3B3B3"),
+    photoFill: pick("--color-surface-card-secondary", "#F0F0F0"),
+    shadow: text,
     strap: text,
     text
   };
-}
-
-function isLightColor(color: string) {
-  const match = color.match(/\d+/g);
-  if (!match || match.length < 3) {
-    return false;
-  }
-  const [r, g, b] = match.map(Number);
-  return (r * 299 + g * 587 + b * 114) / 1000 > 160;
 }
 
 function roundRect(
@@ -86,67 +72,6 @@ function ellipsize(ctx: CanvasRenderingContext2D, text: string, maxWidth: number
   return `${value}…`;
 }
 
-function themePortrait(img: HTMLImageElement, palette: BadgePalette) {
-  const canvas = document.createElement("canvas");
-  canvas.width = img.width;
-  canvas.height = img.height;
-  const ctx = canvas.getContext("2d");
-  const ink = parseCssColor(palette.text);
-  const paper = parseCssColor(palette.photoFill);
-  const grid = parseCssColor(palette.line);
-  if (!ctx || !ink || !paper || !grid) {
-    return img;
-  }
-  ctx.imageSmoothingEnabled = false;
-  ctx.drawImage(img, 0, 0);
-  const image = ctx.getImageData(0, 0, canvas.width, canvas.height);
-  const data = image.data;
-  for (let i = 0; i < data.length; i += 4) {
-    const luminance = (data[i] * 299 + data[i + 1] * 587 + data[i + 2] * 114) / 1000;
-    const next = luminance < 80 ? ink : luminance < 230 ? grid : paper;
-    data[i] = next[0];
-    data[i + 1] = next[1];
-    data[i + 2] = next[2];
-  }
-  ctx.putImageData(image, 0, 0);
-  return canvas;
-}
-
-function drawCoverRoundRect(
-  ctx: CanvasRenderingContext2D,
-  img: HTMLImageElement | null,
-  x: number,
-  y: number,
-  size: number,
-  radius: number,
-  palette: BadgePalette
-) {
-  ctx.save();
-  ctx.beginPath();
-  ctx.roundRect(x, y, size, size, radius);
-  ctx.clip();
-  if (img) {
-    const portrait = themePortrait(img, palette);
-    ctx.imageSmoothingEnabled = false;
-    const scale = Math.max(size / portrait.width, size / portrait.height);
-    const dw = portrait.width * scale;
-    const dh = portrait.height * scale;
-    ctx.drawImage(portrait, x + (size - dw) / 2, y + (size - dh) / 2, dw, dh);
-  } else {
-    ctx.fillStyle = palette.photoFill;
-    ctx.fill();
-  }
-  ctx.restore();
-  ctx.beginPath();
-  ctx.roundRect(x, y, size, size, radius);
-  ctx.strokeStyle = palette.line;
-  ctx.lineWidth = Math.max(TEX_SCALE, Math.round(sy(1)));
-  ctx.stroke();
-}
-
-/** 1px at the badge's on-screen size. */
-const BORDER_TEXELS = Math.max(1, Math.round(TEX_W / 367));
-
 function parseCssColor(color: string): [number, number, number] | null {
   const hex = color.trim().match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
   if (hex) {
@@ -163,62 +88,95 @@ function parseCssColor(color: string): [number, number, number] | null {
       Number.parseInt(value.slice(4, 6), 16)
     ];
   }
-  const match = color.match(/\d+/g);
-  if (!match || match.length < 3) {
+  const channels = color.match(/\d+/g);
+  if (!channels || channels.length < 3) {
     return null;
   }
-  return [Number(match[0]), Number(match[1]), Number(match[2])];
+  return [Number(channels[0]), Number(channels[1]), Number(channels[2])];
 }
 
-function paintCard(ctx: CanvasRenderingContext2D, fill: string, border: string) {
-  const radius = (CARD.radius / CARD.width) * TEX_W;
-  ctx.clearRect(0, 0, TEX_W, TEX_H);
-  ctx.fillStyle = border;
-  ctx.fillRect(0, 0, TEX_W, TEX_H);
-  ctx.globalCompositeOperation = "destination-in";
-  roundRect(ctx, 0, 0, TEX_W, TEX_H, radius);
-  ctx.fill();
-  ctx.globalCompositeOperation = "source-over";
-
-  const inset = BORDER_TEXELS;
-  roundRect(
-    ctx,
-    inset,
-    inset,
-    TEX_W - inset * 2,
-    TEX_H - inset * 2,
-    Math.max(0, radius - inset)
-  );
-  ctx.fillStyle = fill;
-  ctx.fill();
-}
-
-/** Transparent texels keep the border color so filtering does not pull in a black edge. */
-function keepEdgeColor(ctx: CanvasRenderingContext2D, color: string) {
-  const rgb = parseCssColor(color);
-  if (!rgb) {
-    return;
+/** Recolors the pixel portrait so ink, grid, and paper follow the theme tokens. */
+function themePortrait(img: HTMLImageElement, palette: BadgePalette) {
+  const canvas = document.createElement("canvas");
+  canvas.width = img.width;
+  canvas.height = img.height;
+  const portrait = canvas.getContext("2d");
+  const ink = parseCssColor(palette.text);
+  const paper = parseCssColor(palette.card);
+  const grid = parseCssColor(palette.line);
+  if (!portrait || !ink || !paper || !grid) {
+    return img;
   }
-  const [r, g, b] = rgb;
-  const image = ctx.getImageData(0, 0, TEX_W, TEX_H);
+  portrait.imageSmoothingEnabled = false;
+  portrait.drawImage(img, 0, 0);
+  const image = portrait.getImageData(0, 0, canvas.width, canvas.height);
   const data = image.data;
   for (let i = 0; i < data.length; i += 4) {
-    if (data[i + 3] === 0) {
-      data[i] = r;
-      data[i + 1] = g;
-      data[i + 2] = b;
+    const luminance = (data[i] * 299 + data[i + 1] * 587 + data[i + 2] * 114) / 1000;
+    const next = luminance < 80 ? ink : luminance < 228 ? grid : paper;
+    data[i] = next[0];
+    data[i + 1] = next[1];
+    data[i + 2] = next[2];
+  }
+  portrait.putImageData(image, 0, 0);
+  return canvas;
+}
+
+function drawCoverRoundRect(
+  ctx: CanvasRenderingContext2D,
+  img: HTMLImageElement | HTMLCanvasElement | null,
+  x: number,
+  y: number,
+  size: number,
+  radius: number,
+  lineWidth: number,
+  palette: BadgePalette
+) {
+  ctx.save();
+  ctx.beginPath();
+  ctx.roundRect(x, y, size, size, radius);
+  ctx.clip();
+  if (img) {
+    const portrait = img instanceof HTMLImageElement ? themePortrait(img, palette) : img;
+    ctx.imageSmoothingEnabled = false;
+    const scale = Math.max(size / portrait.width, size / portrait.height);
+    const dw = portrait.width * scale;
+    const dh = portrait.height * scale;
+    ctx.drawImage(portrait, x + (size - dw) / 2, y + (size - dh) / 2, dw, dh);
+  } else {
+    ctx.fillStyle = palette.photoFill;
+    ctx.fill();
+  }
+  ctx.restore();
+  ctx.beginPath();
+  ctx.roundRect(x, y, size, size, radius);
+  ctx.strokeStyle = palette.line;
+  ctx.lineWidth = lineWidth;
+  ctx.stroke();
+}
+
+function paintCard(ctx: CanvasRenderingContext2D, texW: number, texH: number, fill: string) {
+  ctx.clearRect(0, 0, texW, texH);
+  ctx.fillStyle = fill;
+  ctx.fillRect(0, 0, texW, texH);
+}
+
+/** Recolors every see-through pixel so the edge cannot blend toward black. */
+function bleedHiddenPixels(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement, bleed: [number, number, number]) {
+  const image = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const data = image.data;
+  for (let i = 3; i < data.length; i += 4) {
+    if (data[i] === 255) {
+      continue;
     }
+    data[i - 3] = bleed[0];
+    data[i - 2] = bleed[1];
+    data[i - 1] = bleed[2];
   }
   ctx.putImageData(image, 0, 0);
 }
 
-function drawIosEmoji(
-  ctx: CanvasRenderingContext2D,
-  emoji: string,
-  x: number,
-  y: number,
-  size: number
-) {
+function drawIosEmoji(ctx: CanvasRenderingContext2D, emoji: string, x: number, y: number, size: number) {
   const canvas = document.createElement("canvas");
   const pad = Math.ceil(size * 0.35);
   canvas.width = Math.ceil(size + pad * 2);
@@ -228,6 +186,7 @@ function drawIosEmoji(
     return;
   }
   emojiCtx.clearRect(0, 0, canvas.width, canvas.height);
+  emojiCtx.globalAlpha = 1;
   emojiCtx.fillStyle = "#000000";
   emojiCtx.font = `${size}px "Apple Color Emoji"`;
   emojiCtx.textAlign = "center";
@@ -239,6 +198,7 @@ function drawIosEmoji(
 function makeTexture(canvas: HTMLCanvasElement) {
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;
+  texture.premultiplyAlpha = false;
   texture.generateMipmaps = false;
   texture.minFilter = THREE.LinearFilter;
   texture.magFilter = THREE.LinearFilter;
@@ -247,61 +207,73 @@ function makeTexture(canvas: HTMLCanvasElement) {
   return texture;
 }
 
-function sx(value: number) {
-  return (value * TEX_W) / FRAME_W;
-}
-
-function sy(value: number) {
-  return (value * TEX_H) / FRAME_H;
+function drawingContext(canvas: HTMLCanvasElement) {
+  const context = canvas.getContext("2d", { alpha: true });
+  if (!context) {
+    throw new Error("Could not draw the name badge.");
+  }
+  return context;
 }
 
 export function createBadgeTextures({
-  email = "",
+  name = "",
   job = "",
   location = "",
-  name = "",
-  palette,
-  photo = null
+  email = "",
+  photo = null,
+  pixelWidth = FRAME_W * 2,
+  palette
 }: {
-  email?: string;
+  name?: string;
   job?: string;
   location?: string;
-  name?: string;
-  palette: BadgePalette;
+  email?: string;
   photo?: HTMLImageElement | null;
+  pixelWidth?: number;
+  palette: BadgePalette;
 }) {
+  const texW = Math.round(Math.min(4096, Math.max(pixelWidth, 2)));
+  const texH = Math.round(texW * (FRAME_H / FRAME_W));
+  const sx = (value: number) => (value * texW) / FRAME_W;
+  const sy = (value: number) => (value * texH) / FRAME_H;
+  const hairline = Math.max(1, Math.round(sy(1)));
+
   const nameText = name.trim() || "Name";
   const jobText = job.trim() || "Job title";
   const locationText = location.trim() || "Location";
   const emailText = email.trim() || "Email";
-  const typeface = palette.fontFamily;
 
   const frontCanvas = document.createElement("canvas");
-  frontCanvas.width = TEX_W;
-  frontCanvas.height = TEX_H;
-  const ctx = frontCanvas.getContext("2d");
-  if (!ctx) {
-    throw new Error("Could not draw the name badge.");
-  }
+  frontCanvas.width = texW;
+  frontCanvas.height = texH;
+  const ctx = drawingContext(frontCanvas);
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = "high";
 
-  paintCard(ctx, palette.card, palette.line);
+  paintCard(ctx, texW, texH, palette.card);
 
   const pad = 40;
   const photoSize = sx(180);
   const photoX = sx(FRAME_W - pad - 180);
   const photoY = sy(pad);
-  drawCoverRoundRect(ctx, photo, photoX, photoY, photoSize, sx(24), palette);
+  drawCoverRoundRect(ctx, photo, photoX, photoY, photoSize, sx(24), hairline, palette);
 
   const nameSize = Math.round(sy(52));
   ctx.textBaseline = "middle";
   ctx.textAlign = "left";
   ctx.letterSpacing = "-0.02em";
-  ctx.font = `500 ${nameSize}px ${typeface}`;
+  ctx.font = `500 ${nameSize}px ${palette.fontFamily}`;
   ctx.fillStyle = name.trim() ? palette.text : palette.muted;
   ctx.fillText(ellipsize(ctx, nameText, sx(500)), sx(pad), sy(pad + 31));
 
   const rowsTop = FRAME_H - pad - 204;
-  const rows = [
+  const rows: Array<{
+    icon: string;
+    text: string;
+    filled: boolean;
+    center: number;
+    line: number | null;
+  }> = [
     { icon: "🌐", text: locationText, filled: Boolean(location.trim()), center: rowsTop + 18, line: rowsTop + 60 },
     { icon: "🖥️", text: jobText, filled: Boolean(job.trim()), center: rowsTop + 102, line: rowsTop + 144 },
     { icon: "✉️", text: emailText, filled: Boolean(email.trim()), center: rowsTop + 186, line: null }
@@ -315,7 +287,7 @@ export function createBadgeTextures({
     drawIosEmoji(ctx, row.icon, sx(pad), sy(row.center), iconSize);
     ctx.restore();
 
-    ctx.font = `600 ${valueSize}px ${typeface}`;
+    ctx.font = `600 ${valueSize}px ${palette.fontFamily}`;
     ctx.textAlign = "left";
     ctx.textBaseline = "middle";
     ctx.letterSpacing = "-0.01em";
@@ -324,30 +296,30 @@ export function createBadgeTextures({
 
     if (row.line != null) {
       ctx.fillStyle = palette.line;
-      ctx.fillRect(sx(pad), sy(row.line), sx(446), Math.max(1, Math.round(sy(1))));
+      ctx.fillRect(sx(pad), sy(row.line), sx(446), hairline);
     }
   });
 
   const backCanvas = document.createElement("canvas");
-  backCanvas.width = TEX_W;
-  backCanvas.height = TEX_H;
-  const back = backCanvas.getContext("2d");
-  if (!back) {
-    throw new Error("Could not draw the name badge.");
-  }
-  paintCard(back, palette.card, palette.line);
+  backCanvas.width = texW;
+  backCanvas.height = texH;
+  const back = drawingContext(backCanvas);
+  back.imageSmoothingEnabled = true;
+  back.imageSmoothingQuality = "high";
+  paintCard(back, texW, texH, palette.card);
 
   if (name.trim()) {
     back.textBaseline = "middle";
     back.textAlign = "left";
     back.letterSpacing = "-0.02em";
-    back.font = `500 ${nameSize}px ${typeface}`;
+    back.font = `500 ${nameSize}px ${palette.fontFamily}`;
     back.fillStyle = palette.text;
     back.fillText(ellipsize(back, name.trim(), sx(700)), sx(40), sy(250));
   }
 
-  keepEdgeColor(ctx, palette.line);
-  keepEdgeColor(back, palette.line);
+  const faceRgb = parseCssColor(palette.card) ?? [247, 247, 247];
+  bleedHiddenPixels(ctx, frontCanvas, faceRgb);
+  bleedHiddenPixels(back, backCanvas, faceRgb);
 
   return {
     front: makeTexture(frontCanvas),
@@ -379,6 +351,7 @@ export function createBadgeGeometry() {
   return geometry;
 }
 
+/** Soft contact shadow under the card — not a corner halo. */
 export function createContactShadowTexture(color: string) {
   const canvas = document.createElement("canvas");
   canvas.width = 512;
@@ -390,7 +363,7 @@ export function createContactShadowTexture(color: string) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.filter = "blur(28px)";
   ctx.fillStyle = color;
-  ctx.globalAlpha = 0.22;
+  ctx.globalAlpha = 0.18;
   roundRect(ctx, 90, 110, canvas.width - 180, canvas.height - 150, 40);
   ctx.fill();
   const texture = new THREE.CanvasTexture(canvas);

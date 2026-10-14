@@ -93,7 +93,7 @@ export default function Home() {
           <p className={styles.closing}>
             I consider myself a designer at heart and enjoy building products with taste. Very
             recently, I start shipping things myself with the assistance of code & AI, including
-            this site, you are looking at <span className={styles.version}>v7.3.0</span>.
+            this site, you are looking at <span className={styles.version}>v7.3.2</span>.
           </p>
           <div className={styles.introActions}>
             <Button href="/about">About me</Button>

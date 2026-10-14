@@ -16,6 +16,7 @@ export type ProjectCaseMediaFrame =
 type ProjectCaseMediaProps = {
   children: ReactNode;
   className?: string;
+  layout?: "stack" | "row";
 };
 
 type ProjectCaseMediaItemProps = {
@@ -26,9 +27,11 @@ type ProjectCaseMediaItemProps = {
   src?: string;
 };
 
-export function ProjectCaseMedia({ children, className }: ProjectCaseMediaProps) {
+export function ProjectCaseMedia({ children, className, layout = "stack" }: ProjectCaseMediaProps) {
   return (
-    <figure className={[styles.media, className].filter(Boolean).join(" ")}>
+    <figure
+      className={[styles.media, layout === "row" ? styles.row : "", className].filter(Boolean).join(" ")}
+    >
       {children}
     </figure>
   );

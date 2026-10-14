@@ -42,18 +42,6 @@
   font-variant-numeric: tabular-nums;
 }
 
-@media (max-width: 1199px) {
-  .footer {
-    width: min(100%, var(--portfolio-text-column));
-  }
-}
-
-@media (max-width: 767px) {
-  .footer {
-    width: var(--portfolio-text-column);
-  }
-}
-
 @media (max-width: 479px) {
   .copyright {
     white-space: pre-wrap;

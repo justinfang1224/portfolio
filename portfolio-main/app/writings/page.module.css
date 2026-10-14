@@ -139,12 +139,6 @@
   width: 100%;
 }
 
-@media (max-width: 1199px) {
-  .main {
-    width: var(--portfolio-text-column);
-  }
-}
-
 @media (max-width: 767px) {
   .main {
     gap: 56px;

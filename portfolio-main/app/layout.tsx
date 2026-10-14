@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { BadgePresence } from "@/components/about/badgePresence";
-import { NameBadgeLayer } from "@/components/about/NameBadgeLayer";
-import { NameBadgePreload } from "@/components/about/NameBadgePreload";
 import { SiteAnalytics } from "@/components/analytics/SiteAnalytics";
 import { DesignSystemAudit } from "@/components/dev/DesignSystemAudit";
 import { FloatingNav } from "@/components/FloatingNav";
@@ -64,20 +61,16 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: colorSchemeScript }} />
       </head>
       <body>
-        <NameBadgePreload />
         <LandingSplash />
-        <BadgePresence>
-          <div className="portfolio-content-shell">
-            <FloatingNav />
-            <SmoothScroll>
-              <RouteFade>
-                <NameBadgeLayer />
-                {children}
-                <Footer />
-              </RouteFade>
-            </SmoothScroll>
-          </div>
-        </BadgePresence>
+        <div className="portfolio-content-shell">
+          <FloatingNav />
+          <SmoothScroll>
+            <RouteFade>
+              {children}
+              <Footer />
+            </RouteFade>
+          </SmoothScroll>
+        </div>
         {process.env.NODE_ENV === "development" ? <DesignSystemAudit /> : null}
         {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ? (
           <SiteAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />

@@ -1,0 +1,35 @@
+---
+description: Enforce the 16px page gutter site-wide and prevent horizontal scrolling on mobile
+alwaysApply: true
+---
+
+# Page Gutter And Mobile Scroll Standard
+
+## 16px Left/Right Page Gutter
+
+The site uses a single, consistent 16px left/right page gutter on every page and at every viewport width. The source of truth lives in `portfolio-main/app/globals.css`:
+
+- `--portfolio-page-gutter: var(--spacing-16)` — the one place the gutter is defined.
+- `--portfolio-shell: min(960px, calc(100vw - (var(--portfolio-page-gutter) * 2)))` — page shell; guarantees 16px gutters below the 960px cap.
+- `--portfolio-text-column: min(796px, var(--portfolio-shell))` — text column; always tracks the shell.
+
+Rules:
+
+- Never hard-code page gutters (e.g. `100vw - 48px`, `padding-inline: 24px`) or redefine `--portfolio-shell` / `--portfolio-text-column` per page or per breakpoint. Use the shared variables.
+- Page-level containers size with `width: var(--portfolio-shell)` or `width: var(--portfolio-text-column)` plus `margin: 0 auto`; the gutter then falls out automatically.
+- Full-bleed sections that pad their own content (e.g. `.caseStudyShell` on project detail pages) must use `var(--portfolio-page-gutter)` for inline padding.
+- Intentional viewport-bleeding media inside an `overflow: hidden` frame (e.g. case-study hero media) is fine and is not a gutter violation.
+
+## No Horizontal Scroll On Mobile
+
+At `max-width: 767px`, users must never be able to scroll horizontally — vertical scrolling only. `globals.css` enforces this with:
+
+- `html, body { min-width: 0 }` — lifts the desktop 360px floor so nothing forces overflow.
+- `html, body { overflow-x: clip }` — clips any accidental overflow instead of scrolling (does not create a scroll container, so sticky/fixed positioning and Lenis keep working).
+
+Rules:
+
+- Do not remove or weaken these mobile rules, and do not reintroduce a `min-width` on `html`/`body` below the desktop breakpoint.
+- Never ship fixed widths, `min-width`, negative margins, or `100vw`-sized elements that overflow the shell on mobile; size things with `width: 100%`, `minmax(0, ...)`, or the shell variables.
+- If an element genuinely cannot shrink (e.g. a deliberate design floor), it must clip symmetrically inside a centered parent — never push the page wider.
+- Verify at 360px and 375px viewport widths that `document.documentElement.scrollWidth === window.innerWidth` (no horizontal overflow) after layout-affecting changes.

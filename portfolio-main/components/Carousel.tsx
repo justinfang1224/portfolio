@@ -891,6 +891,7 @@ function Card({
     >
       <div className="car-flip">
         <div
+          aria-label={alt}
           className="car-face car-front"
           role="img"
           style={{

@@ -426,19 +426,10 @@
   transform: translate(2px, -2px);
 }
 
-@media (max-width: 1199px) {
-  .main {
-    --portfolio-shell: calc(100vw - 64px);
-    width: min(100%, var(--portfolio-text-column));
-  }
-}
-
 @media (max-width: 767px) {
   .main {
-    --portfolio-shell: calc(100vw - 48px);
     gap: var(--spacing-56);
     padding-top: var(--spacing-128);
-    width: var(--portfolio-text-column);
   }
 
   .featuredCard {

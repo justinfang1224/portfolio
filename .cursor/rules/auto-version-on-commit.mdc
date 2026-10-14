@@ -1,0 +1,19 @@
+---
+description: Bump the homepage site version label whenever a commit is created
+alwaysApply: true
+---
+
+# Auto-label site version on commit
+
+The live site version is the `vMAJOR.MINOR.PATCH` label in `portfolio-main/app/page.tsx`, inside `<span className={styles.version}>`.
+
+Whenever you create a git commit that includes portfolio changes:
+
+1. Read the current label.
+2. Increment the patch number by 1. Example: `v7.3.0` becomes `v7.3.1`. Leave major and minor unchanged unless the user asks for a larger bump.
+3. Update that span and include the change in the same commit.
+4. Leave `package.json` `version` alone. That field is not the site label.
+5. If the only staged change is this version bump, do not bump again.
+6. Report the new version in the commit summary.
+
+Skip the bump only when the user explicitly says not to change the version.

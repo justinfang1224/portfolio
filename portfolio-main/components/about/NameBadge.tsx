@@ -1,41 +1,27 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { aboutBadge } from "@/content/about";
 import { dsMarker } from "@/lib/ds-marker";
-import { useBadgePresence } from "./badgePresence";
 import styles from "./NameBadge.module.css";
 
-export function NameBadge() {
-  const { ready } = useBadgePresence();
+const Lanyard = dynamic(() => import("./name-badge/Lanyard"), {
+  ssr: false
+});
 
+export function NameBadge() {
   return (
-    <div className={styles.slot} {...dsMarker("NameBadge")}>
-      <div aria-hidden="true" className={styles.poster} hidden={ready}>
-        <span className={styles.strap} />
-        <article className={styles.card}>
-          <div className={styles.identity}>
-            <p className={styles.name}>{aboutBadge.name}</p>
-            <img alt="" className={styles.photo} src={aboutBadge.photo} />
-          </div>
-          <ul className={styles.rows}>
-            <li>
-              <span aria-hidden="true">🌐</span>
-              {aboutBadge.location}
-            </li>
-            <li>
-              <span aria-hidden="true">🖥️</span>
-              {aboutBadge.job}
-            </li>
-            <li>
-              <span aria-hidden="true">✉️</span>
-              {aboutBadge.email}
-            </li>
-          </ul>
-        </article>
-      </div>
+    <div className={styles.slot} data-badge-slot="" {...dsMarker("NameBadge")}>
+      <Lanyard
+        email={aboutBadge.email}
+        job={aboutBadge.job}
+        location={aboutBadge.location}
+        name={aboutBadge.name}
+        photo={aboutBadge.photo}
+      />
       <p className={styles.srOnly}>
-        {aboutBadge.name}. {aboutBadge.location}. {aboutBadge.job}. {aboutBadge.email}. Drag the
-        badge to swing it.
+        {aboutBadge.name}. {aboutBadge.location}. {aboutBadge.job}. {aboutBadge.email}.
+        <span className={styles.dragHint}> Drag the badge to swing it.</span>
       </p>
     </div>
   );

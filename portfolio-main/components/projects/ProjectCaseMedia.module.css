@@ -6,6 +6,21 @@
   width: 100%;
 }
 
+.row {
+  align-items: flex-start;
+  flex-direction: row;
+  gap: 24px;
+}
+
+.row .item {
+  flex: 1 1 0;
+  width: auto;
+}
+
+.row .image {
+  object-fit: contain;
+}
+
 .item {
   align-items: center;
   align-self: stretch;
@@ -89,6 +104,10 @@
 }
 
 @media (max-width: 767px) {
+  .row {
+    flex-direction: column;
+  }
+
   .frame {
     height: auto;
   }

@@ -155,6 +155,10 @@
   transform: none;
 }
 
+.menuLink[aria-current="page"] {
+  color: var(--color-content-primary);
+}
+
 .menuLink:hover {
   background: var(--color-background-primary);
   color: var(--color-content-primary);

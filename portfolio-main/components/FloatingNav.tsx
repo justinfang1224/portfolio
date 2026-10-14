@@ -40,6 +40,14 @@ const shellSpring = {
 
 let hasPreloadedAboutHero = false;
 
+function isCurrentNavItem(pathname: string, href: string) {
+  if (href === "/") {
+    return pathname === "/";
+  }
+
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
 function preloadAboutHeroImages() {
   if (hasPreloadedAboutHero || typeof window === "undefined") {
     return;
@@ -261,6 +269,7 @@ export function FloatingNav() {
               <nav aria-label="Primary" className={styles.menu} id={menuId} inert={menuOpen ? undefined : true}>
                 {navItems.map((item, index) => (
                   <Link
+                    aria-current={isCurrentNavItem(pathname, item.href) ? "page" : undefined}
                     className={styles.menuLink}
                     href={item.href}
                     key={item.id}

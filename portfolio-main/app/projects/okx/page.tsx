@@ -171,6 +171,7 @@ export default function OkxProjectPage() {
                       <ProjectCaseMedia
                         className={styles.imageBlock}
                         key={`${section.id}-image-${blockIndex}`}
+                        layout={block.images.length > 1 ? "row" : "stack"}
                       >
                         {block.images.map((image) => (
                           <ProjectCaseMediaItem

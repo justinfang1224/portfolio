@@ -40,7 +40,7 @@
   display: grid;
   grid-template-columns: minmax(0, 632px);
   justify-content: center;
-  padding: 100px 40px 80px;
+  padding: 100px var(--portfolio-page-gutter) 80px;
   width: 100%;
 }
 
@@ -275,13 +275,6 @@
   width: 100%;
 }
 
-@media (max-width: 1199px) {
-  .caseStudyShell {
-    grid-template-columns: minmax(0, 632px);
-    padding-inline: 32px;
-  }
-}
-
 @media (max-width: 767px) {
   .hero {
     height: 420px;
@@ -292,7 +285,7 @@
   }
 
   .caseStudyShell {
-    padding: 72px 24px 56px;
+    padding: 72px var(--portfolio-page-gutter) 56px;
   }
 
   .content,
