@@ -524,7 +524,7 @@ export function HomeFeaturedCarousel() {
             height={449}
             onLoad={(event) => rememberSlideTone(item.image, event.currentTarget)}
             priority={index === 0}
-            sizes="(max-width: 767px) calc(100vw - 48px), 796px"
+            sizes="(max-width: 767px) calc(100vw - 40px), 796px"
             src={item.image}
             width={804}
           />

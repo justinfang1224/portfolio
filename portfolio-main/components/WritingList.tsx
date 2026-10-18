@@ -1,10 +1,9 @@
-import Link from "next/link";
 import { writings } from "@/content/portfolio";
 import { dsMarker } from "@/lib/ds-marker";
 import { Button } from "./Button";
-import { ArrowUpRightIcon } from "./icons";
 import { MotionReveal } from "./MotionReveal";
 import { SectionTitle } from "./SectionTitle";
+import { WritingItem } from "./WritingItem";
 import styles from "./WritingList.module.css";
 
 type WritingEntry = {
@@ -17,61 +16,64 @@ type WritingEntry = {
 type WritingListProps = {
   actionHref?: string | null;
   actionLabel?: string;
+  embedded?: boolean;
   entries?: readonly WritingEntry[];
+  flushLast?: boolean;
   index?: string;
   sectionId?: string;
+  showAction?: boolean;
+  showHeading?: boolean;
   title?: string;
 };
 
 export function WritingList({
   actionHref = "/writings",
   actionLabel = "View all →",
+  embedded = false,
   entries = writings,
+  flushLast = false,
   index = "03",
   sectionId = "writings",
+  showAction = true,
+  showHeading = true,
   title = "Writings"
 }: WritingListProps = {}) {
   const titleId = `${sectionId}-title`;
+  const items = entries.map((writing, itemIndex) => (
+    <WritingItem
+      category={writing.category}
+      date={writing.date}
+      delay={Math.min(itemIndex, 2) * 60}
+      flush={flushLast && itemIndex === entries.length - 1}
+      href={writing.href}
+      key={writing.title}
+      title={writing.title}
+    />
+  ));
+
+  if (embedded) {
+    return <div className={styles.embedded}>{items}</div>;
+  }
 
   return (
     <section
-      aria-labelledby={titleId}
+      aria-label={showHeading ? undefined : "Writing list"}
+      aria-labelledby={showHeading ? titleId : undefined}
       className={styles.section}
-      id={sectionId}
+      id={showHeading ? sectionId : undefined}
       {...dsMarker("WritingList")}
     >
-      <MotionReveal>
-        <SectionTitle id={titleId} index={index} title={title} />
-      </MotionReveal>
-      <div className={styles.list}>
-        {entries.map((writing, index) => {
-          const href = writing.href ?? "#";
-
-          return (
-            <MotionReveal
-              as="article"
-              className={styles.item}
-              delay={Math.min(index, 2) * 60}
-              key={writing.title}
-            >
-              <Link className={styles.itemLink} href={href}>
-                <div className={styles.itemText}>
-                  <h3 className={styles.itemTitle}>{writing.title}</h3>
-                  <p className={styles.meta}>
-                    <span>{writing.date}</span>
-                    <span aria-hidden="true">•</span>
-                    <span>{writing.category}</span>
-                  </p>
-                </div>
-                <ArrowUpRightIcon className={styles.arrow} />
-              </Link>
-            </MotionReveal>
-          );
-        })}
-      </div>
-      <MotionReveal delay={60}>
-        <Button href={actionHref ?? undefined}>{actionLabel}</Button>
-      </MotionReveal>
+      {showHeading ? (
+        <MotionReveal>
+          <SectionTitle id={titleId} index={index} title={title} />
+        </MotionReveal>
+      ) : null}
+      <div className={styles.list}>{items}</div>
+      {showAction ? (
+        <MotionReveal delay={60}>
+          <Button href={actionHref ?? undefined}>{actionLabel}</Button>
+        </MotionReveal>
+      ) : null}
     </section>
   );
 }

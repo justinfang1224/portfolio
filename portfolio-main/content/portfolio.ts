@@ -1,5 +1,6 @@
 export const assetUrls = {
   avatar: "/images/profile/avatar.png",
+  homeAvatar: "/images/profile/home-avatar.png",
   projectCard: "/images/projects/credit-card-cover.png",
   depositExperience: "/images/projects/okx-deposit-experience.png",
   delphiAiSearch: "/images/projects/delphi-ai-search.png",

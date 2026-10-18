@@ -1,16 +1,16 @@
 ---
-description: Enforce the 16px page gutter site-wide and prevent horizontal scrolling on mobile
+description: Enforce the 20px page gutter site-wide and prevent horizontal scrolling on mobile
 alwaysApply: true
 ---
 
 # Page Gutter And Mobile Scroll Standard
 
-## 16px Left/Right Page Gutter
+## 20px Left/Right Page Gutter
 
-The site uses a single, consistent 16px left/right page gutter on every page and at every viewport width. The source of truth lives in `portfolio-main/app/globals.css`:
+The site uses a single, consistent 20px left/right page gutter on every page and at every viewport width. The source of truth lives in `portfolio-main/app/globals.css`:
 
-- `--portfolio-page-gutter: var(--spacing-16)` — the one place the gutter is defined.
-- `--portfolio-shell: min(960px, calc(100vw - (var(--portfolio-page-gutter) * 2)))` — page shell; guarantees 16px gutters below the 960px cap.
+- `--portfolio-page-gutter: var(--spacing-20)` — the one place the gutter is defined.
+- `--portfolio-shell: min(960px, calc(100vw - (var(--portfolio-page-gutter) * 2)))` — page shell; guarantees 20px gutters below the 960px cap.
 - `--portfolio-text-column: min(796px, var(--portfolio-shell))` — text column; always tracks the shell.
 
 Rules:

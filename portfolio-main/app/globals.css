@@ -7,7 +7,7 @@
   --portfolio-nav-active-background: var(--color-background-contrast);
   --portfolio-nav-background: color-mix(in srgb, var(--color-surface-card-primary) 80%, transparent);
   --portfolio-min-width: 360px;
-  --portfolio-page-gutter: var(--spacing-16);
+  --portfolio-page-gutter: var(--spacing-20);
   --portfolio-shell: min(960px, calc(100vw - (var(--portfolio-page-gutter) * 2)));
   --portfolio-text-column: min(796px, var(--portfolio-shell));
   --motion-fade-duration: 360ms;
@@ -81,6 +81,53 @@ svg {
 
 a {
   color: inherit;
+}
+
+.text-link {
+  position: relative;
+  text-decoration: none;
+}
+
+.text-link::before,
+.text-link::after {
+  content: "";
+  height: 1px;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.text-link::before {
+  background: var(--color-border-primary);
+}
+
+.text-link::after {
+  background: var(--color-content-primary);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 380ms var(--motion-fade-ease);
+}
+
+.text-link:hover::after,
+.text-link:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.text-link:hover,
+.text-link:focus-visible {
+  outline: none;
+}
+
+.text-link:focus-visible::after {
+  height: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .text-link::after {
+    transition: none;
+  }
 }
 
 button,

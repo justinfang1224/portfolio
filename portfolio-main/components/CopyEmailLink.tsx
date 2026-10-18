@@ -82,7 +82,7 @@ export function CopyEmailLink({ children = "Email", className, email }: CopyEmai
   return (
     <TermExplain asChild explanation={copied ? COPIED_HINT : DEFAULT_HINT}>
       <a
-        className={className}
+        className={["text-link", className].filter(Boolean).join(" ")}
         href={`mailto:${email}`}
         onClick={handleClick}
         onMouseLeave={handleMouseLeave}

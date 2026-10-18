@@ -17,7 +17,7 @@ type HeroCompanyLinkProps = {
 
 function HeroCompanyLink({ company }: HeroCompanyLinkProps) {
   return (
-    <a className={styles.companyLink} href={company.href} rel="noreferrer" target="_blank">
+    <a className={`${styles.companyLink} text-link`} href={company.href} rel="noreferrer" target="_blank">
       <Image
         alt={company.logoAlt}
         className={styles.companyLogo}

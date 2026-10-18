@@ -5,9 +5,15 @@ import { aboutBadge } from "@/content/about";
 import { dsMarker } from "@/lib/ds-marker";
 import styles from "./NameBadge.module.css";
 
-const Lanyard = dynamic(() => import("./name-badge/Lanyard"), {
+const loadLanyard = () => import("./name-badge/Lanyard");
+
+const Lanyard = dynamic(loadLanyard, {
   ssr: false
 });
+
+if (typeof window !== "undefined") {
+  void loadLanyard();
+}
 
 export function NameBadge() {
   return (

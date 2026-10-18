@@ -24,17 +24,7 @@
 .identity {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-24);
   width: 100%;
-}
-
-.index {
-  color: var(--color-content-secondary);
-  font-family: var(--font-family-base);
-  font-size: var(--typography-caption-font-size);
-  font-weight: var(--typography-caption-font-weight);
-  line-height: var(--typography-caption-line-height);
-  margin: 0;
 }
 
 .identityCopy {
@@ -46,17 +36,16 @@
 
 .name,
 .identityCopy p,
-.sectionHeader h2,
-.writingCopy h3 {
+.sectionHeader h3 {
   font-family: var(--font-family-base);
   margin: 0;
 }
 
 .name {
   color: var(--color-content-primary);
-  font-size: var(--typography-heading-2-font-size);
-  font-weight: var(--typography-heading-2-font-weight);
-  line-height: var(--typography-heading-2-line-height);
+  font-size: var(--typography-heading-3-font-size);
+  font-weight: var(--typography-heading-3-font-weight);
+  line-height: var(--typography-heading-3-line-height);
 }
 
 .identityCopy p,
@@ -79,9 +68,9 @@
 .closing {
   color: var(--color-content-primary);
   font-family: var(--font-family-base);
-  font-size: var(--typography-body-large-font-size);
-  font-weight: var(--typography-body-large-font-weight);
-  line-height: var(--typography-body-large-line-height);
+  font-size: var(--typography-body-medium-font-size);
+  font-weight: var(--typography-body-medium-font-weight);
+  line-height: var(--typography-body-medium-line-height);
   margin: 0;
   width: 100%;
 }
@@ -91,7 +80,7 @@
 }
 
 .prose p + p {
-  margin-top: var(--typography-body-large-line-height);
+  margin-top: var(--typography-body-medium-line-height);
 }
 
 .introActions {
@@ -100,23 +89,8 @@
   gap: var(--spacing-12);
 }
 
-.prose a,
-.version {
+.prose a {
   color: var(--color-content-primary);
-  text-decoration: underline;
-  text-decoration-style: dotted;
-  text-underline-offset: 3px;
-}
-
-.prose a:hover {
-  text-decoration-style: solid;
-}
-
-.prose a:focus-visible,
-.writingLink:focus-visible {
-  border-radius: var(--spacing-8);
-  outline: 2px solid var(--color-content-primary);
-  outline-offset: 4px;
 }
 
 .companyLink {
@@ -347,83 +321,11 @@
   width: 100%;
 }
 
-.sectionHeader h2 {
+.sectionHeader h3 {
   color: var(--color-content-primary);
-  font-size: var(--typography-heading-2-font-size);
-  font-weight: var(--typography-heading-2-font-weight);
-  line-height: var(--typography-heading-2-line-height);
-}
-
-.writingList {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-36);
-  width: 100%;
-}
-
-.writingItem {
-  border-bottom: 1px solid var(--color-border-primary);
-  padding-bottom: var(--spacing-36);
-}
-
-.writingItem:last-child {
-  border-bottom: 0;
-  padding-bottom: 0;
-}
-
-.writingLink {
-  align-items: center;
-  color: inherit;
-  display: flex;
-  gap: var(--spacing-20);
-  justify-content: space-between;
-  text-decoration: none;
-  transition: transform 160ms ease;
-}
-
-.writingLink:hover {
-  transform: translateX(4px);
-}
-
-.writingCopy {
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: column;
-  gap: var(--spacing-8);
-  min-width: 0;
-}
-
-.writingCopy h3 {
-  color: var(--color-content-primary);
-  font-size: var(--typography-subtitle-font-size);
-  font-weight: var(--typography-heading-2-font-weight);
-  line-height: var(--typography-subtitle-line-height);
-}
-
-.writingCopy p {
-  align-items: center;
-  color: var(--color-content-tertiary);
-  display: flex;
-  flex-wrap: wrap;
-  font-family: var(--font-family-base);
-  font-size: var(--typography-body-medium-font-size);
-  font-weight: var(--typography-body-medium-font-weight);
-  gap: var(--spacing-8);
-  line-height: var(--typography-body-medium-line-height);
-  margin: 0;
-}
-
-.writingArrow {
-  color: var(--color-content-tertiary);
-  flex: 0 0 auto;
-  height: 24px;
-  transition: color 160ms ease, transform 160ms ease;
-  width: 24px;
-}
-
-.writingLink:hover .writingArrow {
-  color: var(--color-content-primary);
-  transform: translate(2px, -2px);
+  font-size: var(--typography-heading-3-font-size);
+  font-weight: var(--typography-heading-3-font-weight);
+  line-height: var(--typography-heading-3-line-height);
 }
 
 @media (max-width: 767px) {
@@ -447,9 +349,7 @@
 @media (prefers-reduced-motion: reduce) {
   .featuredImage,
   .featuredSlide,
-  .slideIndicator button,
-  .writingLink,
-  .writingArrow {
+  .slideIndicator button {
     transition: none;
   }
 
@@ -472,10 +372,5 @@
   .featuredSlideOutgoingForward,
   .featuredSlidePrev {
     opacity: 0;
-  }
-
-  .writingLink:hover,
-  .writingLink:hover .writingArrow {
-    transform: none;
   }
 }

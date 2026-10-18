@@ -97,7 +97,7 @@ function ProjectIndexCard({ project, priority }: { project: ProjectCard; priorit
         className={[styles.projectImage, styles[project.imageClassName]].join(" ")}
         height={528}
         priority={priority}
-        sizes="(max-width: 767px) calc(100vw - 48px), 796px"
+        sizes="(max-width: 767px) calc(100vw - 40px), 796px"
         src={project.image}
         width={796}
       />
@@ -239,7 +239,7 @@ export function ProjectsIndex() {
           </button>
         </div>
         <div className={styles.headingGroup}>
-          <h1 id="projects-title">{isArchive ? "Archived works 📂" : "Office hours 🕐"}</h1>
+          <h2 id="projects-title">{isArchive ? "Archived works 📂" : "Office hours 🕐"}</h2>
           <p>
             {isArchive
               ? "Selected works and creative side projects outside of my case studies."
@@ -264,7 +264,7 @@ export function ProjectsIndex() {
               >
                 <p className={styles.archiveYear}>{work.year}</p>
                 {work.href ? (
-                  <a className={styles.archiveTitleLink} href={work.href} rel="noreferrer" target="_blank">
+                  <a className={`${styles.archiveTitleLink} text-link`} href={work.href} rel="noreferrer" target="_blank">
                     {work.title}
                   </a>
                 ) : (

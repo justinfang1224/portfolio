@@ -17,16 +17,14 @@ function runGit(args: string[]) {
 
 function formatUpdatedOn(date: Date) {
   const parts = new Intl.DateTimeFormat("en-US", {
-    day: "numeric",
     month: "short",
     timeZone: DISPLAY_TIME_ZONE,
     year: "numeric"
   }).formatToParts(date);
   const month = parts.find((part) => part.type === "month")?.value ?? "";
-  const day = parts.find((part) => part.type === "day")?.value ?? "";
   const year = parts.find((part) => part.type === "year")?.value ?? "";
 
-  return `${DATE_PREFIX} ${month} ${day} ${year}`;
+  return `${DATE_PREFIX} Updated ${month}, ${year}`;
 }
 
 function getLastUpdatedDate() {
