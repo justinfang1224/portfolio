@@ -187,6 +187,9 @@ const buildCss = (tokens) => {
     ".text-subtitle { font-family: var(--font-family-base); font-size: var(--typography-subtitle-font-size); font-weight: var(--typography-subtitle-font-weight); line-height: var(--typography-subtitle-line-height); }"
   );
   lines.push(
+    ".text-subtitle-2 { font-family: var(--font-family-base); font-size: var(--typography-subtitle-2-font-size); font-weight: var(--typography-subtitle-2-font-weight); line-height: var(--typography-subtitle-2-line-height); }"
+  );
+  lines.push(
     ".text-button { font-family: var(--font-family-base); font-size: var(--typography-button-font-size); font-weight: var(--typography-button-font-weight); line-height: var(--typography-button-line-height); }"
   );
   lines.push(

@@ -76,9 +76,9 @@
 .company {
   color: var(--color-content-primary);
   font-family: var(--font-family-base);
-  font-size: var(--typography-body-medium-font-size);
-  font-weight: var(--typography-body-medium-font-weight);
-  line-height: var(--typography-body-medium-line-height);
+  font-size: var(--typography-subtitle-2-font-size);
+  font-weight: var(--typography-subtitle-2-font-weight);
+  line-height: var(--typography-subtitle-2-line-height);
   margin: 0;
 }
 

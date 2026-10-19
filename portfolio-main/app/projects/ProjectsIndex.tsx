@@ -239,7 +239,7 @@ export function ProjectsIndex() {
           </button>
         </div>
         <div className={styles.headingGroup}>
-          <h2 id="projects-title">{isArchive ? "Archived works 📂" : "Office hours 🕐"}</h2>
+          <h3 id="projects-title">{isArchive ? "Archived works 📂" : "Office hours 🕐"}</h3>
           <p>
             {isArchive
               ? "Selected works and creative side projects outside of my case studies."

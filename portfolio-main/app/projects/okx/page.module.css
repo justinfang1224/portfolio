@@ -87,9 +87,9 @@
 .title {
   color: var(--color-content-primary);
   font-family: var(--font-family-base);
-  font-size: var(--typography-heading-1-font-size);
-  font-weight: var(--typography-heading-1-font-weight);
-  line-height: var(--typography-heading-1-line-height);
+  font-size: var(--typography-heading-2-font-size);
+  font-weight: var(--typography-heading-2-font-weight);
+  line-height: var(--typography-heading-2-line-height);
   margin: 0;
   max-width: 597px;
 }
@@ -267,13 +267,6 @@
   margin-top: 0;
 }
 
-.highlight {
-  color: var(--color-content-secondary);
-  text-decoration: underline;
-  text-decoration-style: dotted;
-  text-underline-offset: 3px;
-}
-
 .imageBlock {
   width: 100%;
 }
@@ -301,11 +294,6 @@
   .content,
   .sections {
     gap: 40px;
-  }
-
-  .title {
-    font-size: var(--typography-heading-2-font-size);
-    line-height: var(--typography-heading-2-line-height);
   }
 
   .details {

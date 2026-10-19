@@ -32,7 +32,7 @@ function RichParagraph({
         const isHighlighted = "highlight" in segment && segment.highlight;
 
         return isHighlighted ? (
-          <span className={styles.highlight} key={`${segment.text}-${index}`}>
+          <span className="text-link" key={`${segment.text}-${index}`}>
             {segment.text}
           </span>
         ) : (
@@ -65,7 +65,7 @@ export default function CryptoProjectPage() {
             <MotionReveal as="section" className={styles.intro} id="intro">
               <div className={styles.introHeader}>
                 <p className={styles.index}>{cryptoProjectDetail.intro.year}</p>
-                <h1 className={styles.title}>{cryptoProjectDetail.intro.title}</h1>
+                <h2 className={styles.title}>{cryptoProjectDetail.intro.title}</h2>
                 <p className={styles.summary}>{cryptoProjectDetail.intro.summary}</p>
               </div>
 

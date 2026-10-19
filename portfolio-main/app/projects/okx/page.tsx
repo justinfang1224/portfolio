@@ -33,7 +33,7 @@ function RichParagraph({
         const isHighlighted = "highlight" in segment && segment.highlight;
 
         return isHighlighted ? (
-          <span className={styles.highlight} key={`${segment.text}-${index}`}>
+          <span className="text-link" key={`${segment.text}-${index}`}>
             {segment.text}
           </span>
         ) : (
@@ -66,7 +66,7 @@ export default function OkxProjectPage() {
             <MotionReveal as="section" className={styles.intro} id="intro">
               <div className={styles.introHeader}>
                 <p className={styles.index}>{okxProjectDetail.intro.year}</p>
-                <h1 className={styles.title}>{okxProjectDetail.intro.title}</h1>
+                <h2 className={styles.title}>{okxProjectDetail.intro.title}</h2>
                 <p className={styles.summary}>{okxProjectDetail.intro.summary}</p>
               </div>
 
@@ -145,7 +145,7 @@ export default function OkxProjectPage() {
                           <ul className={styles.list}>
                             {block.items.map((item) => (
                               <li key={item.label}>
-                                <span className={styles.highlight}>{item.label}</span>
+                                <span className="text-link">{item.label}</span>
                                 <span>{` -> ${item.text}`}</span>
                               </li>
                             ))}
