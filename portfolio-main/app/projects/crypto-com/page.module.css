@@ -8,8 +8,10 @@
 
 .hero {
   background: var(--color-surface-card-secondary, var(--color-button-secondary-default));
+  aspect-ratio: 796 / 496;
   border-bottom: 1px solid var(--color-border-primary);
-  height: 420px;
+  height: auto;
+  max-height: 320px;
   overflow: hidden;
   position: relative;
   width: 100%;
@@ -269,14 +271,6 @@
 }
 
 @media (max-width: 767px) {
-  .hero {
-    height: 420px;
-  }
-
-  .heroMedia {
-    width: 100%;
-  }
-
   .caseStudyShell {
     padding: 72px var(--portfolio-page-gutter) 56px;
   }

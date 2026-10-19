@@ -4,37 +4,42 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
-import { Badge } from "@/components/Badge";
+import { projectThumbnails } from "@/content/portfolio";
 import styles from "./page.module.css";
 
 const carouselItems = [
   {
-    alt: "Delphi AI search mobile interface shown inside a dark blue project preview.",
-    image: "/images/landing/home-featured-work.png",
-    status: "locked"
+    alt: "Crypto.com AI search on a phone, asking what's up with BTC today.",
+    image: projectThumbnails.cryptoAiSearch,
+    title: "Delphi AI search",
+    year: "2026"
   },
   {
-    alt: "OG.com mobile interface shown on a dark orange project preview.",
-    image: "/images/landing/home-featured-og.png",
-    status: "locked"
+    alt: "OG.com sports markets and a trade slip on two phones.",
+    image: projectThumbnails.ogTrading,
+    title: "OG.com Prediction trading",
+    year: "2026"
   },
   {
-    alt: "Crypto.com credit card app on two phones: an Obsidian card application and the credit card balance home.",
+    alt: "Crypto.com credit card balance and an Indigo Visa card on a phone.",
     href: "/projects/crypto-com",
-    image: "/images/landing/home-featured-credit-card.png",
-    status: "live"
+    image: projectThumbnails.cryptoCard,
+    title: "Crypto.com credit card",
+    year: "2025"
   },
   {
-    alt: "OKX web deposit page beside a deposit details card, shown on a light project preview.",
+    alt: "OKX deposit details showing the selected asset, network, and deposit address.",
     href: "/projects/okx",
-    image: "/images/landing/home-featured-okx-deposit.png",
-    status: "live"
+    image: projectThumbnails.okxDeposit,
+    title: "OKX Web deposit",
+    year: "2024"
   },
   {
-    alt: "Filter badge application interface shown on a pink project preview.",
+    alt: "Bowtie filter badge application board.",
     href: "/projects/bowtie",
-    image: "/images/landing/home-featured-filter-badge.png",
-    status: "live"
+    image: projectThumbnails.bowtie,
+    title: "Filter widget redesign",
+    year: "2022"
   }
 ] as const;
 
@@ -42,12 +47,10 @@ const AUTO_ADVANCE_MS = 3000;
 const DRAG_LOCK_PX = 8;
 const DRAG_COMMIT_RATIO = 0.2;
 const DRAG_COMMIT_VELOCITY = 0.45;
-const LIGHT_BACKGROUND_LUMINANCE = 0.45;
 const SLIDE_COUNT = carouselItems.length;
 const SLIDE_MS = 360;
 type SlideDirection = "backward" | "forward";
 type SlideRole = "current" | "hidden" | "next" | "outgoing" | "prev";
-type SlideTone = "dark" | "light";
 
 type DragSession = {
   currentIndex: number;
@@ -116,51 +119,6 @@ function getSlideClassName(role: SlideRole, slideDirection: SlideDirection) {
   return styles.featuredSlideHidden;
 }
 
-function getSlideTone(image: HTMLImageElement): SlideTone {
-  const canvas = document.createElement("canvas");
-  const sampleSize = 32;
-  canvas.height = sampleSize;
-  canvas.width = sampleSize;
-  const context = canvas.getContext("2d", { willReadFrequently: true });
-
-  if (!context || image.naturalWidth === 0 || image.naturalHeight === 0) {
-    return "dark";
-  }
-
-  // Sample the left-center strip where the page switcher sits.
-  context.drawImage(
-    image,
-    0,
-    image.naturalHeight * 0.35,
-    image.naturalWidth * 0.08,
-    image.naturalHeight * 0.3,
-    0,
-    0,
-    sampleSize,
-    sampleSize
-  );
-
-  const pixels = context.getImageData(0, 0, sampleSize, sampleSize).data;
-  let luminance = 0;
-  const pixelCount = sampleSize * sampleSize;
-
-  for (let index = 0; index < pixels.length; index += 4) {
-    const channel = (value: number) => {
-      const normalized = value / 255;
-      return normalized <= 0.04045
-        ? normalized / 12.92
-        : ((normalized + 0.055) / 1.055) ** 2.4;
-    };
-
-    luminance +=
-      0.2126 * channel(pixels[index]) +
-      0.7152 * channel(pixels[index + 1]) +
-      0.0722 * channel(pixels[index + 2]);
-  }
-
-  return luminance / pixelCount > LIGHT_BACKGROUND_LUMINANCE ? "light" : "dark";
-}
-
 function prefersReducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
@@ -171,9 +129,8 @@ export function HomeFeaturedCarousel() {
   const [isPaused, setIsPaused] = useState(false);
   const [previousIndex, setPreviousIndex] = useState<number | null>(null);
   const [slideDirection, setSlideDirection] = useState<SlideDirection>("forward");
-  const [slideTones, setSlideTones] = useState<Partial<Record<string, SlideTone>>>({});
   const activeItem = carouselItems[activeIndex];
-  const activeTone = slideTones[activeItem.image] ?? "dark";
+  const isLocked = !("href" in activeItem);
   const activeIndexRef = useRef(activeIndex);
   const cardRef = useRef<HTMLDivElement>(null);
   const slideRefs = useRef<Array<HTMLDivElement | null>>([]);
@@ -192,19 +149,6 @@ export function HomeFeaturedCarousel() {
     onWindowPointerUpRef.current(event);
   }).current;
   activeIndexRef.current = activeIndex;
-
-  const rememberSlideTone = (src: string, image: HTMLImageElement) => {
-    setSlideTones((current) => {
-      if (current[src]) {
-        return current;
-      }
-
-      return {
-        ...current,
-        [src]: getSlideTone(image)
-      };
-    });
-  };
 
   const slideAt = (index: number) => slideRefs.current[index];
 
@@ -495,9 +439,7 @@ export function HomeFeaturedCarousel() {
 
   return (
     <div
-      className={styles.featuredCard}
-      id="featured-work"
-      onFocus={() => setIsPaused(true)}
+      className={styles.featured}
       onMouseEnter={() => {
         hoveredRef.current = true;
         setIsPaused(true);
@@ -506,6 +448,14 @@ export function HomeFeaturedCarousel() {
         hoveredRef.current = false;
         resumeAutoAdvance();
       }}
+    >
+    <div
+      className={[
+        styles.featuredCard,
+        "href" in activeItem ? styles.featuredCardLink : styles.featuredCardProgress
+      ].join(" ")}
+      id="featured-work"
+      onFocus={() => setIsPaused(true)}
       ref={cardRef}
     >
       {carouselItems.map((item, index) => {
@@ -522,7 +472,6 @@ export function HomeFeaturedCarousel() {
               .join(" ")}
             draggable={false}
             height={449}
-            onLoad={(event) => rememberSlideTone(item.image, event.currentTarget)}
             priority={index === 0}
             sizes="(max-width: 767px) calc(100vw - 40px), 796px"
             src={item.image}
@@ -579,19 +528,15 @@ export function HomeFeaturedCarousel() {
         role={"href" in activeItem ? "link" : "group"}
         tabIndex={0}
       />
-      <Badge className={styles.lockedBadge} status={activeItem.status === "live" ? "positive" : "warning"}>
-        {activeItem.status === "live" ? "Live" : "Locked"}
-      </Badge>
-      <div
-        aria-label="Featured work carousel"
-        className={[
-          styles.slideIndicator,
-          activeTone === "light" ? styles.slideIndicatorOnLight : ""
-        ]
-          .filter(Boolean)
-          .join(" ")}
-        role="tablist"
-      >
+      <div aria-hidden="true" className={styles.featuredTitle}>
+        {isLocked ? (
+          <img alt="" className={styles.featuredLock} height={12} src="/icons/featured-lock.svg" width={12} />
+        ) : null}
+        <span className={styles.featuredYear}>{activeItem.year}</span>
+        <span className={styles.featuredName}>{activeItem.title}</span>
+      </div>
+    </div>
+      <div aria-label="Featured work carousel" className={styles.slideIndicator} role="tablist">
         {carouselItems.map((item, index) => (
           <button
             aria-label={`Show featured work ${index + 1}`}

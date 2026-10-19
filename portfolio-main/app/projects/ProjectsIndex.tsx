@@ -13,7 +13,6 @@ import styles from "./page.module.css";
 const projectCards = [
   {
     ...projects[0],
-    image: "/images/landing/home-featured-work.png",
     imageClassName: "delphiImage"
   },
   {
@@ -85,13 +84,14 @@ type ProjectCard = (typeof projectCards)[number];
 type ProjectsTab = "case-studies" | "archive";
 
 function ProjectIndexCard({ project, priority }: { project: ProjectCard; priority: boolean }) {
-  const statusLabel = project.status === "active" ? "Active" : "Locked";
-  const statusTone = project.status === "active" ? "positive" : "warning";
+  const isLocked = project.status !== "active";
   const image = (
     <>
-      <Badge className={styles.statusBadge} status={statusTone}>
-        {statusLabel}
-      </Badge>
+      {isLocked ? (
+        <Badge className={styles.statusBadge} status="warning">
+          Locked
+        </Badge>
+      ) : null}
       <Image
         alt={project.alt}
         className={[styles.projectImage, styles[project.imageClassName]].join(" ")}
@@ -105,7 +105,11 @@ function ProjectIndexCard({ project, priority }: { project: ProjectCard; priorit
   );
 
   return (
-    <article className={styles.projectCard}>
+    <article
+      className={[styles.projectCard, project.detailHref ? "" : styles.projectCardLocked]
+        .filter(Boolean)
+        .join(" ")}
+    >
       {project.detailHref ? (
         <Link
           aria-label={`Open case study: ${project.title}`}

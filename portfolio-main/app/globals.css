@@ -103,6 +103,10 @@ a {
   background: var(--color-border-primary);
 }
 
+.text-link:not(a)::before {
+  background: var(--color-content-tertiary);
+}
+
 .text-link::after {
   background: var(--color-content-primary);
   transform: scaleX(0);
@@ -110,8 +114,12 @@ a {
   transition: transform 380ms var(--motion-fade-ease);
 }
 
-.text-link:hover::after,
-.text-link:focus-visible::after {
+.text-link:not(a)::after {
+  content: none;
+}
+
+a.text-link:hover::after,
+a.text-link:focus-visible::after {
   transform: scaleX(1);
 }
 

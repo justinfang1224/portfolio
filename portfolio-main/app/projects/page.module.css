@@ -181,12 +181,24 @@
   background: var(--color-surface-card-primary);
   border-radius: var(--spacing-24);
   color: inherit;
+  cursor: pointer;
   display: block;
   height: 528px;
   overflow: hidden;
   position: relative;
   text-decoration: none;
   width: 100%;
+}
+
+.projectCardLocked,
+.projectCardLocked * {
+  cursor: progress;
+}
+
+.projectCardLocked .projectMedia:hover .projectImage,
+.projectCardLocked .projectMedia:focus-visible .projectImage,
+.projectCardLocked .projectMedia:focus-within .projectImage {
+  transform: none;
 }
 
 .projectMedia:hover .projectImage,
@@ -245,8 +257,8 @@
 }
 
 .bowtieImage {
-  object-position: left top;
-  transform-origin: left top;
+  object-position: center;
+  transform-origin: center;
 }
 
 .projectContent {

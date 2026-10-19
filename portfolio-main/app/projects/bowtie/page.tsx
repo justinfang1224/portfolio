@@ -52,8 +52,10 @@ export default function BowtieProjectPage() {
           <ProjectHeroParallax
             alt={bowtieProjectDetail.hero.alt}
             className={styles.heroMedia}
+            height={1984}
             imageClassName={styles.heroImage}
             src={bowtieProjectDetail.hero.image}
+            width={3184}
           />
         </MotionReveal>
 
