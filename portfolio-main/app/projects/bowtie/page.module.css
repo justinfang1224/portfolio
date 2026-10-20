@@ -7,9 +7,12 @@
 }
 
 .hero {
-  background: #f4dff2;
+  /* Matches the screenshot canvas so parallax movement does not reveal a different color. */
+  aspect-ratio: 796 / 496;
+  background: #f2f2f2;
   border-bottom: 1px solid var(--color-border-primary);
-  height: 520px;
+  height: auto;
+  max-height: 320px;
   overflow: hidden;
   position: relative;
   width: 100%;
@@ -17,23 +20,19 @@
 
 .heroMedia {
   height: 100%;
-  left: 50%;
-  overflow: visible;
+  left: 0;
+  overflow: hidden;
   position: absolute;
-  top: 138px;
-  transform: translateX(-50%);
-  width: min(1223px, 84.9vw);
+  top: 0;
+  width: 100%;
 }
 
 .heroImage {
   border-radius: 12px;
-  box-shadow: 0 4px 25px rgb(0 0 0 / 20%);
+  display: block;
   height: auto;
-  left: 0;
   object-fit: cover;
-  object-position: center top;
-  position: absolute;
-  top: 0;
+  object-position: center;
   transform: translate3d(0, 0, 0) scale(1);
   width: 100%;
   will-change: transform;
@@ -90,9 +89,9 @@
 .title {
   color: var(--color-content-primary);
   font-family: var(--font-family-base);
-  font-size: var(--typography-heading-1-font-size);
-  font-weight: var(--typography-heading-1-font-weight);
-  line-height: var(--typography-heading-1-line-height);
+  font-size: var(--typography-heading-2-font-size);
+  font-weight: var(--typography-heading-2-font-weight);
+  line-height: var(--typography-heading-2-line-height);
   margin: 0;
   max-width: 597px;
 }
@@ -247,9 +246,9 @@
 .list {
   color: var(--color-content-secondary);
   font-family: var(--font-family-base);
-  font-size: var(--typography-body-large-font-size);
-  font-weight: var(--typography-body-large-font-weight);
-  line-height: var(--typography-body-large-line-height);
+  font-size: var(--typography-body-medium-font-size);
+  font-weight: var(--typography-body-medium-font-weight);
+  line-height: var(--typography-body-medium-line-height);
   width: 100%;
 }
 
@@ -270,13 +269,6 @@
   margin-top: 0;
 }
 
-.highlight {
-  color: var(--color-content-secondary);
-  text-decoration: underline;
-  text-decoration-style: dotted;
-  text-underline-offset: 3px;
-}
-
 .imageBlock {
   width: 100%;
 }
@@ -289,15 +281,6 @@
 }
 
 @media (max-width: 767px) {
-  .hero {
-    height: 420px;
-  }
-
-  .heroMedia {
-    top: 120px;
-    width: min(720px, 150vw);
-  }
-
   .caseStudyShell {
     padding: 72px var(--portfolio-page-gutter) 56px;
   }
@@ -305,11 +288,6 @@
   .content,
   .sections {
     gap: 40px;
-  }
-
-  .title {
-    font-size: var(--typography-heading-2-font-size);
-    line-height: var(--typography-heading-2-line-height);
   }
 
   .details {

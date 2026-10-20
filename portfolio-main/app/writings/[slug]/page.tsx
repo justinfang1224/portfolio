@@ -111,7 +111,7 @@ function ArticleSection({ section, index }: { index: number; section: ArticleSec
           {"note" in section ? (
             <p className={styles.note}>
               {section.note.textBeforeLink}
-              <a href={section.note.link.href} rel="noreferrer" target="_blank">
+              <a className="text-link" href={section.note.link.href} rel="noreferrer" target="_blank">
                 {section.note.link.label}
               </a>
               {section.note.textAfterLink}
@@ -151,7 +151,7 @@ export default async function WritingArticlePage({ params }: { params: PageParam
 
           <header className={styles.header}>
             <p className={styles.date}>{article.date}</p>
-            <h1 className={styles.title}>{article.title}</h1>
+            <h2 className={styles.title}>{article.title}</h2>
             <p className={styles.intro}>{article.intro}</p>
           </header>
 

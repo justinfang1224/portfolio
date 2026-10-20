@@ -258,7 +258,7 @@ export default function Lanyard({
 }: LanyardProps) {
   const palette = useBadgePalette();
   const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" && window.innerWidth < 768);
-  const [mounted, setMounted] = useState(false);
+  const [mounted, setMounted] = useState(() => typeof window !== "undefined");
 
   useEffect(() => {
     setMounted(true);
@@ -604,17 +604,17 @@ function Band({
     <>
       <group position={[0, 4, 0]}>
         <RigidBody ref={fixed} {...segmentProps} type="fixed" />
-        <RigidBody position={isMobile ? [0, -1, 0] : [0.5, 0, 0]} ref={j1} {...segmentProps} type={isMobile ? "fixed" : "dynamic"}>
+        <RigidBody position={[0, -1, 0]} ref={j1} {...segmentProps} type={isMobile ? "fixed" : "dynamic"}>
           <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody position={isMobile ? [0, -2, 0] : [1, 0, 0]} ref={j2} {...segmentProps} type={isMobile ? "fixed" : "dynamic"}>
+        <RigidBody position={[0, -2, 0]} ref={j2} {...segmentProps} type={isMobile ? "fixed" : "dynamic"}>
           <BallCollider args={[0.1]} />
         </RigidBody>
-        <RigidBody position={isMobile ? [0, -3, 0] : [1.5, 0, 0]} ref={j3} {...segmentProps} type={isMobile ? "fixed" : "dynamic"}>
+        <RigidBody position={[0, -3, 0]} ref={j3} {...segmentProps} type={isMobile ? "fixed" : "dynamic"}>
           <BallCollider args={[0.1]} />
         </RigidBody>
         <RigidBody
-          position={isMobile ? [0, -4.5, 0] : [2, 0, 0]}
+          position={[0, -4.5, 0]}
           ref={card}
           {...segmentProps}
           type={isMobile ? "fixed" : dragged ? "kinematicPosition" : "dynamic"}

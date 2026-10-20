@@ -1,13 +1,22 @@
+export const projectThumbnails = {
+  cryptoAiSearch: "/images/projects/thumbnails/crypto-ai-search.png",
+  ogTrading: "/images/projects/thumbnails/og-trading.png",
+  cryptoCard: "/images/projects/thumbnails/crypto-card.png",
+  okxDeposit: "/images/projects/thumbnails/okx-deposit.png",
+  bowtie: "/images/projects/thumbnails/bowtie.png"
+} as const;
+
 export const assetUrls = {
   avatar: "/images/profile/avatar.png",
-  projectCard: "/images/projects/credit-card-cover.png",
-  depositExperience: "/images/projects/okx-deposit-experience.png",
-  delphiAiSearch: "/images/projects/delphi-ai-search.png",
-  filterWidget: "/images/projects/filter-widget.png"
+  homeAvatar: "/images/profile/home-avatar.png",
+  projectCard: projectThumbnails.cryptoCard,
+  depositExperience: projectThumbnails.okxDeposit,
+  delphiAiSearch: projectThumbnails.cryptoAiSearch,
+  filterWidget: projectThumbnails.bowtie
 } as const;
 
 export const cryptoProjectAssets = {
-  hero: "/images/projects/credit-card-cover.png",
+  hero: projectThumbnails.cryptoCard,
   researchData: "/images/projects/crypto-com/research-data.png",
   originalCardHome: "/images/projects/crypto-com/original-card-home.png",
   invisibleCashback: "/images/projects/crypto-com/invisible-cashback.png",
@@ -20,7 +29,7 @@ export const cryptoProjectAssets = {
 } as const;
 
 export const okxProjectAssets = {
-  hero: "/images/projects/okx/hero.png",
+  hero: projectThumbnails.okxDeposit,
   depositGrowth: "/images/projects/okx/deposit-growth.png",
   webVsApp: "/images/projects/okx/web-vs-app.png",
   networkQuestions: "/images/projects/okx/network-questions.png",
@@ -30,8 +39,8 @@ export const okxProjectAssets = {
 } as const;
 
 export const bowtieProjectAssets = {
-  projectCard: "/images/projects/bowtie/project-card.png",
-  hero: "/images/projects/bowtie/hero.jpg",
+  projectCard: projectThumbnails.bowtie,
+  hero: projectThumbnails.bowtie,
   background: "/images/projects/bowtie/background.png",
   filterAnalysis: "/images/projects/bowtie/filter-analysis.png",
   portalAnalysis: "/images/projects/bowtie/portal-analysis.png",
@@ -110,7 +119,7 @@ export const projects = [
       "An AI-powered search engine that converts high-volume market data into real-time sentiment analysis, enabling users to transition from discovery to execution with higher precision and speed.",
     tags: ["0 → 1", "AI feature"],
     image: assetUrls.delphiAiSearch,
-    alt: "Delphi AI search mobile interface showing an AI-powered crypto search query.",
+    alt: "Crypto.com AI search on a phone, asking what's up with BTC today.",
     imageClassName: "projectImageBrowser",
     detailHref: null,
     status: "locked"
@@ -121,7 +130,7 @@ export const projects = [
       "Building the 0 → 1 of a crypto-based credit card for the U.S market. Centralizing rewards within the experience, driving 3M+ card spend within the first 6 months.",
     tags: ["0 → 1", "Payment"],
     image: assetUrls.projectCard,
-    alt: "Crypto.com credit card app on two phones: an Obsidian card application and the credit card balance home.",
+    alt: "Crypto.com credit card balance and an Indigo Visa card on a phone.",
     imageClassName: "projectImagePhone",
     detailHref: "/projects/crypto-com",
     status: "active"
@@ -131,7 +140,7 @@ export const projects = [
     description: "Design enhancement that led to a 18.3% increase in conversion",
     tags: ["Feature improvement", "Payment"],
     image: assetUrls.depositExperience,
-    alt: "OKX web deposit page beside a deposit details card, shown on a light background.",
+    alt: "OKX deposit details showing the selected asset, network, and deposit address.",
     imageClassName: "projectImageBrowser",
     detailHref: "/projects/okx",
     status: "active"
@@ -142,7 +151,7 @@ export const projects = [
       "Optimized Bowtie's internal portal efficiency by replacing manual browser-bookmark workarounds with a searchable, re-usable filter.",
     tags: ["New feature", "Internal tools"],
     image: bowtieProjectAssets.projectCard,
-    alt: "Bowtie filter badge and card open instructions design board.",
+    alt: "Bowtie filter badge application board.",
     imageClassName: "projectImageFilter",
     detailHref: "/projects/bowtie",
     status: "active"
@@ -154,7 +163,7 @@ export const cryptoProjectDetail = {
   newsHref: "https://crypto.com/sg/company-news/creditcardus",
   hero: {
     image: cryptoProjectAssets.hero,
-    alt: "Crypto.com credit card app on two phones: an Obsidian card application and the credit card balance home."
+    alt: "Crypto.com credit card balance and an Indigo Visa card on a phone."
   },
   navItems: [
     { id: "intro", label: "Intro" },
@@ -376,7 +385,7 @@ export const okxProjectDetail = {
   newsHref: "https://www.okx.com/help/how-do-i-make-a-deposit-web",
   hero: {
     image: okxProjectAssets.hero,
-    alt: "OKX web deposit page beside a deposit details card, shown on a light background."
+    alt: "OKX deposit details showing the selected asset, network, and deposit address."
   },
   navItems: [
     { id: "intro", label: "Intro" },
@@ -548,7 +557,7 @@ export const bowtieProjectDetail = {
   href: "/projects/bowtie",
   hero: {
     image: bowtieProjectAssets.hero,
-    alt: "Bowtie internal portal application list with filter controls."
+    alt: "Bowtie filter badge application board."
   },
   navItems: [
     { id: "intro", label: "Intro" },

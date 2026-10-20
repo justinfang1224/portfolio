@@ -83,9 +83,9 @@
 .title {
   color: var(--color-content-primary);
   font-family: var(--font-family-base);
-  font-size: var(--typography-heading-1-font-size);
-  font-weight: var(--typography-heading-1-font-weight);
-  line-height: var(--typography-heading-1-line-height);
+  font-size: var(--typography-heading-2-font-size);
+  font-weight: var(--typography-heading-2-font-weight);
+  line-height: var(--typography-heading-2-line-height);
   margin: 0;
   width: 100%;
 }
@@ -95,9 +95,9 @@
 .note {
   color: var(--color-content-secondary);
   font-family: var(--font-family-base);
-  font-size: var(--typography-body-large-font-size);
-  font-weight: var(--typography-body-large-font-weight);
-  line-height: var(--typography-body-large-line-height);
+  font-size: var(--typography-body-medium-font-size);
+  font-weight: var(--typography-body-medium-font-weight);
+  line-height: var(--typography-body-medium-line-height);
 }
 
 .intro {
@@ -171,20 +171,6 @@
 .note a {
   color: var(--color-content-primary);
   overflow-wrap: anywhere;
-  text-decoration: underline;
-  text-decoration-style: dotted;
-  text-decoration-thickness: max(1px, 0.08em);
-  text-underline-offset: var(--spacing-4);
-}
-
-.note a:hover {
-  text-decoration-style: solid;
-}
-
-.note a:focus-visible {
-  border-radius: var(--spacing-4);
-  outline: 2px solid var(--color-content-primary);
-  outline-offset: var(--spacing-4);
 }
 
 .imageBlock {
@@ -221,11 +207,6 @@
 
   .article {
     gap: var(--spacing-56);
-  }
-
-  .title {
-    font-size: var(--typography-heading-2-font-size);
-    line-height: var(--typography-heading-2-line-height);
   }
 
   .caption {

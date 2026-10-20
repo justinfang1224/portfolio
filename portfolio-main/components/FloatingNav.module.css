@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   left: 0;
+  padding-inline: var(--portfolio-page-gutter);
   pointer-events: none;
   position: fixed;
   right: 0;
@@ -13,8 +14,9 @@
   align-items: center;
   display: flex;
   justify-content: space-between;
+  max-width: var(--portfolio-text-column);
   pointer-events: none;
-  width: min(100%, var(--portfolio-text-column));
+  width: 100%;
 }
 
 .bar > * {

@@ -8,8 +8,10 @@
 
 .hero {
   background: var(--color-surface-card-secondary, var(--color-button-secondary-default));
+  aspect-ratio: 796 / 496;
   border-bottom: 1px solid var(--color-border-primary);
-  height: 420px;
+  height: auto;
+  max-height: 320px;
   overflow: hidden;
   position: relative;
   width: 100%;
@@ -87,9 +89,9 @@
 .title {
   color: var(--color-content-primary);
   font-family: var(--font-family-base);
-  font-size: var(--typography-heading-1-font-size);
-  font-weight: var(--typography-heading-1-font-weight);
-  line-height: var(--typography-heading-1-line-height);
+  font-size: var(--typography-heading-2-font-size);
+  font-weight: var(--typography-heading-2-font-weight);
+  line-height: var(--typography-heading-2-line-height);
   margin: 0;
   max-width: 597px;
 }
@@ -243,9 +245,9 @@
 .prose {
   color: var(--color-content-secondary);
   font-family: var(--font-family-base);
-  font-size: var(--typography-body-large-font-size);
-  font-weight: var(--typography-body-large-font-weight);
-  line-height: var(--typography-body-large-line-height);
+  font-size: var(--typography-body-medium-font-size);
+  font-weight: var(--typography-body-medium-font-weight);
+  line-height: var(--typography-body-medium-line-height);
   width: 100%;
 }
 
@@ -255,13 +257,6 @@
 
 .prose p + p {
   margin-top: 24px;
-}
-
-.highlight {
-  color: var(--color-content-secondary);
-  text-decoration: underline;
-  text-decoration-style: dotted;
-  text-underline-offset: 3px;
 }
 
 .imageBlock {
@@ -276,14 +271,6 @@
 }
 
 @media (max-width: 767px) {
-  .hero {
-    height: 420px;
-  }
-
-  .heroMedia {
-    width: 100%;
-  }
-
   .caseStudyShell {
     padding: 72px var(--portfolio-page-gutter) 56px;
   }
@@ -291,11 +278,6 @@
   .content,
   .sections {
     gap: 40px;
-  }
-
-  .title {
-    font-size: var(--typography-heading-2-font-size);
-    line-height: var(--typography-heading-2-line-height);
   }
 
   .details {

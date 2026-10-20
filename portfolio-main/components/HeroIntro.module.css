@@ -67,9 +67,6 @@
 
 .intro a {
   color: var(--color-content-primary);
-  text-decoration: underline;
-  text-decoration-style: dotted;
-  text-underline-offset: 3px;
 }
 
 .companyLink {
@@ -91,16 +88,6 @@
   height: 16px;
   object-fit: cover;
   width: 16px;
-}
-
-.intro a:hover {
-  text-decoration-style: solid;
-}
-
-.intro a:focus-visible {
-  border-radius: 4px;
-  outline: 2px solid var(--color-content-primary);
-  outline-offset: 2px;
 }
 
 .updated {

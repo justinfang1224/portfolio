@@ -1,21 +1,21 @@
 ---
-description: Enforce the 16px page gutter site-wide and prevent horizontal scrolling on mobile
+description: Enforce the 24px page gutter site-wide and prevent horizontal scrolling on mobile
 alwaysApply: true
 ---
 
 # Page Gutter And Mobile Scroll Standard
 
-## 16px Left/Right Page Gutter
+## 24px Left/Right Page Gutter
 
-The site uses a single, consistent 16px left/right page gutter on every page and at every viewport width. The source of truth lives in `portfolio-main/app/globals.css`:
+The site uses a single, consistent 24px left/right page gutter on every page and at every viewport width. The source of truth lives in `portfolio-main/app/globals.css`:
 
-- `--portfolio-page-gutter: var(--spacing-16)` — the one place the gutter is defined.
-- `--portfolio-shell: min(960px, calc(100vw - (var(--portfolio-page-gutter) * 2)))` — page shell; guarantees 16px gutters below the 960px cap.
+- `--portfolio-page-gutter: var(--spacing-24)` — the one place the gutter is defined.
+- `--portfolio-shell: min(960px, calc(100vw - (var(--portfolio-page-gutter) * 2)))` — page shell; guarantees 24px gutters below the 960px cap.
 - `--portfolio-text-column: min(796px, var(--portfolio-shell))` — text column; always tracks the shell.
 
 Rules:
 
-- Never hard-code page gutters (e.g. `100vw - 48px`, `padding-inline: 24px`) or redefine `--portfolio-shell` / `--portfolio-text-column` per page or per breakpoint. Use the shared variables.
+- Never hard-code page gutters (e.g. `100vw - 40px`, `padding-inline: 20px`) or redefine `--portfolio-shell` / `--portfolio-text-column` per page or per breakpoint. Use the shared variables.
 - Page-level containers size with `width: var(--portfolio-shell)` or `width: var(--portfolio-text-column)` plus `margin: 0 auto`; the gutter then falls out automatically.
 - Full-bleed sections that pad their own content (e.g. `.caseStudyShell` on project detail pages) must use `var(--portfolio-page-gutter)` for inline padding.
 - Intentional viewport-bleeding media inside an `overflow: hidden` frame (e.g. case-study hero media) is fine and is not a gutter violation.

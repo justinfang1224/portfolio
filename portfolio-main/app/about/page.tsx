@@ -55,13 +55,13 @@ export default function AboutPage() {
             className={styles.introSection}
           >
             <p className={styles.index}>{aboutIntro.index}</p>
-            <h1 className={styles.title} id="about-intro-title">
+            <h2 className={styles.title} id="about-intro-title">
               {aboutIntro.title}
-            </h1>
+            </h2>
             <div className={styles.prose}>
               <p>
                 I was born in{" "}
-                <a href={aboutIntro.city.href} rel="noreferrer" target="_blank">
+                <a className="text-link" href={aboutIntro.city.href} rel="noreferrer" target="_blank">
                   {aboutIntro.city.label}
                 </a>
                 , a city cradled by perpetual rains in Taiwan.
@@ -70,7 +70,7 @@ export default function AboutPage() {
                 In 2017, I visited Hong Kong for the first time and felt drawn to the city&apos;s
                 distinct energy. That connection brought me back to study{" "}
                 {aboutIntro.discipline.label} at{" "}
-                <a href={aboutIntro.school.href} rel="noreferrer" target="_blank">
+                <a className="text-link" href={aboutIntro.school.href} rel="noreferrer" target="_blank">
                   {aboutIntro.school.label}
                 </a>
                 , where I focused on visual &amp; graphic work, and I eventually decided to stay and
@@ -81,7 +81,7 @@ export default function AboutPage() {
                 Beyond tech &amp; design, I lean into a broad appreciation spending my time with
                 books, movies, nature (
                 <TermExplain asChild explanation="❤️">
-                  <a href="#about-favorites-title">see my favorites</a>
+                  <a className="text-link" href="#about-favorites-title">see my favorites</a>
                 </TermExplain>
                 ), and everything between culture &amp; humanities.
               </p>
@@ -98,7 +98,7 @@ export default function AboutPage() {
                       {emailAddress ? (
                         <CopyEmailLink email={emailAddress}>{link.label}</CopyEmailLink>
                       ) : (
-                        <a href={link.href} rel="noreferrer" target="_blank">
+                        <a className="text-link" href={link.href} rel="noreferrer" target="_blank">
                           {link.label}
                         </a>
                       )}

@@ -33,7 +33,7 @@ function RichParagraph({
         const isHighlighted = "highlight" in segment && segment.highlight;
 
         return isHighlighted ? (
-          <span className={styles.highlight} key={`${segment.text}-${index}`}>
+          <span className="text-link" key={`${segment.text}-${index}`}>
             {segment.text}
           </span>
         ) : (
@@ -52,8 +52,10 @@ export default function BowtieProjectPage() {
           <ProjectHeroParallax
             alt={bowtieProjectDetail.hero.alt}
             className={styles.heroMedia}
+            height={1984}
             imageClassName={styles.heroImage}
             src={bowtieProjectDetail.hero.image}
+            width={3184}
           />
         </MotionReveal>
 
@@ -64,7 +66,7 @@ export default function BowtieProjectPage() {
             <MotionReveal as="section" className={styles.intro} id="intro">
               <div className={styles.introHeader}>
                 <p className={styles.index}>{bowtieProjectDetail.intro.year}</p>
-                <h1 className={styles.title}>{bowtieProjectDetail.intro.title}</h1>
+                <h2 className={styles.title}>{bowtieProjectDetail.intro.title}</h2>
                 <p className={styles.summary}>{bowtieProjectDetail.intro.summary}</p>
               </div>
 
@@ -137,7 +139,7 @@ export default function BowtieProjectPage() {
                           <ul className={styles.list}>
                             {block.items.map((item) => (
                               <li key={item.label}>
-                                <span className={styles.highlight}>{item.label}</span>
+                                <span className="text-link">{item.label}</span>
                                 <span>{` ${item.text}`}</span>
                               </li>
                             ))}

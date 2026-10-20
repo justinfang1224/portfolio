@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import type { ReactNode } from "react";
-import { color, colorDark, type ColorTokenName } from "../../design-system-tokens/src/tokens";
+import { color, colorDark, typography, type ColorTokenName } from "../../design-system-tokens/src/tokens";
 import { aboutFavorites } from "@/content/about";
 import { assetUrls } from "@/content/portfolio";
 import { AboutCollage } from "@/components/about/AboutCollage";
@@ -42,17 +42,12 @@ const placeholderProject = {
 
 const colorTokenNames = Object.keys(color) as ColorTokenName[];
 
-const typographyTokens = [
-  { name: "heading-1", size: 40, weight: 500, lineHeight: 48 },
-  { name: "heading-2", size: 28, weight: 500, lineHeight: 36 },
-  { name: "heading-3", size: 20, weight: 500, lineHeight: 28 },
-  { name: "subtitle", size: 18, weight: 400, lineHeight: 28 },
-  { name: "button", size: 15, weight: 500, lineHeight: 18 },
-  { name: "body-large", size: 18, weight: 400, lineHeight: 30 },
-  { name: "body-medium", size: 16, weight: 400, lineHeight: 27 },
-  { name: "body-small", size: 14, weight: 400, lineHeight: 20 },
-  { name: "caption", size: 12, weight: 400, lineHeight: 16 }
-] as const;
+const typographyTokens = Object.entries(typography).map(([name, token]) => ({
+  name,
+  size: token.size,
+  weight: token.weight,
+  lineHeight: token.lineHeight
+}));
 
 const spacingTokens = [0, 4, 8, 12, 16, 20, 24, 36, 40, 48, 56, 64, 80, 100, 128, 190, 201] as const;
 

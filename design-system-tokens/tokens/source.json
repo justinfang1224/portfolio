@@ -9,6 +9,7 @@
     "heading-2": { "size": 28, "weight": 500, "lineHeight": 36 },
     "heading-3": { "size": 20, "weight": 500, "lineHeight": 28 },
     "subtitle": { "size": 18, "weight": 400, "lineHeight": 28 },
+    "subtitle-2": { "size": 16, "weight": 500, "lineHeight": 27 },
     "button": { "size": 15, "weight": 500, "lineHeight": 18 },
     "body-large": { "size": 18, "weight": 400, "lineHeight": 30 },
     "body-medium": { "size": 16, "weight": 400, "lineHeight": 27 },

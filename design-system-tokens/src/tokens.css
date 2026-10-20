@@ -18,6 +18,9 @@
   --typography-subtitle-font-size: 18px;
   --typography-subtitle-font-weight: 400;
   --typography-subtitle-line-height: 28px;
+  --typography-subtitle-2-font-size: 16px;
+  --typography-subtitle-2-font-weight: 500;
+  --typography-subtitle-2-line-height: 27px;
   --typography-button-font-size: 15px;
   --typography-button-font-weight: 500;
   --typography-button-line-height: 18px;
@@ -117,6 +120,7 @@
 .text-heading-2 { font-family: var(--font-family-base); font-size: var(--typography-heading-2-font-size); font-weight: var(--typography-heading-2-font-weight); line-height: var(--typography-heading-2-line-height); }
 .text-heading-3 { font-family: var(--font-family-base); font-size: var(--typography-heading-3-font-size); font-weight: var(--typography-heading-3-font-weight); line-height: var(--typography-heading-3-line-height); }
 .text-subtitle { font-family: var(--font-family-base); font-size: var(--typography-subtitle-font-size); font-weight: var(--typography-subtitle-font-weight); line-height: var(--typography-subtitle-line-height); }
+.text-subtitle-2 { font-family: var(--font-family-base); font-size: var(--typography-subtitle-2-font-size); font-weight: var(--typography-subtitle-2-font-weight); line-height: var(--typography-subtitle-2-line-height); }
 .text-button { font-family: var(--font-family-base); font-size: var(--typography-button-font-size); font-weight: var(--typography-button-font-weight); line-height: var(--typography-button-line-height); }
 .text-body-large { font-family: var(--font-family-base); font-size: var(--typography-body-large-font-size); font-weight: var(--typography-body-large-font-weight); line-height: var(--typography-body-large-line-height); }
 .text-body-medium { font-family: var(--font-family-base); font-size: var(--typography-body-medium-font-size); font-weight: var(--typography-body-medium-font-weight); line-height: var(--typography-body-medium-line-height); }

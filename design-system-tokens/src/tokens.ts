@@ -30,6 +30,11 @@ export const typography = {
     weight: 400,
     lineHeight: 28
   },
+  "subtitle-2": {
+    size: 16,
+    weight: 500,
+    lineHeight: 27
+  },
   "button": {
     size: 15,
     weight: 500,

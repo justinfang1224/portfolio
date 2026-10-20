@@ -3,7 +3,7 @@
   align-items: center;
   display: flex;
   flex-direction: column;
-  gap: calc(var(--spacing-64) + var(--spacing-8));
+  gap: var(--spacing-40);
   margin: 0 auto;
   padding-top: var(--about-badge-offset);
   width: var(--portfolio-shell);
@@ -11,6 +11,7 @@
 
 .badge {
   height: 536px;
+  margin-bottom: calc(var(--spacing-80) * -1);
   margin-top: calc(var(--spacing-100) * -1);
   min-width: var(--portfolio-min-width);
   position: relative;
@@ -72,9 +73,9 @@
 .title {
   color: var(--color-content-primary);
   font-family: var(--font-family-base);
-  font-size: var(--typography-heading-1-font-size);
-  font-weight: var(--typography-heading-1-font-weight);
-  line-height: var(--typography-heading-1-line-height);
+  font-size: var(--typography-heading-2-font-size);
+  font-weight: var(--typography-heading-2-font-weight);
+  line-height: var(--typography-heading-2-line-height);
   margin: 0;
 }
 
@@ -88,11 +89,11 @@
 }
 
 .prose {
-  color: var(--color-content-secondary);
+  color: var(--color-content-primary);
   font-family: var(--font-family-base);
-  font-size: var(--typography-body-large-font-size);
-  font-weight: var(--typography-body-large-font-weight);
-  line-height: var(--typography-body-large-line-height);
+  font-size: var(--typography-body-medium-font-size);
+  font-weight: var(--typography-body-medium-font-weight);
+  line-height: var(--typography-body-medium-line-height);
   width: 100%;
 }
 
@@ -107,21 +108,6 @@
 .prose a,
 .socialLinks a {
   color: var(--color-content-primary);
-  text-decoration: underline;
-  text-decoration-style: dotted;
-  text-underline-offset: 3px;
-}
-
-.prose a:hover,
-.socialLinks a:hover {
-  text-decoration-style: solid;
-}
-
-.prose a:focus-visible,
-.socialLinks a:focus-visible {
-  border-radius: 4px;
-  outline: 2px solid var(--color-content-primary);
-  outline-offset: 2px;
 }
 
 .socials {
@@ -166,7 +152,7 @@
 @media (max-width: 767px) {
   .main {
     --about-badge-offset: 128px;
-    gap: var(--spacing-56);
+    gap: var(--spacing-36);
     padding-top: var(--about-badge-offset);
   }
 
@@ -177,11 +163,6 @@
 
   .content {
     gap: var(--spacing-64);
-  }
-
-  .title {
-    font-size: var(--typography-heading-2-font-size);
-    line-height: var(--typography-heading-2-line-height);
   }
 
   .timelineSection {
