@@ -97,7 +97,7 @@ function ProjectIndexCard({ project, priority }: { project: ProjectCard; priorit
         className={[styles.projectImage, styles[project.imageClassName]].join(" ")}
         height={528}
         priority={priority}
-        sizes="(max-width: 767px) calc(100vw - 40px), 796px"
+        sizes="(max-width: 767px) calc(100vw - 48px), 796px"
         src={project.image}
         width={796}
       />

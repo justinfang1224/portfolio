@@ -62,10 +62,12 @@ export default function Home() {
               </h3>
               <p className={styles.role}>
                 Senior Product Designer
-                <span aria-hidden="true" className={styles.roleSeparator}>
-                  {"  •  "}
+                <span className={styles.roleUpdated}>
+                  <span aria-hidden="true" className={styles.roleSeparator}>
+                    {"  •  "}
+                  </span>
+                  <UpdatedAtTypewriter inline value={getLastUpdatedLabel()} />
                 </span>
-                <UpdatedAtTypewriter inline value={getLastUpdatedLabel()} />
               </p>
             </div>
           </div>

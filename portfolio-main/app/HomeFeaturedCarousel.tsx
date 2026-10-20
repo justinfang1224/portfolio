@@ -57,10 +57,11 @@ type DragSession = {
   incomingIndex: number | null;
   intent: SlideDirection | null;
   lastTime: number;
-  lastY: number;
+  lastX: number;
   locked: boolean;
   offset: number;
   pointerId: number;
+  startX: number;
   startY: number;
   velocity: number;
 };
@@ -180,21 +181,20 @@ export function HomeFeaturedCarousel() {
   ) => {
     const current = slideAt(currentIndex);
     const incoming = slideAt(incomingIndex);
-    const height = cardRef.current?.clientHeight ?? 1;
-    // Keep the two slides in a vertical strip: the neighbor rides
-    // just above (forward) or below (backward) the active card.
-    const incomingOffset = intent === "forward" ? offset - height : offset + height;
+    const width = cardRef.current?.clientWidth ?? 1;
+    // Next waits on the right. Previous waits on the left.
+    const incomingOffset = intent === "forward" ? offset + width : offset - width;
 
     if (incoming) {
       incoming.style.transition = "none";
-      incoming.style.transform = `translate3d(0, ${incomingOffset}px, 0)`;
+      incoming.style.transform = `translate3d(${incomingOffset}px, 0, 0)`;
       incoming.style.visibility = "visible";
       incoming.style.zIndex = "1";
     }
 
     if (current) {
       current.style.transition = "none";
-      current.style.transform = `translate3d(0, ${offset}px, 0)`;
+      current.style.transform = `translate3d(${offset}px, 0, 0)`;
       current.style.zIndex = "2";
     }
   };
@@ -259,14 +259,22 @@ export function HomeFeaturedCarousel() {
       return;
     }
 
+    const offsetX = event.clientX - drag.startX;
     const offsetY = event.clientY - drag.startY;
     const elapsed = Math.max(event.timeStamp - drag.lastTime, 1);
-    drag.velocity = (event.clientY - drag.lastY) / elapsed;
+    drag.velocity = (event.clientX - drag.lastX) / elapsed;
     drag.lastTime = event.timeStamp;
-    drag.lastY = event.clientY;
+    drag.lastX = event.clientX;
 
     if (!drag.locked) {
-      if (Math.abs(offsetY) < DRAG_LOCK_PX) {
+      if (Math.abs(offsetX) < DRAG_LOCK_PX && Math.abs(offsetY) < DRAG_LOCK_PX) {
+        return;
+      }
+
+      if (Math.abs(offsetY) > Math.abs(offsetX)) {
+        unbindWindowListeners();
+        dragRef.current = null;
+        resumeAutoAdvance();
         return;
       }
 
@@ -277,9 +285,10 @@ export function HomeFeaturedCarousel() {
 
     event.preventDefault();
 
-    const height = cardRef.current?.clientHeight ?? 1;
-    const offset = Math.max(-height, Math.min(height, offsetY));
-    const intent: SlideDirection = offset >= 0 ? "forward" : "backward";
+    const width = cardRef.current?.clientWidth ?? 1;
+    const offset = Math.max(-width, Math.min(width, offsetX));
+    // Drag left to reveal the next project. Drag right to reveal the previous one.
+    const intent: SlideDirection = offset <= 0 ? "forward" : "backward";
     const incomingIndex = getNeighborIndex(drag.currentIndex, intent);
 
     if (drag.incomingIndex != null && drag.incomingIndex !== incomingIndex) {
@@ -315,31 +324,31 @@ export function HomeFeaturedCarousel() {
       return;
     }
 
-    const height = cardRef.current?.clientHeight ?? 1;
+    const width = cardRef.current?.clientWidth ?? 1;
     const committed =
       drag.intent === "forward"
-        ? drag.offset >= height * DRAG_COMMIT_RATIO || drag.velocity >= DRAG_COMMIT_VELOCITY
-        : drag.offset <= -height * DRAG_COMMIT_RATIO || drag.velocity <= -DRAG_COMMIT_VELOCITY;
+        ? drag.offset <= -width * DRAG_COMMIT_RATIO || drag.velocity <= -DRAG_COMMIT_VELOCITY
+        : drag.offset >= width * DRAG_COMMIT_RATIO || drag.velocity >= DRAG_COMMIT_VELOCITY;
 
     enableSlideTransitions();
 
     if (committed) {
       clearInlineAfterPaintRef.current = true;
-      shiftSlide(drag.intent, drag.intent === "forward" ? "backward" : "forward");
+      shiftSlide(drag.intent);
       resumeAutoAdvance();
       return;
     }
 
     const current = slideAt(drag.currentIndex);
     const incoming = slideAt(drag.incomingIndex);
-    const incomingRest = drag.intent === "forward" ? -height : height;
+    const incomingRest = drag.intent === "forward" ? width : -width;
 
     if (current) {
       current.style.transform = "translate3d(0, 0, 0)";
     }
 
     if (incoming) {
-      incoming.style.transform = `translate3d(0, ${incomingRest}px, 0)`;
+      incoming.style.transform = `translate3d(${incomingRest}px, 0, 0)`;
     }
 
     if (snapTimerRef.current) {
@@ -376,10 +385,11 @@ export function HomeFeaturedCarousel() {
       incomingIndex: null,
       intent: null,
       lastTime: event.timeStamp,
-      lastY: event.clientY,
+      lastX: event.clientX,
       locked: false,
       offset: 0,
       pointerId: event.pointerId,
+      startX: event.clientX,
       startY: event.clientY,
       velocity: 0
     };
@@ -473,7 +483,7 @@ export function HomeFeaturedCarousel() {
             draggable={false}
             height={449}
             priority={index === 0}
-            sizes="(max-width: 767px) calc(100vw - 40px), 796px"
+            sizes="(max-width: 767px) calc(100vw - 48px), 796px"
             src={item.image}
             width={804}
           />
@@ -503,7 +513,7 @@ export function HomeFeaturedCarousel() {
         aria-label={
           "href" in activeItem
             ? `Open case study: ${activeItem.alt}`
-            : "Drag to switch featured work"
+            : "Drag left or right to switch featured work"
         }
         className={styles.featuredDragLayer}
         onClick={() => {

@@ -7,7 +7,7 @@
   --portfolio-nav-active-background: var(--color-background-contrast);
   --portfolio-nav-background: color-mix(in srgb, var(--color-surface-card-primary) 80%, transparent);
   --portfolio-min-width: 360px;
-  --portfolio-page-gutter: var(--spacing-20);
+  --portfolio-page-gutter: var(--spacing-24);
   --portfolio-shell: min(960px, calc(100vw - (var(--portfolio-page-gutter) * 2)));
   --portfolio-text-column: min(796px, var(--portfolio-shell));
   --motion-fade-duration: 360ms;

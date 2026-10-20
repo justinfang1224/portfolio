@@ -131,7 +131,7 @@
   isolation: isolate;
   overflow: hidden;
   position: relative;
-  touch-action: none;
+  touch-action: pan-y;
   transform: translateZ(0);
   user-select: none;
   width: 100%;
@@ -183,7 +183,7 @@
   left: 0;
   position: absolute;
   top: 0;
-  touch-action: none;
+  touch-action: pan-y;
   width: 100%;
   z-index: 3;
 }
@@ -263,28 +263,28 @@
 }
 
 .featuredSlideNext {
-  transform: translate3d(0, 100%, 0);
+  transform: translate3d(100%, 0, 0);
   z-index: 0;
 }
 
 .featuredSlidePrev {
-  transform: translate3d(0, -100%, 0);
+  transform: translate3d(-100%, 0, 0);
   z-index: 0;
 }
 
 .featuredSlideOutgoingForward {
-  transform: translate3d(0, -100%, 0);
+  transform: translate3d(-100%, 0, 0);
   z-index: 1;
 }
 
 .featuredSlideOutgoingBackward {
-  transform: translate3d(0, 100%, 0);
+  transform: translate3d(100%, 0, 0);
   z-index: 1;
 }
 
 .featuredSlideHidden {
   pointer-events: none;
-  transform: translate3d(0, 100%, 0);
+  transform: translate3d(100%, 0, 0);
   visibility: hidden;
   z-index: 0;
 }
@@ -372,6 +372,16 @@
   .main {
     gap: var(--spacing-56);
     padding-top: var(--spacing-128);
+  }
+
+  .role {
+    font-size: var(--typography-caption-font-size);
+    font-weight: var(--typography-caption-font-weight);
+    line-height: var(--typography-caption-line-height);
+  }
+
+  .roleUpdated {
+    display: none;
   }
 
   .featuredCard {

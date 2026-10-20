@@ -474,14 +474,14 @@
 
   .appCarousel {
     left: auto;
-    margin-inline: calc(var(--spacing-20) * -1);
+    margin-inline: calc(var(--portfolio-page-gutter) * -1);
     mask-image: linear-gradient(90deg, transparent, #000 24px, #000 calc(100% - 24px), transparent);
     position: relative;
     right: auto;
     top: auto;
     transform: none;
     -webkit-mask-image: linear-gradient(90deg, transparent, #000 24px, #000 calc(100% - 24px), transparent);
-    width: calc(100% + var(--spacing-40));
+    width: calc(100% + (var(--portfolio-page-gutter) * 2));
   }
 }
 
