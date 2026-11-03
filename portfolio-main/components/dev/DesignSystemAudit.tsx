@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState, type TransitionEvent } from "react";
 import { Button } from "@/components/Button";
+import { ColorTokenInspector } from "@/components/dev/ColorTokenInspector";
 import { SettingsIcon } from "@/components/icons";
 import styles from "./DesignSystemAudit.module.css";
 
@@ -17,6 +18,7 @@ type HighlightBox = {
 };
 
 type StoredState = {
+  colors: boolean;
   enabled: boolean;
   grid: boolean;
 };
@@ -25,16 +27,17 @@ function readStoredState(): StoredState {
   try {
     const raw = sessionStorage.getItem(STORAGE_KEY);
     if (!raw) {
-      return { enabled: false, grid: false };
+      return { colors: false, enabled: false, grid: false };
     }
 
     const parsed = JSON.parse(raw) as Partial<StoredState>;
     return {
+      colors: Boolean(parsed.colors),
       enabled: Boolean(parsed.enabled),
       grid: Boolean(parsed.grid)
     };
   } catch {
-    return { enabled: false, grid: false };
+    return { colors: false, enabled: false, grid: false };
   }
 }
 
@@ -80,6 +83,7 @@ function collectHighlights(): HighlightBox[] {
 export function DesignSystemAudit() {
   const [enabled, setEnabled] = useState(false);
   const [gridEnabled, setGridEnabled] = useState(false);
+  const [colorsEnabled, setColorsEnabled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [menuRendered, setMenuRendered] = useState(false);
   const [menuShown, setMenuShown] = useState(false);
@@ -94,6 +98,7 @@ export function DesignSystemAudit() {
     const stored = readStoredState();
     setEnabled(stored.enabled);
     setGridEnabled(stored.grid);
+    setColorsEnabled(stored.colors);
     setHydrated(true);
   }, []);
 
@@ -102,8 +107,8 @@ export function DesignSystemAudit() {
       return;
     }
 
-    writeStoredState({ enabled, grid: gridEnabled });
-  }, [enabled, gridEnabled, hydrated]);
+    writeStoredState({ colors: colorsEnabled, enabled, grid: gridEnabled });
+  }, [colorsEnabled, enabled, gridEnabled, hydrated]);
 
   const refreshHighlights = useCallback(() => {
     if (!enabled) {
@@ -309,6 +314,19 @@ export function DesignSystemAudit() {
                 </button>
               </div>
               <div className={styles.row}>
+                <p className={styles.rowTitle}>Color tokens</p>
+                <button
+                  aria-checked={colorsEnabled}
+                  aria-label="Toggle color token inspector"
+                  className={[styles.switch, colorsEnabled ? styles.switchOn : ""].filter(Boolean).join(" ")}
+                  onClick={() => setColorsEnabled((current) => !current)}
+                  role="switch"
+                  type="button"
+                >
+                  <span className={styles.switchThumb} />
+                </button>
+              </div>
+              <div className={styles.row}>
                 <p className={styles.rowTitle}>Grid</p>
                 <button
                   aria-checked={gridEnabled}
@@ -339,6 +357,8 @@ export function DesignSystemAudit() {
           </div>
         </div>
       ) : null}
+
+      <ColorTokenInspector enabled={colorsEnabled} />
 
       {enabled
         ? highlights.map((box, index) => (

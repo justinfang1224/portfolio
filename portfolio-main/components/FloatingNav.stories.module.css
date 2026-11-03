@@ -1,7 +1,7 @@
 .preview {
   align-items: center;
   background: var(--color-background-secondary);
-  border-radius: 24px;
+  border-radius: var(--radius-full);
   display: flex;
   justify-content: center;
   min-height: 220px;

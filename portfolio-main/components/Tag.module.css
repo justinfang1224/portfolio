@@ -1,7 +1,7 @@
 .tag {
   align-items: center;
   background: var(--color-surface-card-primary);
-  border-radius: 24px;
+  border-radius: var(--radius-full);
   color: var(--color-content-secondary);
   display: inline-flex;
   font-family: var(--font-family-base);

@@ -18,6 +18,7 @@ export type BadgePalette = {
   card: string;
   fontFamily: string;
   line: string;
+  frame: string;
   muted: string;
   photoFill: string;
   shadow: string;
@@ -28,15 +29,16 @@ export type BadgePalette = {
 export function readBadgePalette(): BadgePalette {
   const styles = getComputedStyle(document.documentElement);
   const pick = (name: string, fallback: string) => styles.getPropertyValue(name).trim() || fallback;
-  const text = pick("--color-content-primary", "#111111");
+  const text = pick("--color-content-primary", "#18181b");
 
   return {
-    background: pick("--color-background-contrast", "#FFFFFF"),
-    card: pick("--color-surface-card-primary", "#F7F7F7"),
+    background: pick("--color-background-contrast", "#ffffff"),
+    card: pick("--color-surface-card-primary", "#fafafa"),
     fontFamily: pick("--font-family-base", '"SF Pro Text", "SF Pro Display", Helvetica, Arial, sans-serif'),
-    line: pick("--color-border-primary", "#EDEDED"),
-    muted: pick("--color-content-tertiary", "#B3B3B3"),
-    photoFill: pick("--color-surface-card-secondary", "#F0F0F0"),
+    line: pick("--color-border-primary", "#e4e4e7"),
+    frame: pick("--color-border-secondary", "#f4f4f5"),
+    muted: pick("--color-content-tertiary", "#a1a1aa"),
+    photoFill: pick("--color-surface-card-secondary", "#f4f4f5"),
     shadow: text,
     strap: text,
     text
@@ -150,7 +152,7 @@ function drawCoverRoundRect(
   ctx.restore();
   ctx.beginPath();
   ctx.roundRect(x, y, size, size, radius);
-  ctx.strokeStyle = palette.line;
+  ctx.strokeStyle = palette.frame;
   ctx.lineWidth = lineWidth;
   ctx.stroke();
 }

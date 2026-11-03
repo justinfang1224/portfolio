@@ -27,7 +27,7 @@
   pointer-events: none;
   position: absolute;
   right: 0;
-  top: calc(var(--spacing-100) - var(--about-badge-offset, 128px));
+  top: calc(var(--space-25) - var(--about-badge-offset, 128px));
 }
 
 .stageStatic canvas {

@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Button } from "@/components/Button";
 import { MotionReveal } from "@/components/MotionReveal";
 import { TermExplain } from "@/components/TermExplain";
+import { TextScramble } from "@/components/TextScramble";
 import { UpdatedAtTypewriter } from "@/components/UpdatedAtTypewriter";
 import { WritingList } from "@/components/WritingList";
 import { profile, writings } from "@/content/portfolio";
@@ -57,8 +58,8 @@ export default function Home() {
         <MotionReveal as="section" aria-labelledby="home-title" className={styles.intro}>
           <div className={styles.identity}>
             <div className={styles.identityCopy}>
-              <h3 className={styles.name} id="home-title">
-                {profile.name}
+              <h3 aria-label={profile.name} className={styles.name} id="home-title">
+                <TextScramble text={profile.name} />
               </h3>
               <p className={styles.role}>
                 Senior Product Designer

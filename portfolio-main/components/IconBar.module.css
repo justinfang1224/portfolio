@@ -6,15 +6,15 @@
 .nav {
   align-items: center;
   background: var(--color-background-contrast);
-  border-radius: 36px;
+  border-radius: var(--radius-full);
   box-shadow: 0 2px 6px color-mix(in srgb, var(--color-content-tertiary) 16%, transparent);
   color: var(--color-content-primary);
   display: inline-flex;
   flex-direction: row;
-  gap: var(--spacing-8);
+  gap: var(--space-2);
   isolation: isolate;
   justify-content: center;
-  padding: var(--spacing-4);
+  padding: var(--space-1);
   pointer-events: auto;
   position: relative;
 }
@@ -37,14 +37,14 @@
   align-items: center;
   background: transparent;
   border: 0;
-  border-radius: 36px;
+  border-radius: var(--radius-full);
   color: var(--color-content-tertiary);
   cursor: pointer;
   display: grid;
   flex: 0 0 36px;
   height: 36px;
   justify-items: center;
-  padding: var(--spacing-8);
+  padding: var(--space-2);
   place-items: center;
   position: relative;
   text-decoration: none;
@@ -73,7 +73,7 @@
 }
 
 .divider {
-  background: var(--color-border-primary);
+  background: var(--color-border-secondary);
   flex: 0 0 1px;
   height: 16px;
   width: 1px;

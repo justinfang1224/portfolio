@@ -43,7 +43,7 @@
   align-items: center;
   backdrop-filter: blur(6px);
   background: var(--portfolio-nav-background);
-  border-radius: 24px;
+  border-radius: var(--radius-full);
   display: inline-flex;
   gap: 4px;
   max-width: 100%;
@@ -55,7 +55,7 @@
 .activeTab {
   appearance: none;
   border: 0;
-  border-radius: 24px;
+  border-radius: var(--radius-full);
   color: var(--color-content-tertiary);
   cursor: pointer;
   font-family: var(--font-family-base);
@@ -64,8 +64,8 @@
   line-height: var(--typography-button-line-height);
   padding: 10px 16px;
   transition:
-    background-color 180ms ease,
-    color 180ms ease;
+    background-color var(--duration-normal) var(--ease-smooth),
+    color var(--duration-normal) var(--ease-smooth);
 }
 
 .tab {

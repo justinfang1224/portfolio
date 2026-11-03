@@ -3,7 +3,7 @@
   appearance: none;
   background: var(--color-button-secondary-hover);
   border: 0;
-  border-radius: var(--spacing-12);
+  border-radius: var(--radius-lg);
   cursor: pointer;
   flex: 0 0 auto;
   height: 24px;
@@ -30,7 +30,7 @@
 
 .thumb {
   background: var(--color-background-contrast);
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   height: var(--toggle-thumb);
   left: 0;
   margin-top: calc(var(--toggle-thumb) / -2);

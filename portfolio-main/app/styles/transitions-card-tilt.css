@@ -3,10 +3,10 @@
 
 :root {
   --tilt-perspective: 1000px;
-  --tilt-return: 1000ms;
-  --tilt-return-ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --tilt-follow: 400ms;
-  --tilt-follow-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --tilt-return: var(--duration-slow);
+  --tilt-return-ease: var(--ease-smooth);
+  --tilt-follow: var(--duration-slow);
+  --tilt-follow-ease: var(--ease-smooth);
 }
 
 .t-tilt {

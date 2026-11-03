@@ -28,7 +28,7 @@
 .link,
 .activeLink {
   align-items: center;
-  border-radius: 24px;
+  border-radius: var(--radius-full);
   color: var(--color-content-tertiary);
   display: inline-flex;
   font-family: var(--font-family-base);
@@ -40,8 +40,8 @@
   padding: 4px 8px;
   text-decoration: none;
   transition:
-    background-color 160ms ease,
-    color 160ms ease;
+    background-color var(--duration-fast) var(--ease-smooth),
+    color var(--duration-fast) var(--ease-smooth);
   white-space: nowrap;
 }
 

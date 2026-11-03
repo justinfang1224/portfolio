@@ -15,7 +15,7 @@
 
 .word {
   align-items: center;
-  animation: welcome-ease-in 560ms var(--motion-fade-ease) 180ms both;
+  animation: welcome-ease-in var(--duration-slow) var(--motion-fade-ease) var(--duration-normal) both;
   display: inline-flex;
   font-family: var(--font-family-base);
   font-size: clamp(32px, 2.78vw, 40px);
@@ -26,7 +26,7 @@
 }
 
 .overlayExiting .word {
-  animation: welcome-ease-out 350ms var(--motion-fade-ease) both;
+  animation: welcome-ease-out var(--duration-slow) var(--motion-fade-ease) both;
 }
 
 .iconSlot {
@@ -40,7 +40,7 @@
 }
 
 .icon {
-  animation: symbol-soft-swap 200ms var(--motion-fade-ease) both;
+  animation: symbol-soft-swap var(--duration-normal) var(--motion-fade-ease) both;
   height: 100%;
   object-fit: contain;
   width: 100%;

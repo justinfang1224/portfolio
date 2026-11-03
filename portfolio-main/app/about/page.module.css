@@ -3,16 +3,16 @@
   align-items: center;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-40);
+  gap: var(--space-8);
   margin: 0 auto;
   padding-top: var(--about-badge-offset);
   width: var(--portfolio-shell);
 }
 
 .badge {
-  height: 536px;
-  margin-bottom: calc(var(--spacing-80) * -1);
-  margin-top: calc(var(--spacing-100) * -1);
+  height: 482px;
+  margin-bottom: calc(var(--space-20) * -1);
+  margin-top: calc(var(--space-25) * -1);
   min-width: var(--portfolio-min-width);
   position: relative;
   width: var(--portfolio-text-column);
@@ -23,7 +23,7 @@
   align-items: flex-start;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-48);
+  gap: var(--space-12);
   min-height: 360px;
   width: 100%;
 }
@@ -32,7 +32,7 @@
   align-items: flex-start;
   display: flex;
   flex-direction: column;
-  gap: calc(var(--spacing-80) + var(--spacing-4));
+  gap: calc(var(--space-12) + var(--space-1));
   width: var(--portfolio-text-column);
 }
 
@@ -45,19 +45,19 @@
 }
 
 .introSection {
-  gap: var(--spacing-24);
+  gap: var(--space-6);
 }
 
 .timelineSection {
-  gap: var(--spacing-48);
-  scroll-margin-top: var(--spacing-128);
+  gap: var(--space-12);
+  scroll-margin-top: var(--space-12);
 }
 
 .sectionHeader {
   align-items: flex-start;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-20);
+  gap: var(--space-4);
   width: 100%;
 }
 
@@ -102,7 +102,7 @@
 }
 
 .prose p + p {
-  margin-top: var(--spacing-24);
+  margin-top: var(--space-6);
 }
 
 .prose a,
@@ -114,8 +114,8 @@
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  gap: var(--spacing-16);
-  margin-top: var(--spacing-4);
+  gap: var(--space-4);
+  margin-top: var(--space-1);
 }
 
 .socials p,
@@ -136,13 +136,13 @@
   color: var(--color-content-primary);
   display: flex;
   flex-wrap: wrap;
-  gap: var(--spacing-16);
+  gap: var(--space-4);
 }
 
 .socialItem {
   align-items: center;
   display: inline-flex;
-  gap: var(--spacing-16);
+  gap: var(--space-4);
 }
 
 .socialSeparator {
@@ -152,7 +152,7 @@
 @media (max-width: 767px) {
   .main {
     --about-badge-offset: 128px;
-    gap: var(--spacing-36);
+    gap: var(--space-8);
     padding-top: var(--about-badge-offset);
   }
 
@@ -162,10 +162,10 @@
   }
 
   .content {
-    gap: var(--spacing-64);
+    gap: var(--space-12);
   }
 
   .timelineSection {
-    gap: var(--spacing-40);
+    gap: var(--space-8);
   }
 }

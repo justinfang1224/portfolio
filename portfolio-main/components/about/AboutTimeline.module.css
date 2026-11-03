@@ -6,7 +6,7 @@
 
 .row {
   align-items: flex-start;
-  border-bottom: 1px solid var(--color-border-primary);
+  border-bottom: 1px solid var(--color-border-secondary);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -40,7 +40,7 @@
 .logo {
   align-items: center;
   background: var(--color-background-primary);
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   display: flex;
   flex: 0 0 48px;
   height: 48px;
@@ -88,7 +88,7 @@
 }
 
 .company a:focus-visible {
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   outline: 2px solid var(--color-content-primary);
   outline-offset: 2px;
 }
@@ -133,7 +133,7 @@
   justify-content: center;
   margin: -4px;
   padding: 4px;
-  transition: color 160ms ease, transform 160ms ease;
+  transition: color var(--duration-fast) var(--ease-smooth), transform var(--duration-fast) var(--ease-smooth);
   width: 32px;
 }
 
@@ -146,7 +146,7 @@
 }
 
 .toggle:focus-visible {
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   outline: 2px solid var(--color-content-primary);
   outline-offset: 2px;
 }
@@ -155,7 +155,7 @@
   display: block;
   height: 24px;
   position: relative;
-  transition: transform 220ms ease;
+  transition: transform var(--duration-normal) var(--ease-smooth);
   width: 24px;
 }
 
@@ -166,13 +166,13 @@
 .toggleLineHorizontal,
 .toggleLineVertical {
   background: currentColor;
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   height: 1.5px;
   left: 5px;
   position: absolute;
   top: 50%;
   transform-origin: center;
-  transition: opacity 180ms ease, transform 180ms ease;
+  transition: opacity var(--duration-normal) var(--ease-smooth), transform var(--duration-normal) var(--ease-smooth);
   width: 14px;
 }
 
@@ -190,7 +190,7 @@
 }
 
 .details {
-  color: var(--color-content-secondary);
+  color: var(--color-content-primary);
   display: grid;
   font-family: var(--font-family-base);
   font-size: var(--typography-body-medium-font-size);
@@ -202,8 +202,8 @@
   max-width: calc(100% - 64px);
   opacity: 0;
   transform: translateY(-8px);
-  transition: grid-template-rows 300ms ease-in-out, margin-top 300ms ease-in-out,
-    opacity 300ms ease-in-out, transform 300ms ease-in-out;
+  transition: grid-template-rows var(--duration-slow) var(--ease-smooth), margin-top var(--duration-slow) var(--ease-smooth),
+    opacity var(--duration-slow) var(--ease-smooth), transform var(--duration-slow) var(--ease-smooth);
 }
 
 .detailsExpanded {
@@ -220,7 +220,7 @@
   min-height: 0;
   opacity: 0;
   overflow: hidden;
-  transition: opacity 300ms ease-in-out;
+  transition: opacity var(--duration-slow) var(--ease-smooth);
 }
 
 .detailsExpanded .detailsContent {

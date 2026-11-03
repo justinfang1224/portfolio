@@ -34,7 +34,7 @@
 .frame {
   background: var(--color-surface-card-primary);
   border: 1px solid var(--color-border-primary);
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   box-sizing: border-box;
   height: 361px;
   overflow: hidden;

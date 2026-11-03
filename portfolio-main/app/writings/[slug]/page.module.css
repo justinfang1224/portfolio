@@ -1,6 +1,6 @@
 .main {
   margin: 0 auto;
-  padding-top: var(--spacing-190);
+  padding-top: var(--space-12);
   width: var(--portfolio-text-column);
 }
 
@@ -8,7 +8,7 @@
   align-items: center;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-64);
+  gap: var(--space-12);
   width: 100%;
 }
 
@@ -39,14 +39,14 @@
   align-items: center;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-24);
+  gap: var(--space-6);
   margin: 0;
   width: 100%;
 }
 
 .heroImage {
   aspect-ratio: 796 / 472;
-  border-radius: var(--spacing-12);
+  border-radius: var(--radius-lg);
   display: block;
   object-fit: cover;
   width: 100%;
@@ -66,7 +66,7 @@
   align-items: flex-start;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-24);
+  gap: var(--space-6);
   width: 100%;
 }
 
@@ -109,7 +109,7 @@
   align-items: flex-start;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-48);
+  gap: var(--space-12);
   width: 100%;
 }
 
@@ -117,19 +117,19 @@
   align-items: flex-start;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-20);
+  gap: var(--space-4);
   width: 100%;
 }
 
 .section:first-child {
-  gap: var(--spacing-36);
+  gap: var(--space-8);
 }
 
 .sectionText {
   align-items: flex-start;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-20);
+  gap: var(--space-4);
   width: 100%;
 }
 
@@ -146,7 +146,7 @@
 .prose {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-20);
+  gap: var(--space-4);
   margin: 0;
   width: 100%;
 }
@@ -159,13 +159,13 @@
 .list {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-4);
+  gap: var(--space-1);
   margin: 0;
-  padding-left: var(--spacing-24);
+  padding-left: var(--space-6);
 }
 
 .list li {
-  padding-left: var(--spacing-4);
+  padding-left: var(--space-1);
 }
 
 .note a {
@@ -180,12 +180,12 @@
 
 .imageBlockBordered {
   border: 1px solid var(--color-border-primary);
-  border-radius: var(--spacing-12);
+  border-radius: var(--radius-lg);
   overflow: hidden;
 }
 
 .articleImage {
-  border-radius: var(--spacing-12);
+  border-radius: var(--radius-lg);
   display: block;
   height: auto;
   width: 100%;
@@ -194,19 +194,19 @@
 .actions {
   align-items: center;
   display: flex;
-  gap: var(--spacing-16);
+  gap: var(--space-4);
   justify-content: space-between;
-  padding-top: var(--spacing-16);
+  padding-top: var(--space-4);
   width: 100%;
 }
 
 @media (max-width: 767px) {
   .main {
-    padding-top: var(--spacing-128);
+    padding-top: var(--space-12);
   }
 
   .article {
-    gap: var(--spacing-56);
+    gap: var(--space-12);
   }
 
   .caption {

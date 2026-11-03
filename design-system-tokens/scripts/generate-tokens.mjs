@@ -41,11 +41,27 @@ const walkColor = (node, pathParts = []) => {
   );
 };
 
-const isThemedColor = (color) =>
-  Boolean(color && typeof color.light === "object" && typeof color.dark === "object");
+const colorThemes = (color) => {
+  if (color?.semantic && typeof color.semantic.light === "object") {
+    return { light: color.semantic.light, dark: color.semantic.dark ?? null };
+  }
+  if (color && typeof color.light === "object" && typeof color.dark === "object") {
+    return color;
+  }
+  return { light: color, dark: null };
+};
 
-const colorThemes = (color) =>
-  isThemedColor(color) ? color : { light: color, dark: null };
+const resolveColorValue = (value, primitives) => {
+  if (typeof value !== "string" || value.startsWith("#")) return value;
+  const [family, step] = value.split("-");
+  const hex = primitives?.[family]?.[step];
+  if (!hex) {
+    throw new Error(`Unknown color primitive "${value}"`);
+  }
+  return hex;
+};
+
+const colorCssValue = (value) => (value.startsWith("#") ? value : `var(--${value})`);
 
 const hexToRgbChannels = (hex) => {
   const normalized = hex.replace("#", "");
@@ -62,16 +78,44 @@ const hexToRgbChannels = (hex) => {
   return `${red}, ${green}, ${blue}`;
 };
 
-const colorDeclarations = (colorNode) => {
-  const lines = walkColor(colorNode).map(
-    (entry) => `--color-${entry.name}: ${entry.value};`
+const colorDeclarations = (colorNode, primitives) => {
+  const entries = walkColor(colorNode);
+  const lines = entries.map(
+    (entry) => `--color-${entry.name}: ${colorCssValue(entry.value)};`
   );
-  const primary = walkColor(colorNode).find((entry) => entry.name === "content-primary");
+  const primary = entries.find((entry) => entry.name === "content-primary");
 
   if (primary) {
-    lines.push(`--color-content-primary-rgb: ${hexToRgbChannels(primary.value)};`);
+    lines.push(
+      `--color-content-primary-rgb: ${hexToRgbChannels(resolveColorValue(primary.value, primitives))};`
+    );
   }
 
+  return lines;
+};
+
+const buildPrimitiveColorCssVars = (primitives) =>
+  Object.entries(primitives ?? {}).flatMap(([family, steps]) =>
+    Object.entries(steps).map(([step, hex]) => `  --${family}-${step}: ${hex};`)
+  );
+
+const buildRadiusCssVars = (tokens) =>
+  Object.entries(tokens.radius ?? {}).map(
+    ([name, value]) => `  --radius-${toKebab(name)}: ${value}px;`
+  );
+
+const buildMotionCssVars = (tokens) => {
+  const lines = [];
+  for (const [name, value] of Object.entries(tokens.motion?.ease ?? {})) {
+    lines.push(`  --ease-${toKebab(name)}: ${value};`);
+  }
+  for (const [name, value] of Object.entries(tokens.motion?.duration ?? {})) {
+    lines.push(`  --duration-${toKebab(name)}: ${value}ms;`);
+  }
+  for (const [name, spec] of Object.entries(tokens.motion?.semantic ?? {})) {
+    lines.push(`  --motion-${toKebab(name)}-duration: var(--duration-${spec.duration});`);
+    lines.push(`  --motion-${toKebab(name)}-ease: var(--ease-${spec.ease});`);
+  }
   return lines;
 };
 
@@ -86,7 +130,7 @@ const cssBlock = (selector, declarations, indentLevel = 0) => {
 
 const buildSpacingCssVars = (tokens) =>
   Object.entries(tokens.spacing ?? {}).map(
-    ([name, value]) => `  --spacing-${toKebab(name)}: ${value}px;`
+    ([name, value]) => `  --space-${toKebab(name)}: ${value}px;`
   );
 
 const buildTypographyTsObject = (tokens) => {
@@ -111,17 +155,44 @@ const buildSpacingTsObject = (tokens) => {
   return lines.join("\n");
 };
 
-const buildColorTsObject = (name, colorNode) => {
+const buildColorTsObject = (name, colorNode, primitives) => {
   const lines = [`export const ${name} = {`];
   for (const entry of walkColor(colorNode)) {
-    lines.push(`  "${entry.name}": "${entry.value}",`);
+    lines.push(`  "${entry.name}": "${resolveColorValue(entry.value, primitives)}",`);
   }
   lines.push("} as const;");
   return lines.join("\n");
 };
 
+const buildFlatTsObject = (name, entries) => {
+  const lines = [`export const ${name} = {`];
+  for (const [key, value] of entries) {
+    const rendered = typeof value === "number" ? value : JSON.stringify(value);
+    lines.push(`  "${key}": ${rendered},`);
+  }
+  lines.push("} as const;");
+  return lines.join("\n");
+};
+
+const primitiveColorEntries = (primitives) =>
+  Object.entries(primitives ?? {}).flatMap(([family, steps]) =>
+    Object.entries(steps).map(([step, hex]) => [`${family}-${step}`, hex])
+  );
+
+const motionEntries = (motion) => {
+  const entries = [];
+  for (const [name, value] of Object.entries(motion?.ease ?? {})) {
+    entries.push([`ease-${name}`, value]);
+  }
+  for (const [name, value] of Object.entries(motion?.duration ?? {})) {
+    entries.push([`duration-${name}`, value]);
+  }
+  return entries;
+};
+
 const buildTs = (tokens) => {
   const themes = colorThemes(tokens.color);
+  const primitives = tokens.color?.primitive;
   const lines = [banner, "", "export const meta = {"];
   lines.push(`  name: "${tokens.meta.name}",`);
   lines.push(`  version: "${tokens.meta.version}",`);
@@ -132,14 +203,27 @@ const buildTs = (tokens) => {
   lines.push("");
   lines.push(buildSpacingTsObject(tokens));
   lines.push("");
-  lines.push(buildColorTsObject("color", themes.light));
+  lines.push(buildFlatTsObject("radius", Object.entries(tokens.radius ?? {})));
+  lines.push("");
+  lines.push(buildFlatTsObject("motion", motionEntries(tokens.motion)));
+  lines.push("");
+  if (primitives) {
+    lines.push(buildFlatTsObject("colorPrimitive", primitiveColorEntries(primitives)));
+    lines.push("");
+  }
+  lines.push(buildColorTsObject("color", themes.light, primitives));
   lines.push("");
   if (themes.dark) {
-    lines.push(buildColorTsObject("colorDark", themes.dark));
+    lines.push(buildColorTsObject("colorDark", themes.dark, primitives));
     lines.push("");
   }
   lines.push("export type TypographyTokenName = keyof typeof typography;");
   lines.push("export type SpacingTokenName = keyof typeof spacing;");
+  lines.push("export type RadiusTokenName = keyof typeof radius;");
+  lines.push("export type MotionTokenName = keyof typeof motion;");
+  if (primitives) {
+    lines.push("export type ColorPrimitiveName = keyof typeof colorPrimitive;");
+  }
   lines.push("export type ColorTokenName = keyof typeof color;");
   lines.push("");
   lines.push(
@@ -154,17 +238,21 @@ const buildTs = (tokens) => {
 
 const buildCss = (tokens) => {
   const themes = colorThemes(tokens.color);
+  const primitives = tokens.color?.primitive;
   const lightDeclarations = [
     "color-scheme: light;",
     `--font-family-base: ${tokens.meta.fontFamily};`,
     ...buildTypographyCssVars(tokens).map((line) => line.trim()),
     ...buildSpacingCssVars(tokens).map((line) => line.trim()),
-    ...colorDeclarations(themes.light)
+    ...buildRadiusCssVars(tokens).map((line) => line.trim()),
+    ...buildMotionCssVars(tokens).map((line) => line.trim()),
+    ...buildPrimitiveColorCssVars(primitives).map((line) => line.trim()),
+    ...colorDeclarations(themes.light, primitives)
   ];
   const lines = [banner, "", ...cssBlock(":root", lightDeclarations)];
 
   if (themes.dark) {
-    const darkDeclarations = ["color-scheme: dark;", ...colorDeclarations(themes.dark)];
+    const darkDeclarations = ["color-scheme: dark;", ...colorDeclarations(themes.dark, primitives)];
     lines.push("");
     lines.push(...cssBlock('[data-theme="dark"]', darkDeclarations));
     lines.push("");

@@ -1,14 +1,14 @@
 .favorites {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-24);
+  gap: var(--space-6);
   width: 100%;
 }
 
 .topRow,
 .bottomRow {
   display: flex;
-  gap: var(--spacing-24);
+  gap: var(--space-6);
   width: 100%;
 }
 
@@ -41,7 +41,7 @@
 .card {
   background: var(--color-background-contrast);
   border: 1px solid var(--color-border-primary);
-  border-radius: var(--spacing-24);
+  border-radius: var(--radius-xl);
   overflow: hidden;
   position: relative;
 }
@@ -53,7 +53,7 @@
   height: 362px;
   justify-content: space-between;
   min-width: 0;
-  padding: var(--spacing-16) var(--spacing-20);
+  padding: var(--space-4) var(--space-4);
 }
 
 .smallCard {
@@ -62,7 +62,7 @@
   flex-direction: column;
   height: 120px;
   justify-content: space-between;
-  padding: var(--spacing-16) var(--spacing-20);
+  padding: var(--space-4) var(--space-4);
 }
 
 .readingCard {
@@ -84,7 +84,7 @@
   position: relative;
   text-decoration: none;
   transform: scale(1);
-  transition: transform 180ms ease;
+  transition: transform var(--duration-normal) var(--ease-smooth);
   width: auto;
 }
 
@@ -94,7 +94,7 @@
 }
 
 .readingImageFrame:focus-visible {
-  border-radius: var(--spacing-8);
+  border-radius: var(--radius-md);
   outline: 2px solid color-mix(in srgb, var(--color-content-primary) 40%, transparent);
   outline-offset: 4px;
 }
@@ -121,7 +121,7 @@
   align-items: center;
   background: var(--color-background-contrast);
   border: 1px solid var(--color-border-primary);
-  border-radius: var(--spacing-24);
+  border-radius: var(--radius-full);
   color: var(--color-content-primary);
   display: inline-flex;
   flex: 0 0 auto;
@@ -129,7 +129,7 @@
   justify-content: center;
   text-decoration: none;
   transition:
-    transform 160ms ease;
+    transform var(--duration-fast) var(--ease-smooth);
   width: 42px;
   z-index: 2;
 }
@@ -173,11 +173,11 @@
   align-items: center;
   color: inherit;
   display: flex;
-  gap: var(--spacing-16);
+  gap: var(--space-4);
   min-width: 0;
-  padding: 18px var(--spacing-12);
+  padding: 18px var(--space-3);
   text-decoration: none;
-  transition: transform 160ms ease;
+  transition: transform var(--duration-fast) var(--ease-smooth);
   width: 100%;
 }
 
@@ -191,7 +191,7 @@
 }
 
 .movieItem + .movieItem {
-  border-top: 1px solid var(--color-border-primary);
+  border-top: 1px solid var(--color-border-secondary);
 }
 
 .movieIndex {
@@ -206,7 +206,7 @@
 .movieCopy {
   display: flex;
   flex-direction: column;
-  gap: calc(var(--spacing-4) / 2);
+  gap: calc(var(--space-1) / 2);
   min-width: 0;
   overflow: hidden;
 }
@@ -244,7 +244,7 @@
   bottom: 16px;
   color: var(--color-content-primary);
   display: flex;
-  gap: var(--spacing-12);
+  gap: var(--space-3);
   left: 20px;
   position: absolute;
   text-decoration: none;
@@ -253,13 +253,13 @@
 
 .travelImage {
   display: block;
-  border-radius: var(--spacing-12);
+  border-radius: var(--radius-lg);
   flex: 0 0 44px;
   height: 44px;
   object-fit: cover;
   transform: scale(1);
   transform-origin: center;
-  transition: transform 180ms ease;
+  transition: transform var(--duration-normal) var(--ease-smooth);
   width: 44px;
 }
 
@@ -269,7 +269,7 @@
 }
 
 .travelLink:focus-visible {
-  border-radius: var(--spacing-12);
+  border-radius: var(--radius-lg);
   outline: 2px solid color-mix(in srgb, var(--color-content-primary) 40%, transparent);
   outline-offset: 4px;
 }
@@ -277,7 +277,7 @@
 .travelCopy {
   display: flex;
   flex-direction: column;
-  gap: calc(var(--spacing-4) / 2);
+  gap: calc(var(--space-1) / 2);
   min-width: 0;
 }
 
@@ -310,7 +310,7 @@
 }
 
 .musicCard {
-  gap: var(--spacing-24);
+  gap: var(--space-6);
   flex: 1 1 0;
   justify-content: flex-start;
   min-width: 0;
@@ -326,7 +326,7 @@
 .musicCopy {
   display: flex;
   flex-direction: column;
-  gap: calc(var(--spacing-4) / 2);
+  gap: calc(var(--space-1) / 2);
   white-space: nowrap;
 }
 
@@ -371,7 +371,7 @@
 
 .appTrack {
   display: flex;
-  gap: var(--spacing-16);
+  gap: var(--space-4);
   width: max-content;
   will-change: transform;
 }
@@ -380,13 +380,13 @@
   align-items: center;
   display: flex;
   flex: 0 0 auto;
-  gap: var(--spacing-12);
+  gap: var(--space-3);
 }
 
 .appLogo {
   align-items: center;
   appearance: none;
-  border-radius: var(--spacing-8);
+  border-radius: var(--radius-md);
   color: inherit;
   display: flex;
   flex: 0 0 46px;
@@ -408,11 +408,11 @@
 }
 
 .appLogo img {
-  border-radius: var(--spacing-8);
+  border-radius: var(--radius-md);
   height: 42px;
   object-fit: cover;
   pointer-events: none;
-  transition: transform 180ms ease;
+  transition: transform var(--duration-normal) var(--ease-smooth);
   width: 42px;
 }
 
@@ -459,7 +459,7 @@
   }
 
   .movieItem {
-    padding-inline: var(--spacing-4);
+    padding-inline: var(--space-1);
   }
 
   .musicCard {
@@ -468,7 +468,7 @@
 
   .appsCard {
     align-items: center;
-    gap: var(--spacing-16);
+    gap: var(--space-4);
     min-height: auto;
   }
 

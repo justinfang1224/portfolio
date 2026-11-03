@@ -12,10 +12,10 @@
 .menu {
   background: var(--color-background-contrast);
   border: 1px solid var(--color-border-primary);
-  border-radius: var(--spacing-16);
+  border-radius: var(--radius-lg);
   min-width: 220px;
   opacity: 0;
-  padding: var(--spacing-12) var(--spacing-16);
+  padding: var(--space-3) var(--space-4);
   pointer-events: none;
   position: absolute;
   right: 0;
@@ -23,8 +23,8 @@
   transform: scale(0.96);
   transform-origin: top right;
   transition:
-    opacity 180ms var(--motion-fade-ease),
-    transform 180ms var(--motion-fade-ease);
+    opacity var(--duration-normal) var(--motion-fade-ease),
+    transform var(--duration-normal) var(--motion-fade-ease);
 }
 
 .menuShown {
@@ -42,14 +42,14 @@
 .rows {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-12);
+  gap: var(--space-3);
 }
 
 .row {
   align-items: center;
   display: flex;
   justify-content: space-between;
-  gap: var(--spacing-16);
+  gap: var(--space-4);
 }
 
 .rowTitle {
@@ -68,7 +68,7 @@
   border-radius: 999px;
   cursor: pointer;
   flex: 0 0 auto;
-  height: var(--spacing-24);
+  height: var(--space-6);
   padding: 3px;
   position: relative;
   width: 40px;
@@ -90,7 +90,7 @@
   display: block;
   height: 18px;
   transform: translateX(0);
-  transition: transform 150ms var(--motion-fade-ease);
+  transition: transform var(--duration-fast) var(--motion-fade-ease);
   width: 18px;
 }
 
@@ -112,14 +112,14 @@
       color-mix(in srgb, var(--color-content-primary) 10%, transparent) 0,
       color-mix(in srgb, var(--color-content-primary) 10%, transparent) 1px,
       transparent 1px,
-      transparent var(--spacing-4)
+      transparent var(--space-1)
     ),
     repeating-linear-gradient(
       to right,
       color-mix(in srgb, var(--color-content-primary) 10%, transparent) 0,
       color-mix(in srgb, var(--color-content-primary) 10%, transparent) 1px,
       transparent 1px,
-      transparent var(--spacing-4)
+      transparent var(--space-1)
     );
   inset: 0;
   position: absolute;
@@ -154,11 +154,11 @@
   font-family: var(--font-family-base);
   font-size: var(--typography-caption-font-size);
   font-weight: var(--typography-button-font-weight);
-  left: var(--spacing-4);
+  left: var(--space-1);
   letter-spacing: 0.01em;
   line-height: var(--typography-caption-line-height);
   position: absolute;
-  top: var(--spacing-4);
+  top: var(--space-1);
 }
 
 .gridText .gridLabel {

@@ -8,7 +8,7 @@
 
 .media {
   background: var(--color-surface-card-primary);
-  border-radius: 24px;
+  border-radius: var(--radius-lg);
   color: inherit;
   display: block;
   height: 528px;
@@ -36,7 +36,7 @@
   object-fit: cover;
   pointer-events: none;
   transform: scale(var(--image-rest-scale));
-  transition: transform 300ms ease;
+  transition: transform var(--duration-slow) var(--ease-smooth);
   width: 100%;
   will-change: transform;
 }
@@ -69,8 +69,8 @@
   top: 24px;
   transform: translateY(-4px);
   transition:
-    opacity 300ms ease,
-    transform 300ms ease;
+    opacity var(--duration-slow) var(--ease-smooth),
+    transform var(--duration-slow) var(--ease-smooth);
   z-index: 1;
 }
 

@@ -28,7 +28,8 @@ const navItems = [
 type NavItemId = (typeof navItems)[number]["id"];
 
 const PANEL_WIDTH = 196;
-const PANEL_HEIGHT = 172;
+const PANEL_HEIGHT = 180;
+const PANEL_RADIUS = 16;
 const SINK_MS = 60;
 
 const shellSpring = {
@@ -86,6 +87,7 @@ export function FloatingNav() {
   const showShell = () => {
     if (shellRef.current) {
       shellRef.current.style.opacity = "1";
+      shellRef.current.style.borderRadius = `${PANEL_RADIUS}px`;
     }
 
     setSinking(false);
@@ -100,6 +102,10 @@ export function FloatingNav() {
   };
 
   const openMenu = () => {
+    if (shellRef.current) {
+      shellRef.current.style.borderRadius = `${PANEL_RADIUS}px`;
+    }
+
     if (reducedMotion) {
       showShell();
       return;
@@ -171,6 +177,7 @@ export function FloatingNav() {
       }
 
       shell.style.opacity = "0";
+      shell.style.borderRadius = "";
       setShellOn(false);
     });
 

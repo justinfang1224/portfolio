@@ -25,7 +25,7 @@
 }
 
 .avatar {
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   display: block;
   height: 64px;
   width: 64px;
@@ -82,7 +82,7 @@
 }
 
 .companyLogo {
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   display: inline-block;
   flex: 0 0 auto;
   height: 16px;
@@ -127,7 +127,7 @@
 }
 
 .typeCursorActive {
-  animation: type-cursor-blink 800ms steps(2, start) infinite;
+  animation: type-cursor-blink var(--duration-slow) steps(2, start) infinite;
 }
 
 .actions {

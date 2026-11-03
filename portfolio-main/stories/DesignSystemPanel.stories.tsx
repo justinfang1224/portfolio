@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import type { ReactNode } from "react";
-import { color, colorDark, typography, type ColorTokenName } from "../../design-system-tokens/src/tokens";
+import { color, colorDark, spacing, typography, type ColorTokenName } from "../../design-system-tokens/src/tokens";
 import { aboutFavorites } from "@/content/about";
 import { assetUrls } from "@/content/portfolio";
 import { AboutCollage } from "@/components/about/AboutCollage";
@@ -49,7 +49,10 @@ const typographyTokens = Object.entries(typography).map(([name, token]) => ({
   lineHeight: token.lineHeight
 }));
 
-const spacingTokens = [0, 4, 8, 12, 16, 20, 24, 36, 40, 48, 56, 64, 80, 100, 128, 190, 201] as const;
+const spacingTokens = Object.entries(spacing).map(([step, value]) => ({
+  name: `space-${step}`,
+  value
+}));
 
 const placeholderTimelineEntries = [
   {
@@ -221,13 +224,13 @@ export const Overview: Story = {
               </ComponentCard>
               <ComponentCard description="Spacing scale shown in pixels with proportional bars." isLarge title="Spacing">
                 <div className={styles.tokenList}>
-                  {spacingTokens.map((value) => (
-                    <div className={styles.spacingToken} key={value}>
+                  {spacingTokens.map((token) => (
+                    <div className={styles.spacingToken} key={token.name}>
                       <div className={styles.tokenMeta}>
-                        <p className={styles.tokenName}>spacing-{value}</p>
-                        <p className={styles.tokenValue}>{value}px</p>
+                        <p className={styles.tokenName}>{token.name}</p>
+                        <p className={styles.tokenValue}>{token.value}px</p>
                       </div>
-                      <span className={styles.spacingPreview} style={{ width: Math.max(value, 4) }} />
+                      <span className={styles.spacingPreview} style={{ width: Math.max(token.value, 4) }} />
                     </div>
                   ))}
                 </div>

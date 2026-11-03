@@ -9,7 +9,7 @@ alwaysApply: true
 
 The site uses a single, consistent 24px left/right page gutter on every page and at every viewport width. The source of truth lives in `portfolio-main/app/globals.css`:
 
-- `--portfolio-page-gutter: var(--spacing-24)` — the one place the gutter is defined.
+- `--portfolio-page-gutter: var(--space-6)` — the one place the gutter is defined. `space-6` is 24px.
 - `--portfolio-shell: min(960px, calc(100vw - (var(--portfolio-page-gutter) * 2)))` — page shell; guarantees 24px gutters below the 960px cap.
 - `--portfolio-text-column: min(796px, var(--portfolio-shell))` — text column; always tracks the shell.
 

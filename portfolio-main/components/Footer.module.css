@@ -8,10 +8,10 @@
   font-weight: var(--typography-body-small-font-weight);
   justify-content: space-between;
   line-height: var(--typography-body-small-line-height);
-  margin: 84px auto 0;
-  min-height: var(--spacing-24);
+  margin: auto auto 0;
+  min-height: var(--space-6);
   padding-bottom: 0;
-  padding-top: 0;
+  padding-top: calc(var(--space-12) + var(--space-8) + var(--space-1));
   width: var(--portfolio-text-column);
 }
 
@@ -50,7 +50,7 @@
   .footer {
     align-items: flex-start;
     flex-direction: column;
-    gap: var(--spacing-8);
+    gap: var(--space-2);
   }
 
   .location {

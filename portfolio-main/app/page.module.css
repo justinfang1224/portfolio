@@ -2,9 +2,9 @@
   align-items: flex-start;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-64);
+  gap: var(--space-12);
   margin: 0 auto;
-  padding-top: calc(var(--spacing-128) + var(--spacing-40) + var(--spacing-4));
+  padding-top: var(--space-page-top);
   width: var(--portfolio-text-column);
 }
 
@@ -18,7 +18,7 @@
 }
 
 .intro {
-  gap: var(--spacing-36);
+  gap: var(--space-8);
 }
 
 .identity {
@@ -31,7 +31,7 @@
   align-items: flex-start;
   display: flex;
   flex-direction: column;
-  gap: calc(var(--spacing-4) / 2);
+  gap: calc(var(--space-1) / 2);
 }
 
 .name,
@@ -86,7 +86,7 @@
 .introActions {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--spacing-12);
+  gap: var(--space-3);
 }
 
 .prose a {
@@ -96,12 +96,12 @@
 .companyLink {
   align-items: center;
   display: inline-flex;
-  gap: var(--spacing-4);
+  gap: var(--space-1);
   vertical-align: -2px;
 }
 
 .companyLogo {
-  border-radius: var(--spacing-4);
+  border-radius: var(--radius-sm);
   display: inline-block;
   flex: 0 0 auto;
   height: 16px;
@@ -110,23 +110,23 @@
 }
 
 .workSection {
-  gap: var(--spacing-24);
+  gap: var(--space-6);
 }
 
 .featured {
   align-items: center;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-16);
+  gap: var(--space-4);
   width: 100%;
 }
 
 .featuredCard {
   aspect-ratio: 796 / 496;
   background: var(--color-surface-card-primary);
-  border: 1px solid var(--color-border-primary);
-  border-radius: var(--spacing-24);
-  clip-path: inset(0 round var(--spacing-24));
+  border: 1px solid var(--color-border-secondary);
+  border-radius: var(--radius-xl);
+  clip-path: inset(0 round var(--radius-xl));
   height: auto;
   isolation: isolate;
   overflow: hidden;
@@ -166,7 +166,7 @@
   left: 0;
   position: absolute;
   top: 0;
-  transition: transform 320ms var(--motion-fade-ease);
+  transition: transform var(--duration-slow) var(--motion-fade-ease);
   width: 100%;
 }
 
@@ -196,17 +196,17 @@
 .featuredTitle {
   align-items: center;
   background: var(--color-background-primary);
-  border: 1px solid var(--color-border-primary);
-  border-radius: var(--spacing-24);
+  border: 1px solid var(--color-border-secondary);
+  border-radius: var(--radius-full);
   display: flex;
-  gap: var(--spacing-8);
-  left: var(--spacing-24);
+  gap: var(--space-2);
+  left: var(--space-6);
   opacity: 0;
-  padding: var(--spacing-8) var(--spacing-16);
+  padding: var(--space-2) var(--space-4);
   pointer-events: none;
   position: absolute;
-  top: var(--spacing-24);
-  transition: opacity 180ms var(--motion-fade-ease);
+  top: var(--space-6);
+  transition: opacity var(--duration-normal) var(--motion-fade-ease);
   z-index: 5;
 }
 
@@ -298,7 +298,7 @@
   object-position: center;
   position: absolute;
   top: -4px;
-  transition: transform 320ms var(--motion-fade-ease);
+  transition: transform var(--duration-slow) var(--motion-fade-ease);
   width: calc(100% + 8px);
 }
 
@@ -314,7 +314,7 @@
 .slideIndicator {
   align-items: center;
   display: flex;
-  gap: calc(var(--spacing-12) / 2);
+  gap: calc(var(--space-3) / 2);
   position: relative;
   z-index: 4;
 }
@@ -323,14 +323,14 @@
   appearance: none;
   background: color-mix(in srgb, var(--color-content-primary) 20%, transparent);
   border: 0;
-  border-radius: 2px;
+  border-radius: var(--radius-xs);
   cursor: pointer;
   display: block;
   height: 6px;
   padding: 0;
   transition:
-    background-color 180ms var(--motion-fade-ease),
-    width 180ms var(--motion-fade-ease);
+    background-color var(--duration-normal) var(--motion-fade-ease),
+    width var(--duration-normal) var(--motion-fade-ease);
   width: 6px;
 }
 
@@ -346,18 +346,18 @@
 
 .slideIndicator .activeSlide {
   background: color-mix(in srgb, var(--color-content-primary) 80%, transparent);
-  width: var(--spacing-24);
+  width: var(--space-6);
 }
 
 .writings {
-  gap: var(--spacing-40);
+  gap: var(--space-8);
 }
 
 .sectionHeader {
   align-items: flex-start;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-20);
+  gap: var(--space-4);
   width: 100%;
 }
 
@@ -370,8 +370,8 @@
 
 @media (max-width: 767px) {
   .main {
-    gap: var(--spacing-56);
-    padding-top: var(--spacing-128);
+    gap: var(--space-12);
+    padding-top: var(--space-32);
   }
 
   .role {
@@ -385,8 +385,8 @@
   }
 
   .featuredCard {
-    border-radius: var(--spacing-16);
-    clip-path: inset(0 round var(--spacing-16));
+    border-radius: var(--radius-xl);
+    clip-path: inset(0 round var(--radius-xl));
   }
 }
 

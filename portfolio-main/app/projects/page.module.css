@@ -6,28 +6,28 @@
   align-items: flex-start;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-48);
+  gap: var(--space-12);
   margin: 0 auto;
-  padding-top: calc(var(--spacing-128) + var(--spacing-40) + var(--spacing-4));
+  padding-top: calc(var(--space-32) + var(--space-10) + var(--space-1));
   width: var(--portfolio-text-column);
 }
 
 .archiveMain {
-  padding-top: calc(var(--spacing-128) + var(--spacing-40) + var(--spacing-4));
+  padding-top: calc(var(--space-32) + var(--space-10) + var(--space-1));
 }
 
 .intro {
   align-items: flex-start;
   display: flex;
   flex-direction: column;
-  gap: calc(var(--spacing-24) + var(--spacing-8));
+  gap: calc(var(--space-6) + var(--space-2));
   width: 100%;
 }
 
 .tabs {
   align-items: center;
   display: flex;
-  gap: var(--spacing-8);
+  gap: var(--space-2);
 }
 
 .activeTab,
@@ -35,7 +35,7 @@
   align-items: center;
   appearance: none;
   border: 0;
-  border-radius: var(--spacing-24);
+  border-radius: var(--radius-full);
   cursor: pointer;
   display: inline-flex;
   font-family: var(--font-family-base);
@@ -43,15 +43,15 @@
   font-weight: var(--typography-button-font-weight);
   line-height: var(--typography-button-line-height);
   min-height: 34px;
-  padding: var(--spacing-8) var(--spacing-16);
-  transition: background-color 160ms ease, color 160ms ease;
+  padding: var(--space-2) var(--space-4);
+  transition: background-color var(--duration-fast) var(--ease-smooth), color var(--duration-fast) var(--ease-smooth);
   white-space: nowrap;
 }
 
 .activeTab {
   background: var(--color-button-secondary-default);
   color: var(--color-content-primary);
-  gap: var(--spacing-8);
+  gap: var(--space-2);
 }
 
 .inactiveTab {
@@ -71,7 +71,7 @@
 
 .tabDot {
   background: var(--color-status-positive);
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   flex: 0 0 6px;
   height: 6px;
   width: 6px;
@@ -98,21 +98,21 @@
 }
 
 .tabCountSlideIn {
-  animation: tabCountSlideIn 500ms var(--motion-fade-ease) both;
+  animation: tabCountSlideIn var(--duration-slow) var(--motion-fade-ease) both;
 }
 
 .tabPanel {
   opacity: 1;
   transform: translate3d(0, 0, 0);
   transition:
-    opacity 180ms var(--motion-fade-ease),
-    transform 180ms var(--motion-fade-ease);
+    opacity var(--duration-normal) var(--motion-fade-ease),
+    transform var(--duration-normal) var(--motion-fade-ease);
   width: 100%;
 }
 
 .tabPanelHidden {
   opacity: 0;
-  transform: translate3d(0, var(--spacing-8), 0);
+  transform: translate3d(0, var(--space-2), 0);
 }
 
 .tabPanelVisible {
@@ -136,7 +136,7 @@
   align-items: flex-start;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-8);
+  gap: var(--space-2);
   width: 100%;
 }
 
@@ -165,7 +165,7 @@
   align-items: center;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-48);
+  gap: var(--space-12);
   width: 100%;
 }
 
@@ -179,7 +179,7 @@
 
 .projectMedia {
   background: var(--color-surface-card-primary);
-  border-radius: var(--spacing-24);
+  border-radius: var(--radius-lg);
   color: inherit;
   cursor: pointer;
   display: block;
@@ -216,7 +216,7 @@
 
 .projectMedia:focus-visible {
   outline: 2px solid var(--color-content-primary);
-  outline-offset: var(--spacing-8);
+  outline-offset: var(--space-2);
 }
 
 .projectImage {
@@ -226,21 +226,21 @@
   pointer-events: none;
   transform: scale(1);
   transform-origin: center;
-  transition: transform 260ms var(--motion-fade-ease);
+  transition: transform var(--duration-slow) var(--motion-fade-ease);
   width: 100%;
   will-change: transform;
 }
 
 .statusBadge {
-  left: var(--spacing-20);
+  left: var(--space-4);
   opacity: 0;
   pointer-events: none;
   position: absolute;
-  top: var(--spacing-20);
-  transform: translate3d(0, calc(var(--spacing-4) * -1), 0);
+  top: var(--space-4);
+  transform: translate3d(0, calc(var(--space-1) * -1), 0);
   transition:
-    opacity 180ms var(--motion-fade-ease),
-    transform 180ms var(--motion-fade-ease);
+    opacity var(--duration-normal) var(--motion-fade-ease),
+    transform var(--duration-normal) var(--motion-fade-ease);
   z-index: 1;
 }
 
@@ -265,7 +265,7 @@
   align-items: flex-start;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-12);
+  gap: var(--space-3);
   width: 100%;
 }
 
@@ -273,7 +273,7 @@
   align-items: flex-start;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-8);
+  gap: var(--space-2);
   width: 100%;
 }
 
@@ -301,23 +301,23 @@
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  gap: var(--spacing-8);
+  gap: var(--space-2);
 }
 
 .archiveList {
   align-items: flex-start;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-24);
+  gap: var(--space-6);
   width: 100%;
 }
 
 .archiveItem {
-  border-bottom: 1px solid var(--color-border-primary);
-  column-gap: var(--spacing-36);
+  border-bottom: 1px solid var(--color-border-secondary);
+  column-gap: var(--space-8);
   display: grid;
   grid-template-columns: 52px 120px 72px minmax(0, 1fr);
-  padding-bottom: var(--spacing-24);
+  padding-bottom: var(--space-6);
   width: 100%;
 }
 
@@ -366,7 +366,7 @@
 
 @media (max-width: 767px) {
   .main {
-    padding-top: var(--spacing-128);
+    padding-top: var(--space-32);
   }
 
   .tabs {
@@ -375,7 +375,7 @@
 
   .projectMedia {
     aspect-ratio: 796 / 528;
-    border-radius: var(--spacing-16);
+    border-radius: var(--radius-lg);
     height: auto;
   }
 
@@ -385,10 +385,10 @@
   }
 
   .archiveItem {
-    column-gap: var(--spacing-12);
-    row-gap: var(--spacing-8);
+    column-gap: var(--space-3);
+    row-gap: var(--space-2);
     grid-template-columns: max-content minmax(0, 1fr);
-    padding-bottom: var(--spacing-24);
+    padding-bottom: var(--space-6);
   }
 
   .archiveYear {

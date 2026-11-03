@@ -11,13 +11,23 @@ This folder keeps a **single source of truth** for typography and color values, 
 
 ## Token coverage
 
-- Typography (SF Pro scale)
-- Color roles:
+Primitives are the raw values. Semantic tokens point at primitives.
+
+- Color primitives: gray, blue, green, amber, and red scales
+- Color semantics (light and dark):
   - Border: primary, secondary
   - Content: primary, secondary, tertiary, contrast
-  - Background: primary, secondary (intended mainly for cards)
-  - Surface card: primary, secondary (semantic alias for card backgrounds)
+  - Background: primary, secondary, contrast
+  - Surface card: primary, secondary
+  - Status: positive (`green-500`), warning (`amber-500`)
   - Button secondary states: default, hover, pressed
+- Spacing primitives: `space-1` through `space-12` (4, 8, 12, 16, 24, 32, 48)
+- Radius primitives: `sm` 4, `md` 8, `lg` 12, `full` 9999
+- Motion primitives: `ease-smooth`, `duration-fast` 150, `duration-normal` 200, `duration-slow` 300
+- Motion semantics: fade and theme, both `duration-slow` and `ease-smooth`
+- Typography (SF Pro scale)
+
+Blue, red, and the unused green and amber stops are primitives only. They have no semantic names.
 
 ## Commands
 
@@ -27,7 +37,7 @@ This folder keeps a **single source of truth** for typography and color values, 
 ## How to use in a portfolio app
 
 1. Import `src/tokens.css` once at app root.
-2. Use CSS variables for styling (`var(--color-content-primary)`).
+2. Use semantic CSS variables for styling (`var(--color-content-primary)`). Reach for a primitive (`var(--gray-900)`, `var(--space-4)`, `var(--radius-lg)`, `var(--duration-fast)`) only when no semantic token exists.
 3. For card UI, prefer `var(--color-surface-card-primary)` and `var(--color-surface-card-secondary)`.
 4. Secondary button background states should always use:
    - `--color-button-secondary-default`

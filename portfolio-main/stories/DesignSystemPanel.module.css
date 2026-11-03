@@ -17,7 +17,7 @@
 .componentCard {
   background: var(--color-background-contrast);
   border: 1px solid var(--color-border-primary);
-  border-radius: 24px;
+  border-radius: var(--radius-lg);
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -82,7 +82,7 @@
 .navPreview {
   align-items: center;
   background: var(--color-background-contrast);
-  border-radius: 24px;
+  border-radius: var(--radius-lg);
   display: flex;
   justify-content: center;
   min-height: 180px;
@@ -121,7 +121,7 @@
 
 .railMockContent {
   background: var(--color-background-contrast);
-  border-radius: 24px;
+  border-radius: var(--radius-lg);
   min-height: 220px;
   padding: 24px;
 }
@@ -164,7 +164,7 @@
 
 .motionSample {
   background: var(--color-background-contrast);
-  border-radius: 24px;
+  border-radius: var(--radius-lg);
   color: var(--color-content-secondary);
   font-family: var(--font-family-base);
   font-size: var(--typography-body-medium-font-size);
@@ -173,7 +173,7 @@
 }
 
 .parallaxPreview {
-  border-radius: 24px;
+  border-radius: var(--radius-lg);
   height: 360px;
   overflow: hidden;
   position: relative;
@@ -208,7 +208,7 @@
 .spacingToken {
   align-items: center;
   border: 1px solid var(--color-border-primary);
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   display: flex;
   gap: 12px;
   justify-content: space-between;
@@ -242,7 +242,7 @@
 
 .swatch {
   border: 1px solid var(--color-border-primary);
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   flex: 0 0 44px;
   height: 44px;
   width: 44px;
@@ -259,7 +259,7 @@
 
 .tokenTable th,
 .tokenTable td {
-  border-bottom: 1px solid var(--color-border-primary);
+  border-bottom: 1px solid var(--color-border-secondary);
   padding: 8px 12px 8px 0;
   text-align: left;
   vertical-align: middle;
@@ -300,7 +300,7 @@
 
 .spacingPreview {
   background: var(--color-button-secondary-default);
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   height: 10px;
   min-width: 4px;
 }

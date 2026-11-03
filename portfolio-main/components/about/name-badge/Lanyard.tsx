@@ -28,9 +28,9 @@ import {
 } from "./badgeTexture";
 
 const CARD_MODEL = "/about/badge-card.glb";
-const MIN_BADGE_WIDTH = 360;
+const MIN_BADGE_WIDTH = 324;
 const CARD_WORLD_WIDTH = CARD.width * 2.25;
-/** Strap thickness as a fraction of the 360px badge face. */
+/** Strap thickness as a fraction of the badge face. */
 const STRAP_PER_CARD = 22 / MIN_BADGE_WIDTH;
 
 extend({ MeshLineGeometry, MeshLineMaterial });
@@ -370,7 +370,7 @@ function Band({
   palette: BadgePalette;
 }) {
   const viewportDpr = useThree((state) => state.viewport.dpr);
-  const [faceHeight, setFaceHeight] = useState(536);
+  const [faceHeight, setFaceHeight] = useState(482);
   const swallowClick = useRef(false);
   const pixelWidth = badgeFacePixels(faceHeight, fov, viewportDpr, baseZ);
 
