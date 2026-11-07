@@ -11,9 +11,11 @@ import styles from "./page.module.css";
 
 const APPEAR_STEP_MS = 60;
 
-function withAppear(className: string, step: number) {
+function withAppear(className: string, step: number, mode: "blur" | "fade" = "blur") {
+  const appearClass = mode === "fade" ? styles.appearFade : styles.appear;
+
   return {
-    className: `${className} ${styles.appear}`,
+    className: `${className} ${appearClass}`,
     style: { "--appear-delay": `${step * APPEAR_STEP_MS}ms` } as CSSProperties
   };
 }
@@ -97,7 +99,7 @@ export default function Home() {
             I consider myself a designer at heart and enjoy building products with care & taste.
             Now I enjoy shipping things myself with the assistance of code & AI.
           </p>
-          <div {...withAppear(styles.introActions, 4)}>
+          <div {...withAppear(styles.introActions, 4, "fade")}>
             <Button href="/about">About me</Button>
             <Button href="/projects">All work →</Button>
           </div>

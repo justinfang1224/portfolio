@@ -394,13 +394,27 @@
   }
 }
 
+.appear,
+.appearFade {
+  opacity: 0;
+}
+
 .appear {
   filter: blur(8px);
-  opacity: 0;
+}
+
+.appearFade {
+  filter: none;
+  transform: translate3d(0, var(--motion-reveal-distance), 0);
 }
 
 :global(html[data-landing-splash="entered"]) .appear {
   animation: home-appear-blur 450ms ease-out both;
+  animation-delay: var(--appear-delay, 0ms);
+}
+
+:global(html[data-landing-splash="entered"]) .appearFade {
+  animation: home-appear-fade 450ms ease-out both;
   animation-delay: var(--appear-delay, 0ms);
 }
 
@@ -416,11 +430,37 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
+@keyframes home-appear-fade {
+  from {
+    opacity: 0;
+    transform: translate3d(0, var(--motion-reveal-distance), 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* iOS Safari can leave animated blur stuck on descendants (e.g. pill buttons). */
+@media (max-width: 767px), ((hover: none) and (pointer: coarse)) {
   .appear {
+    filter: none;
+    transform: translate3d(0, var(--motion-reveal-distance), 0);
+  }
+
+  :global(html[data-landing-splash="entered"]) .appear {
+    animation-name: home-appear-fade;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .appear,
+  .appearFade {
     animation: none;
     filter: none;
     opacity: 1;
+    transform: none;
   }
 
   .featuredImage,
