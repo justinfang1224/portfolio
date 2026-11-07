@@ -88,7 +88,7 @@
 }
 
 .menuSlot[data-open="true"] .shell {
-  border-radius: 16px;
+  border-radius: var(--radius-xl);
   pointer-events: auto;
 }
 
@@ -134,7 +134,6 @@
   font-family: var(--font-family-base);
   font-size: var(--typography-body-small-font-size);
   font-weight: var(--typography-body-small-font-weight);
-  gap: var(--space-2);
   line-height: var(--typography-body-small-line-height);
   opacity: 0;
   padding: var(--space-2) var(--space-3);
@@ -145,12 +144,6 @@
     transform var(--duration-normal) var(--ease-smooth),
     background-color var(--duration-fast) var(--motion-fade-ease),
     color var(--duration-fast) var(--motion-fade-ease);
-}
-
-.menuIcon {
-  flex: 0 0 auto;
-  height: var(--space-4);
-  width: var(--space-4);
 }
 
 .menuSlot[data-open="true"] .menuLink {

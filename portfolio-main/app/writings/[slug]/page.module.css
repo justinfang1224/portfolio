@@ -179,7 +179,7 @@
 }
 
 .imageBlockBordered {
-  border: 1px solid var(--color-border-primary);
+  border: 1px solid var(--color-border-secondary);
   border-radius: var(--radius-lg);
   overflow: hidden;
 }

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Button } from "@/components/Button";
 import { MotionReveal } from "@/components/MotionReveal";
 import { ProjectCaseMedia, ProjectCaseMediaItem } from "@/components/projects/ProjectCaseMedia";
 import { ProjectHeroParallax } from "@/components/projects/ProjectHeroParallax";
@@ -183,10 +183,18 @@ export default function BowtieProjectPage() {
               ))}
             </div>
 
-            <MotionReveal className={styles.actions} delay={80}>
-              <Link className={styles.button} href={bowtieProjectDetail.actions.next.href}>
+            <MotionReveal
+              aria-label="Project navigation"
+              as="nav"
+              className={styles.actions}
+              delay={80}
+            >
+              <Button href={bowtieProjectDetail.actions.back.href}>
+                {bowtieProjectDetail.actions.back.label}
+              </Button>
+              <Button href={bowtieProjectDetail.actions.next.href}>
                 {bowtieProjectDetail.actions.next.label}
-              </Link>
+              </Button>
             </MotionReveal>
           </div>
         </div>

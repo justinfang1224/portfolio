@@ -276,7 +276,9 @@
 .actions {
   align-items: center;
   display: flex;
-  justify-content: flex-start;
+  gap: var(--space-4);
+  justify-content: space-between;
+  padding-top: var(--space-4);
   width: 100%;
 }
 
@@ -300,8 +302,7 @@
     gap: 4px;
   }
 
-  .metrics,
-  .actions {
+  .metrics {
     align-items: flex-start;
     flex-direction: column;
   }

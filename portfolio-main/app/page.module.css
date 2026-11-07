@@ -353,6 +353,10 @@
   gap: var(--space-8);
 }
 
+.writings > :last-child {
+  margin-top: var(--space-6);
+}
+
 .sectionHeader {
   align-items: flex-start;
   display: flex;
@@ -390,7 +394,35 @@
   }
 }
 
+.appear {
+  filter: blur(8px);
+  opacity: 0;
+}
+
+:global(html[data-landing-splash="entered"]) .appear {
+  animation: home-appear-blur 450ms ease-out both;
+  animation-delay: var(--appear-delay, 0ms);
+}
+
+@keyframes home-appear-blur {
+  from {
+    filter: blur(8px);
+    opacity: 0;
+  }
+
+  to {
+    filter: blur(0);
+    opacity: 1;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .appear {
+    animation: none;
+    filter: none;
+    opacity: 1;
+  }
+
   .featuredImage,
   .featuredSlide,
   .featuredTitle,

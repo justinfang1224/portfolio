@@ -14,22 +14,22 @@ import {
 } from "@/lib/color-scheme";
 import { dsMarker } from "@/lib/ds-marker";
 import { Button } from "./Button";
-import { AboutIcon, HomeIcon, MenuIcon, ReplyIcon, WorkIcon, WritingIcon } from "./icons";
+import { MenuIcon, ReplyIcon } from "./icons";
 import { Toggle } from "./Toggle";
 import styles from "./FloatingNav.module.css";
 
 const navItems = [
-  { id: "home", label: "Home", href: "/", icon: HomeIcon },
-  { id: "projects", label: "Projects", href: "/projects", icon: WorkIcon },
-  { id: "writings", label: "Writings", href: "/writings", icon: WritingIcon },
-  { id: "about", label: "About", href: "/about", icon: AboutIcon }
+  { id: "home", label: "Home", href: "/" },
+  { id: "projects", label: "Projects", href: "/projects" },
+  { id: "writings", label: "Writings", href: "/writings" },
+  { id: "about", label: "About", href: "/about" }
 ] as const;
 
 type NavItemId = (typeof navItems)[number]["id"];
 
 const PANEL_WIDTH = 196;
-const PANEL_HEIGHT = 180;
-const PANEL_RADIUS = 16;
+const PANEL_HEIGHT = 174;
+const PANEL_RADIUS = 24;
 const SINK_MS = 60;
 
 const shellSpring = {
@@ -293,7 +293,6 @@ export function FloatingNav() {
                     }}
                     style={{ transitionDelay: menuOpen ? `${30 + index * 22}ms` : "0ms" }}
                   >
-                    <item.icon aria-hidden="true" className={styles.menuIcon} strokeWidth={1.75} />
                     {item.label}
                   </Link>
                 ))}

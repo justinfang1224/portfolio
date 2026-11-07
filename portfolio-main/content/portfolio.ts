@@ -376,7 +376,7 @@ export const cryptoProjectDetail = {
   ],
   actions: {
     back: { label: "← Back", href: "/#projects" },
-    next: { label: "Next project →", href: "/projects/bowtie" }
+    next: { label: "Next →", href: "/projects/bowtie" }
   }
 } as const;
 
@@ -549,7 +549,7 @@ export const okxProjectDetail = {
   ],
   actions: {
     back: { label: "← Back", href: "/#projects" },
-    next: { label: "Next project →", href: "/projects/crypto-com" }
+    next: { label: "Next →", href: "/projects/crypto-com" }
   }
 } as const;
 
@@ -817,7 +817,7 @@ export const bowtieProjectDetail = {
   ],
   actions: {
     back: { label: "← Back", href: "/#projects" },
-    next: { label: "Next project →", href: "/projects/okx" }
+    next: { label: "Next →", href: "/projects/okx" }
   }
 } as const;
 

@@ -22,17 +22,14 @@ export const metadata: Metadata = {
 };
 
 function SectionHeader({
-  index,
   title,
   titleId
 }: {
-  index: string;
   title: string;
   titleId: string;
 }) {
   return (
     <div className={styles.sectionHeader}>
-      <p className={styles.index}>{index}</p>
       <h2 className={styles.sectionTitle} id={titleId}>
         {title}
       </h2>
@@ -54,16 +51,17 @@ export default function AboutPage() {
             aria-labelledby="about-intro-title"
             className={styles.introSection}
           >
-            <p className={styles.index}>{aboutIntro.index}</p>
             <h2 className={styles.title} id="about-intro-title">
               {aboutIntro.title}
             </h2>
             <div className={styles.prose}>
               <p>
                 I was born in{" "}
-                <a className="text-link" href={aboutIntro.city.href} rel="noreferrer" target="_blank">
-                  {aboutIntro.city.label}
-                </a>
+                <TermExplain asChild explanation="🏠">
+                  <a className="text-link" href={aboutIntro.city.href} rel="noreferrer" target="_blank">
+                    {aboutIntro.city.label}
+                  </a>
+                </TermExplain>
                 , a city cradled by perpetual rains in Taiwan.
               </p>
               <p>
@@ -120,11 +118,7 @@ export default function AboutPage() {
             className={styles.snapsSection}
             delay={60}
           >
-            <SectionHeader
-              index={aboutSnaps.index}
-              title={aboutSnaps.title}
-              titleId="about-snaps-title"
-            />
+            <SectionHeader title={aboutSnaps.title} titleId="about-snaps-title" />
             <AboutCollage />
           </MotionReveal>
 
@@ -134,11 +128,7 @@ export default function AboutPage() {
             className={styles.timelineSection}
             delay={80}
           >
-            <SectionHeader
-              index={aboutExperience.index}
-              title={aboutExperience.title}
-              titleId="about-experience-title"
-            />
+            <SectionHeader title={aboutExperience.title} titleId="about-experience-title" />
             <AboutTimeline entries={aboutExperience.entries} expandable />
           </MotionReveal>
 
@@ -148,11 +138,7 @@ export default function AboutPage() {
             className={styles.timelineSection}
             delay={120}
           >
-            <SectionHeader
-              index={aboutEducation.index}
-              title={aboutEducation.title}
-              titleId="about-education-title"
-            />
+            <SectionHeader title={aboutEducation.title} titleId="about-education-title" />
             <AboutTimeline entries={aboutEducation.entries} inlineDate />
           </MotionReveal>
 
@@ -163,11 +149,7 @@ export default function AboutPage() {
             delay={180}
             id="favorites"
           >
-            <SectionHeader
-              index={aboutFavorites.index}
-              title={aboutFavorites.title}
-              titleId="about-favorites-title"
-            />
+            <SectionHeader title={aboutFavorites.title} titleId="about-favorites-title" />
             <AboutFavorites />
           </MotionReveal>
         </div>

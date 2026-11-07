@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Button } from "@/components/Button";
 import { MotionReveal } from "@/components/MotionReveal";
 import { ProjectCaseMedia, ProjectCaseMediaItem } from "@/components/projects/ProjectCaseMedia";
 import { ProjectHeroParallax } from "@/components/projects/ProjectHeroParallax";
@@ -188,10 +188,18 @@ export default function OkxProjectPage() {
               ))}
             </div>
 
-            <MotionReveal className={styles.actions} delay={80}>
-              <Link className={styles.button} href={okxProjectDetail.actions.next.href}>
+            <MotionReveal
+              aria-label="Project navigation"
+              as="nav"
+              className={styles.actions}
+              delay={80}
+            >
+              <Button href={okxProjectDetail.actions.back.href}>
+                {okxProjectDetail.actions.back.label}
+              </Button>
+              <Button href={okxProjectDetail.actions.next.href}>
                 {okxProjectDetail.actions.next.label}
-              </Link>
+              </Button>
             </MotionReveal>
           </div>
         </div>

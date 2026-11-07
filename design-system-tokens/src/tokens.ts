@@ -75,7 +75,7 @@ export const spacing = {
   "20": 80,
   "25": 100,
   "32": 128,
-  "page-top": 172,
+  "page-top": 158,
 } as const;
 
 export const radius = {

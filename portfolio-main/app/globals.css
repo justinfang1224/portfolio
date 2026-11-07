@@ -28,6 +28,11 @@ html {
   min-width: var(--portfolio-min-width);
   overflow-anchor: none;
   scroll-behavior: auto;
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
 }
 
 html:not([data-landing-splash="entered"]),

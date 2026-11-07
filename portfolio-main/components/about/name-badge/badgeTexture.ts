@@ -24,6 +24,7 @@ export type BadgePalette = {
   shadow: string;
   strap: string;
   text: string;
+  white: string;
 };
 
 export function readBadgePalette(): BadgePalette {
@@ -41,7 +42,8 @@ export function readBadgePalette(): BadgePalette {
     photoFill: pick("--color-surface-card-secondary", "#f4f4f5"),
     shadow: text,
     strap: text,
-    text
+    text,
+    white: pick("--gray-0", "#ffffff")
   };
 }
 
@@ -308,7 +310,7 @@ export function createBadgeTextures({
   const back = drawingContext(backCanvas);
   back.imageSmoothingEnabled = true;
   back.imageSmoothingQuality = "high";
-  paintCard(back, texW, texH, palette.card);
+  paintCard(back, texW, texH, palette.white);
 
   if (name.trim()) {
     back.textBaseline = "middle";
@@ -320,8 +322,9 @@ export function createBadgeTextures({
   }
 
   const faceRgb = parseCssColor(palette.card) ?? [247, 247, 247];
+  const backRgb = parseCssColor(palette.white) ?? [255, 255, 255];
   bleedHiddenPixels(ctx, frontCanvas, faceRgb);
-  bleedHiddenPixels(back, backCanvas, faceRgb);
+  bleedHiddenPixels(back, backCanvas, backRgb);
 
   return {
     front: makeTexture(frontCanvas),

@@ -4,9 +4,108 @@
   width: 100%;
 }
 
+.poster {
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.slot[data-badge-ready="true"] .poster {
+  opacity: 0;
+}
+
+.posterStrap {
+  background: var(--color-content-primary);
+  height: calc(var(--about-badge-offset, 128px) - var(--space-25) + 50% - 52px);
+  left: 50%;
+  position: absolute;
+  top: calc((var(--about-badge-offset, 128px) - var(--space-25)) * -1);
+  transform: translateX(-50%);
+  width: 22px;
+}
+
+.posterCard {
+  aspect-ratio: 803 / 500;
+  background: var(--color-surface-card-primary);
+  border: 1px solid var(--color-border-primary);
+  border-radius: 15px;
+  height: 202px;
+  left: 50%;
+  position: absolute;
+  top: calc(50% + 49px);
+  transform: translate(-50%, -50%);
+  width: 324px;
+}
+
+.posterName {
+  color: var(--color-content-primary);
+  font-family: var(--font-family-base);
+  font-size: 21px;
+  font-weight: 500;
+  left: 5%;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin: 0;
+  position: absolute;
+  top: 14%;
+}
+
+.posterPhoto {
+  border: 1px solid var(--color-border-secondary);
+  border-radius: 10px;
+  height: 73px;
+  image-rendering: pixelated;
+  object-fit: cover;
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  width: 73px;
+}
+
+.posterRows {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  left: 5%;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  right: 5%;
+  top: 51%;
+}
+
+.posterRows li {
+  align-items: center;
+  border-bottom: 1px solid var(--color-border-primary);
+  color: var(--color-content-primary);
+  display: flex;
+  font-family: var(--font-family-base);
+  font-size: 11px;
+  font-weight: 600;
+  gap: 8px;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  min-height: 34px;
+  min-width: 0;
+}
+
+.posterRows li:last-child {
+  border-bottom: 0;
+}
+
+.posterRows li span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .stage {
   background: transparent;
   inset: 0;
+  opacity: 0;
   pointer-events: none;
   position: fixed;
   z-index: 4;
@@ -24,6 +123,7 @@
   background: transparent;
   bottom: 0;
   left: 0;
+  opacity: 0;
   pointer-events: none;
   position: absolute;
   right: 0;
@@ -36,6 +136,10 @@
   height: 100%;
   pointer-events: none;
   width: 100%;
+}
+
+.stageReady {
+  opacity: 1;
 }
 
 .dragHint {

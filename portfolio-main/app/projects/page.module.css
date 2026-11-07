@@ -57,6 +57,7 @@
 .inactiveTab {
   background: transparent;
   color: var(--color-content-tertiary);
+  font-weight: var(--typography-body-medium-font-weight);
 }
 
 .inactiveTab:hover {

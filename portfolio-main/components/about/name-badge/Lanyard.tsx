@@ -84,7 +84,7 @@ function clipCardCorners(shader: { fragmentShader: string; uniforms: Record<stri
       float badgeRadius = ${radius};
       vec2 badgeQ = abs(badgeP) - (badgeHalf - vec2(badgeRadius));
       float badgeDist = length(max(badgeQ, 0.0)) + min(max(badgeQ.x, badgeQ.y), 0.0) - badgeRadius;
-      float badgePx = max(fwidth(badgeDist), 1e-4);
+      float badgePx = clamp(fwidth(badgeDist), 1e-4, 0.008);
       float badgeInside = -badgeDist;
       if (badgeInside <= 0.0) discard;
       #include <opaque_fragment>
@@ -113,6 +113,7 @@ type LanyardProps = {
   job?: string;
   location?: string;
   name?: string;
+  onReady?: () => void;
   photo?: string | null;
   position?: [number, number, number];
   gravity?: [number, number, number];
@@ -173,8 +174,36 @@ function isPageControl(target: EventTarget | null) {
   return target instanceof Element && Boolean(target.closest("a, button, input, textarea, select, [role='button']"));
 }
 
+/** Pendulum from the lanyard rail's first-open sway: one +30°/s kick, then k=28, damping 2.2. */
+const SWAY_DELAY_MS = 60;
+const SWAY_IMPULSE = 30;
+const SWAY_K = 28;
+const SWAY_DAMP = 2.2;
+const SWAY_LIMIT = 18;
+
+type FrameState = {
+  frames: number;
+  height: number;
+  stable: boolean;
+  width: number;
+};
+
+function stepSway(angle: number, velocity: number, dt: number) {
+  const nextVelocity = velocity + (-SWAY_K * angle - SWAY_DAMP * velocity) * dt;
+  const nextAngle = Math.min(SWAY_LIMIT, Math.max(-SWAY_LIMIT, angle + nextVelocity * dt));
+  return { angle: nextAngle, velocity: nextVelocity };
+}
+
 /** Frames the slot, but draws on the full viewport so a drag can leave the section. */
-function SlotFrame({ baseZ, fov }: { baseZ: number; fov: number }) {
+function SlotFrame({
+  baseZ,
+  fov,
+  frameState
+}: {
+  baseZ: number;
+  fov: number;
+  frameState: RefObject<FrameState>;
+}) {
   const camera = useThree((state) => state.camera);
   const gl = useThree((state) => state.gl);
 
@@ -203,6 +232,21 @@ function SlotFrame({ baseZ, fov }: { baseZ: number; fov: number }) {
     const offsetX = canvasRect.left - rect.left;
     const offsetY = canvasRect.top - rect.top;
     perspective.setViewOffset(rect.width, rect.height, offsetX, offsetY, canvasRect.width, canvasRect.height);
+
+    const width = Math.round(canvasRect.width);
+    const height = Math.round(canvasRect.height);
+    const state = frameState.current;
+    if (!state) {
+      return;
+    }
+    if (width === state.width && height === state.height) {
+      state.frames += 1;
+    } else {
+      state.width = width;
+      state.height = height;
+      state.frames = 0;
+    }
+    state.stable = state.frames >= 2;
   });
 
   return null;
@@ -254,11 +298,23 @@ export default function Lanyard({
   location = "",
   email = "",
   photo = null,
-  lanyardWidth = 0.62
+  lanyardWidth = 0.62,
+  onReady
 }: LanyardProps) {
   const palette = useBadgePalette();
+  const frameState = useRef<FrameState>({
+    frames: 0,
+    height: 0,
+    stable: false,
+    width: 0
+  });
   const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" && window.innerWidth < 768);
   const [mounted, setMounted] = useState(() => typeof window !== "undefined");
+  const [sceneReady, setSceneReady] = useState(false);
+  const markReady = useCallback(() => {
+    setSceneReady(true);
+    onReady?.();
+  }, [onReady]);
 
   useEffect(() => {
     setMounted(true);
@@ -276,7 +332,7 @@ export default function Lanyard({
 
   const portalTarget = document.querySelector(".portfolio-content-shell") ?? document.body;
   const stage = (
-    <div className={isMobile ? styles.stageStatic : styles.stage}>
+    <div className={[isMobile ? styles.stageStatic : styles.stage, sceneReady ? styles.stageReady : ""].filter(Boolean).join(" ")}>
       <Canvas
         camera={{ position, fov }}
         dpr={isMobile ? [1, 2] : [1, 3]}
@@ -289,7 +345,7 @@ export default function Lanyard({
       >
         <ClearColor />
         <CanvasPointer />
-        <SlotFrame baseZ={position[2]} fov={fov} />
+        <SlotFrame baseZ={position[2]} fov={fov} frameState={frameState} />
         <ambientLight intensity={0.75} />
         <directionalLight position={[4, 7, 8]} intensity={0.85} />
         <Suspense fallback={null}>
@@ -298,11 +354,13 @@ export default function Lanyard({
               baseZ={position[2]}
               email={email}
               fov={fov}
+              frameState={frameState}
               isMobile={isMobile}
               job={job}
               lanyardWidth={lanyardWidth}
               location={location}
               name={name}
+              onReady={markReady}
               palette={palette}
               photo={photo}
             />
@@ -354,7 +412,9 @@ function Band({
   lanyardWidth = 0.62,
   fov = 20,
   baseZ = 18,
-  palette
+  palette,
+  frameState,
+  onReady
 }: {
   maxSpeed?: number;
   minSpeed?: number;
@@ -368,8 +428,14 @@ function Band({
   fov?: number;
   baseZ?: number;
   palette: BadgePalette;
+  frameState: RefObject<FrameState>;
+  onReady?: () => void;
 }) {
   const viewportDpr = useThree((state) => state.viewport.dpr);
+  const gl = useThree((state) => state.gl);
+  const scene = useThree((state) => state.scene);
+  const camera = useThree((state) => state.camera);
+  const compiledWithEnv = useRef(false);
   const [faceHeight, setFaceHeight] = useState(482);
   const swallowClick = useRef(false);
   const pixelWidth = badgeFacePixels(faceHeight, fov, viewportDpr, baseZ);
@@ -404,6 +470,11 @@ function Band({
     return () => window.removeEventListener("click", blockClick, true);
   }, []);
   const band = useRef<THREE.Mesh>(null);
+  const revealed = useRef(false);
+  const readyFrames = useRef(0);
+  const hanger = useRef<THREE.Group>(null);
+  const sway = useRef({ active: false, angle: 0, kicked: false, startedAt: 0, velocity: 0 });
+  const fontEpochRef = useRef(0);
   const fixed = useRef<RapierRigidBody>(null);
   const j1 = useRef<RapierRigidBody>(null);
   const j2 = useRef<RapierRigidBody>(null);
@@ -424,6 +495,7 @@ function Band({
 
   const { nodes, materials } = useGLTF(CARD_MODEL);
   const [photoImg, setPhotoImg] = useState<HTMLImageElement | null>(null);
+  const [photoFailed, setPhotoFailed] = useState(false);
   const [fontEpoch, setFontEpoch] = useState(0);
   const [curve] = useState(
     () =>
@@ -461,11 +533,18 @@ function Band({
 
   useEffect(() => {
     let live = true;
-    document.fonts?.ready.then(() => {
+    const finish = () => {
       if (live) {
         setFontEpoch((value) => value + 1);
       }
-    });
+    };
+    if (!document.fonts) {
+      finish();
+      return () => {
+        live = false;
+      };
+    }
+    document.fonts.ready.then(finish);
     return () => {
       live = false;
     };
@@ -479,8 +558,23 @@ function Band({
     let live = true;
     const img = new Image();
     img.onload = () => {
+      const decoded = typeof img.decode === "function" ? img.decode() : Promise.resolve();
+      decoded.then(
+        () => {
+          if (live) {
+            setPhotoImg(img);
+          }
+        },
+        () => {
+          if (live) {
+            setPhotoImg(img);
+          }
+        }
+      );
+    };
+    img.onerror = () => {
       if (live) {
-        setPhotoImg(img);
+        setPhotoFailed(true);
       }
     };
     img.src = photo;
@@ -549,7 +643,64 @@ function Band({
     return () => window.removeEventListener("pointerup", release);
   }, [dragged]);
 
+  fontEpochRef.current = fontEpoch;
+
   useFrame((state, delta) => {
+    const metal = materials.metal as THREE.MeshStandardMaterial;
+    const renderer = gl as THREE.WebGLRenderer;
+    if (scene.environment && metal.envMap !== scene.environment) {
+      metal.envMap = scene.environment;
+      metal.needsUpdate = true;
+      compiledWithEnv.current = false;
+    }
+    if (scene.environment && metal.envMap === scene.environment && !compiledWithEnv.current) {
+      compiledWithEnv.current = true;
+      void renderer.compileAsync(scene, camera);
+    }
+
+    const photoReady = !photo || photoImg || photoFailed;
+    const frameReady = frameState.current?.stable === true && fontEpochRef.current > 0;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!revealed.current && frameReady && photoReady && card.current && band.current) {
+      readyFrames.current += 1;
+      if (readyFrames.current >= 2) {
+        revealed.current = true;
+        if (!reducedMotion) {
+          sway.current.startedAt = performance.now();
+          sway.current.active = true;
+        }
+        onReady?.();
+      }
+    } else if (!revealed.current) {
+      readyFrames.current = 0;
+    }
+
+    if (dragged && sway.current.active) {
+      sway.current.active = false;
+      sway.current.angle = 0;
+      sway.current.velocity = 0;
+    }
+    if (hanger.current && sway.current.active) {
+      const elapsed = performance.now() - sway.current.startedAt;
+      if (!sway.current.kicked && elapsed >= SWAY_DELAY_MS) {
+        sway.current.velocity += SWAY_IMPULSE;
+        sway.current.kicked = true;
+      }
+      if (sway.current.kicked) {
+        const next = stepSway(sway.current.angle, sway.current.velocity, Math.min(delta, 1 / 30));
+        sway.current.angle = next.angle;
+        sway.current.velocity = next.velocity;
+        if (Math.abs(sway.current.angle) < 0.02 && Math.abs(sway.current.velocity) < 0.05) {
+          sway.current.angle = 0;
+          sway.current.velocity = 0;
+          sway.current.active = false;
+        }
+      }
+      hanger.current.rotation.z = (sway.current.angle * Math.PI) / 180;
+    } else if (hanger.current) {
+      hanger.current.rotation.z = 0;
+    }
+
     if (dragged && card.current) {
       vec.set(state.pointer.x, state.pointer.y, 0.5).unproject(state.camera);
       dir.copy(vec).sub(state.camera.position).normalize();
@@ -576,10 +727,16 @@ function Band({
       });
       const joint2Body = j2.current as LerpedBody;
       const joint1Body = j1.current as LerpedBody;
-      curve.points[0].copy(j3.current.translation());
-      curve.points[1].copy(joint2Body.lerped ?? j2.current.translation());
-      curve.points[2].copy(joint1Body.lerped ?? j1.current.translation());
-      curve.points[3].copy(fixed.current.translation());
+      const originX = hanger.current?.position.x ?? 0;
+      const originY = hanger.current?.position.y ?? 4;
+      const originZ = hanger.current?.position.z ?? 0;
+      const placeStrap = (target: THREE.Vector3, source: { x: number; y: number; z: number }) => {
+        target.set(source.x - originX, source.y - originY, source.z - originZ);
+      };
+      placeStrap(curve.points[0], j3.current.translation());
+      placeStrap(curve.points[1], joint2Body.lerped ?? j2.current.translation());
+      placeStrap(curve.points[2], joint1Body.lerped ?? j1.current.translation());
+      placeStrap(curve.points[3], fixed.current.translation());
       (band.current.geometry as MeshLineGeometry).setPoints(curve.getPoints(isMobile ? 16 : 32));
       const slotHeight = slotElement()?.getBoundingClientRect().height ?? 0;
       if (slotHeight > 1 && state.size.width > 1) {
@@ -602,7 +759,7 @@ function Band({
 
   return (
     <>
-      <group position={[0, 4, 0]}>
+      <group ref={hanger} position={[0, 4, 0]}>
         <RigidBody ref={fixed} {...segmentProps} type="fixed" />
         <RigidBody position={[0, -1, 0]} ref={j1} {...segmentProps} type={isMobile ? "fixed" : "dynamic"}>
           <BallCollider args={[0.1]} />
@@ -621,6 +778,7 @@ function Band({
         >
           <CuboidCollider args={[halfW, halfH, 0.02]} position={[0, colliderY, -0.05]} />
           <group
+            frustumCulled={false}
             scale={2.25}
             position={[0, -1.2, -0.05]}
             {...(isMobile ? { raycast: () => undefined } : {})}
@@ -648,11 +806,11 @@ function Band({
               drag(new THREE.Vector3().copy(event.point).sub(vec.copy(card.current!.translation())));
             }}
           >
-            <mesh position={[0, CARD_CENTER_Y - CARD.height * 0.2, -0.12]}>
+            <mesh frustumCulled={false} position={[0, CARD_CENTER_Y - CARD.height * 0.2, -0.12]}>
               <planeGeometry args={[CARD.width * 0.5, CARD.height * 0.1]} />
               <meshBasicMaterial map={contactShadow} transparent opacity={0.22} depthWrite={false} toneMapped={false} />
             </mesh>
-            <mesh position={[0, CARD_CENTER_Y, CARD.depth / 2 + 0.001]}>
+            <mesh frustumCulled={false} position={[0, CARD_CENTER_Y, CARD.depth / 2 + 0.001]}>
               <planeGeometry args={[CARD.width, CARD.height]} />
               <meshBasicMaterial
                 map={maps.front}
@@ -661,7 +819,7 @@ function Band({
                 onBeforeCompile={clipFace}
               />
             </mesh>
-            <mesh position={[0, CARD_CENTER_Y, -CARD.depth / 2 - 0.001]} rotation={[0, Math.PI, 0]}>
+            <mesh frustumCulled={false} position={[0, CARD_CENTER_Y, -CARD.depth / 2 - 0.001]} rotation={[0, Math.PI, 0]}>
               <planeGeometry args={[CARD.width, CARD.height]} />
               <meshBasicMaterial
                 map={maps.back}
@@ -670,20 +828,20 @@ function Band({
                 onBeforeCompile={clipFace}
               />
             </mesh>
-            <mesh geometry={clip.geometry} material={materials.metal} />
-            <mesh geometry={clamp.geometry} material={materials.metal} />
+            <mesh frustumCulled={false} geometry={clip.geometry} material={materials.metal} />
+            <mesh frustumCulled={false} geometry={clamp.geometry} material={materials.metal} />
           </group>
         </RigidBody>
+        <mesh ref={band} frustumCulled={false}>
+          <meshLineGeometry />
+          <meshLineMaterial
+            color={palette.strap}
+            depthTest={false}
+            resolution={[1000, 1000]}
+            lineWidth={lanyardWidth}
+          />
+        </mesh>
       </group>
-      <mesh ref={band} frustumCulled={false}>
-        <meshLineGeometry />
-        <meshLineMaterial
-          color={palette.strap}
-          depthTest={false}
-          resolution={[1000, 1000]}
-          lineWidth={lanyardWidth}
-        />
-      </mesh>
     </>
   );
 }

@@ -10,7 +10,7 @@ import {
   useState
 } from "react";
 
-type RevealTag = "article" | "div" | "footer" | "section";
+type RevealTag = "article" | "div" | "footer" | "nav" | "section";
 
 type MotionRevealProps = HTMLAttributes<HTMLElement> & {
   as?: RevealTag;

@@ -1,14 +1,22 @@
 import Image from "next/image";
+import type { CSSProperties } from "react";
 import { Button } from "@/components/Button";
-import { MotionReveal } from "@/components/MotionReveal";
 import { TermExplain } from "@/components/TermExplain";
-import { TextScramble } from "@/components/TextScramble";
 import { UpdatedAtTypewriter } from "@/components/UpdatedAtTypewriter";
 import { WritingList } from "@/components/WritingList";
 import { profile, writings } from "@/content/portfolio";
 import { getLastUpdatedLabel } from "@/lib/get-last-updated";
 import { HomeFeaturedCarousel } from "./HomeFeaturedCarousel";
 import styles from "./page.module.css";
+
+const APPEAR_STEP_MS = 60;
+
+function withAppear(className: string, step: number) {
+  return {
+    className: `${className} ${styles.appear}`,
+    style: { "--appear-delay": `${step * APPEAR_STEP_MS}ms` } as CSSProperties
+  };
+}
 
 function CompanyLink({
   company
@@ -55,13 +63,13 @@ export default function Home() {
   return (
     <>
       <main className={styles.main}>
-        <MotionReveal as="section" aria-labelledby="home-title" className={styles.intro}>
+        <section aria-labelledby="home-title" className={styles.intro}>
           <div className={styles.identity}>
             <div className={styles.identityCopy}>
-              <h3 aria-label={profile.name} className={styles.name} id="home-title">
-                <TextScramble text={profile.name} />
+              <h3 {...withAppear(styles.name, 0)} id="home-title">
+                {profile.name}
               </h3>
-              <p className={styles.role}>
+              <p {...withAppear(styles.role, 1)}>
                 Senior Product Designer
                 <span className={styles.roleUpdated}>
                   <span aria-hidden="true" className={styles.roleSeparator}>
@@ -72,7 +80,7 @@ export default function Home() {
               </p>
             </div>
           </div>
-          <p className={styles.prose}>
+          <p {...withAppear(styles.prose, 2)}>
             I&apos;m a Product designer in the field of financial technology. In the past 2 years,
             I&apos;ve designed web3.0 trading experience for{" "}
             <CompanyLink company={profile.introCompany} />. Specifically building in the domain of
@@ -85,27 +93,27 @@ export default function Home() {
             ))}
             .
           </p>
-          <p className={styles.closing}>
+          <p {...withAppear(styles.closing, 3)}>
             I consider myself a designer at heart and enjoy building products with care & taste.
             Now I enjoy shipping things myself with the assistance of code & AI.
           </p>
-          <div className={styles.introActions}>
+          <div {...withAppear(styles.introActions, 4)}>
             <Button href="/about">About me</Button>
             <Button href="/projects">All work →</Button>
           </div>
-        </MotionReveal>
+        </section>
 
-        <MotionReveal as="section" aria-label="Featured work" className={styles.workSection} id="projects">
+        <section {...withAppear(styles.workSection, 5)} aria-label="Featured work" id="projects">
           <HomeFeaturedCarousel />
-        </MotionReveal>
+        </section>
 
-        <MotionReveal as="section" aria-labelledby="writings-title" className={styles.writings} id="writings">
+        <section {...withAppear(styles.writings, 6)} aria-labelledby="writings-title" id="writings">
           <div className={styles.sectionHeader}>
             <h3 id="writings-title">Writings</h3>
           </div>
           <WritingList embedded entries={writingEntries} flushLast />
           <Button href="/writings">View all →</Button>
-        </MotionReveal>
+        </section>
       </main>
     </>
   );
