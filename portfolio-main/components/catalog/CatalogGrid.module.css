@@ -112,10 +112,17 @@
 .item {
   min-width: 0;
   opacity: 0;
+  position: relative;
   transform: translate3d(0, 8px, 0);
   transition:
     opacity 180ms var(--ease-smooth),
     transform 180ms var(--ease-smooth);
+  z-index: 0;
+}
+
+.item:has(.card:hover),
+.item:has(.card:focus-within) {
+  z-index: 1;
 }
 
 .grid[data-visible="true"] .item {
@@ -138,7 +145,7 @@
   flex: 0 0 auto;
   height: 132px;
   justify-content: center;
-  overflow: hidden;
+  overflow: visible;
   position: relative;
   width: 132px;
 }

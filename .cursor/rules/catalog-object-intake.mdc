@@ -1,0 +1,54 @@
+---
+description: Adding new Objects catalog items — image prep, visual size, name/brand accuracy
+globs: portfolio-main/content/catalog.ts,portfolio-main/public/catalog/**,portfolio-main/components/catalog/**,portfolio-main/app/catalog/**
+alwaysApply: false
+---
+
+# Objects Catalog Intake
+
+Follow this whenever the user adds a new **Object** to `/catalog` (or says they are updating the collection). Do not ship an entry until all three gates pass.
+
+## 1. Visual size (match the grid)
+
+The tile frame is **132×132px** (120×120 on mobile). Images use `object-fit: contain` and optional `imageScale` in `portfolio-main/content/catalog.ts`.
+
+| Step | Action |
+| --- | --- |
+| Compare peers | Open `/catalog` and match **perceived size** to neighbors in the same category (e.g. shoes with Metaspeed / Neo Vista, cameras with FM / SX-70). |
+| Trim asset | Crop transparent margins so the subject fills the frame similarly to peers — avoid tiny “floating” objects or edge-to-edge clipping at rest. |
+| Tune scale | If still off after trim, set `imageScale` on the item (see existing: **1.7** wide desk objects e.g. MacBook, **0.85** album covers, default **omit** for most products). |
+| Hover | Confirm hover scale is not clipped (`CatalogGrid` image frame uses `overflow: visible`). |
+
+Do not change global tile dimensions for one product; fix the asset and/or `imageScale` only.
+
+## 2. Background removal (required)
+
+- **Format:** PNG with real alpha in `portfolio-main/public/catalog/<id>.png`.
+- **Not allowed:** Flat studio backgrounds (white, grey, black), checkerboards, or JPEG without transparency.
+- **Processing (pick by source):**
+  - Already has alpha → trim bbox, defringe light halos on edges.
+  - Uniform grey/white studio → edge color key + soft alpha (watch silver/white product edges).
+  - White product on white bg → segmentation (e.g. rembg), then trim.
+- **Shadows:** Keep a subtle contact shadow only if peers in that category use one (e.g. film boxes); otherwise remove env background fully.
+
+## 3. Name, brand, and copy accuracy
+
+Use the **user’s provided title and brand** unless they ask to normalize. When in doubt, ask — do not invent marketing names or “Fujifilm” if they said “Fuji”.
+
+| Field | Convention |
+| --- | --- |
+| `title` | User-facing product name (match user spelling/casing when given). |
+| `brand` | User-facing brand line under the title — same casing as user or nearest sibling brand style in `catalog.ts`. |
+| `id` | kebab-case slug; stable; matches filename (`soundspace-5`, `instax-mini-90`). |
+| `imageSrc` | `/catalog/<id>.png` |
+| `imageAlt` | Short factual description: brand + product + type (e.g. “Fuji Instax Mini 90 camera”). |
+| `category` | One of `sports` \| `tech` \| `photography` \| `album` \| `others` — insert with section comment order used in `catalog.ts`. |
+
+After editing, verify on `/catalog`: title and brand text match the user’s intent, filter tab counts update, and Photography/Tech/etc. grouping looks right.
+
+## Done checklist
+
+1. PNG in `public/catalog/` — transparent, trimmed, sized like peers.
+2. Entry in `catalogItems` in `content/catalog.ts` with correct category and metadata.
+3. Browser pass on `/catalog` (desktop + spot-check 375px); run `npm run qa` in `portfolio-main/` when practical.
+4. Summarize what was checked (size peer, bg, copy) and any remaining visual risk.

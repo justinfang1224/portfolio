@@ -119,6 +119,14 @@ export const catalogItems: CatalogItem[] = [
     imageSrc: "/catalog/aura-studio-3.png",
     title: "Aura studio 3"
   },
+  {
+    brand: "Nakamichi",
+    category: "tech",
+    id: "soundspace-5",
+    imageAlt: "Nakamichi Soundspace 5 stereo system",
+    imageSrc: "/catalog/soundspace-5.png",
+    title: "Soundspace 5"
+  },
 
   // Photography — cameras, then film
   {
@@ -136,6 +144,24 @@ export const catalogItems: CatalogItem[] = [
     imageAlt: "Polaroid SX-70 camera",
     imageSrc: "/catalog/sx-70.png",
     title: "SX-70"
+  },
+  {
+    brand: "Fuji",
+    category: "photography",
+    id: "instax-mini-90",
+    imageAlt: "Fuji Instax Mini 90 camera",
+    imageScale: 0.9,
+    imageSrc: "/catalog/instax-mini-90.png",
+    title: "Instax mini90"
+  },
+  {
+    brand: "Fuji",
+    category: "photography",
+    id: "instax-mini-film",
+    imageAlt: "Fuji Instax Mini instant film twin pack",
+    imageScale: 0.85,
+    imageSrc: "/catalog/instax-mini-film.png",
+    title: "Instax mini film"
   },
   {
     brand: "Nikon",
