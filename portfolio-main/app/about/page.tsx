@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import { CopyEmailLink } from "@/components/CopyEmailLink";
 import { AboutCollage } from "@/components/about/AboutCollage";
 import { AboutFavorites } from "@/components/about/AboutFavorites";
 import { AboutTimeline } from "@/components/about/AboutTimeline";
 import { NameBadge } from "@/components/about/NameBadge";
+import { Button } from "@/components/Button";
 import { MotionReveal } from "@/components/MotionReveal";
 import { TermExplain } from "@/components/TermExplain";
 import {
@@ -22,17 +24,22 @@ export const metadata: Metadata = {
 };
 
 function SectionHeader({
+  action,
   title,
   titleId
 }: {
+  action?: ReactNode;
   title: string;
   titleId: string;
 }) {
   return (
     <div className={styles.sectionHeader}>
-      <h2 className={styles.sectionTitle} id={titleId}>
-        {title}
-      </h2>
+      <div className={styles.sectionTitleRow}>
+        <h2 className={styles.sectionTitle} id={titleId}>
+          {title}
+        </h2>
+        {action}
+      </div>
     </div>
   );
 }
@@ -149,7 +156,15 @@ export default function AboutPage() {
             delay={180}
             id="favorites"
           >
-            <SectionHeader title={aboutFavorites.title} titleId="about-favorites-title" />
+            <SectionHeader
+              action={
+                <Button href="/catalog" variant="secondary">
+                  See all →
+                </Button>
+              }
+              title={aboutFavorites.title}
+              titleId="about-favorites-title"
+            />
             <AboutFavorites />
           </MotionReveal>
         </div>

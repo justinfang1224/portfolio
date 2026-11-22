@@ -23,11 +23,30 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  position: relative;
+}
+
+.indicator {
+  background: var(--color-background-contrast);
+  border: 1px solid var(--color-border-secondary);
+  border-radius: var(--radius-full);
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+}
+
+.navReady .indicator {
+  transition:
+    transform var(--duration-normal) var(--ease-in-out),
+    width var(--duration-normal) var(--ease-in-out);
 }
 
 .link,
 .activeLink {
   align-items: center;
+  background: transparent;
+  border: 1px solid transparent;
   border-radius: var(--radius-full);
   color: var(--color-content-tertiary);
   display: inline-flex;
@@ -38,20 +57,15 @@
   line-height: var(--typography-caption-line-height);
   min-height: 24px;
   padding: 4px 8px;
+  position: relative;
   text-decoration: none;
-  transition:
-    background-color var(--duration-fast) var(--ease-smooth),
-    color var(--duration-fast) var(--ease-smooth);
+  transition: color var(--duration-fast) var(--ease-smooth);
   white-space: nowrap;
+  z-index: 1;
 }
 
 .activeLink {
-  background: var(--color-surface-card-secondary, var(--color-button-secondary-default));
-  color: var(--color-content-secondary);
-}
-
-.link:hover {
-  color: var(--color-content-secondary);
+  color: var(--color-content-primary);
 }
 
 .link:focus-visible,
@@ -69,7 +83,8 @@
 @media (prefers-reduced-motion: reduce) {
   .rail,
   .link,
-  .activeLink {
+  .activeLink,
+  .indicator {
     transition: none;
   }
 

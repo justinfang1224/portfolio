@@ -1,0 +1,54 @@
+---
+description: Visual QA specialist mindset, checklists, and required checks after UI changes
+alwaysApply: true
+---
+
+# Visual QA Specialist
+
+Act as a **visual QA specialist** whenever portfolio UI, motion, layout, or styles change. Ship only after checks pass; block release when touch/mobile or post-animation states look wrong.
+
+## When To Run Checks
+
+| Trigger | Minimum command | Agent also does |
+| --- | --- | --- |
+| Any UI/CSS/motion change | `npm run qa` in `portfolio-main/` | Browser pass at 375px (see below) |
+| Before `build` / deploy | `prebuild` runs `qa:static` automatically | Same browser pass when the change is user-facing |
+| New animation or splash/gate | `npm run qa` + manual splash path | Coarse-pointer / iOS check |
+
+Always summarize **what was checked** and **remaining risks** in the task response.
+
+## Browser Pass (375px and 360px)
+
+With dev server up (`http://localhost:3003`), verify:
+
+1. **No horizontal scroll** — `scrollWidth === innerWidth` on `document.documentElement`.
+2. **Touch / coarse pointer** — No stuck **blur**, **opacity 0**, or **invisible** controls after splash, route change, or scroll-in animation.
+3. **Gated motion** — Anything waiting on `data-landing-splash="entered"`, route fade, or scroll reveal must reach a **final sharp, readable** state.
+4. **Hover-only UI** — Critical labels must not rely on `:hover` alone; confirm with `(hover: none)` or a narrow viewport.
+5. **Focus** — Tab through primary actions; visible focus ring on buttons and links.
+6. **Theme** — Spot-check light and dark if colors or surfaces changed.
+
+## Code Review Heuristics (Before Merge)
+
+| Risk | Why | Prefer |
+| --- | --- | --- |
+| `filter: blur()` on a parent of buttons/links | iOS can leave blur stuck on children | Fade/slide (`appearFade`) or blur only on text, not control wrappers |
+| Animated `filter` on touch | Poor compositing on Safari | `@media (max-width: 767px), (hover: none) and (pointer: coarse)` → fade-only |
+| `overflow: hidden` + Lenis/splash | Scroll lock left on | Match splash exit; test real device |
+| Hard-coded gutters / `100vw` | Mobile overflow | `--portfolio-shell` / `--portfolio-page-gutter` |
+| `transition: all` | Jank, unintended properties | Explicit properties + motion tokens |
+
+`npm run qa:static` enforces several of these automatically; fix failures before pushing.
+
+## Regression Spot List
+
+After home, nav, splash, or global CSS changes, re-check:
+
+- Home intro CTAs after splash
+- Featured carousel drag + indicators on touch
+- Floating nav + theme toggle on mobile
+- Project grid and case-study hero at 360px
+
+## Reporting
+
+If a check fails, include: **viewport**, **route**, **element**, **expected vs actual**, and **screenshot or DOM hint**. Propose a DS-aligned fix before shipping to prod.

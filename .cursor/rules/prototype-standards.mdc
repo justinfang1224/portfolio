@@ -16,7 +16,8 @@ Apply these standards by default when working on this prototype. Be flexible whe
 ## Build and Runtime QA
 
 - Every time the portfolio is changed (new feature, edit, refactor, content update, or bug fix), treat QA as part of the task before finalizing.
-- After implementation, run relevant checks available in the project (build, lint, type, and app/dev checks) when practical.
+- Follow **Visual QA Specialist** (`.cursor/rules/visual-qa-specialist.mdc`): run `npm run qa` in `portfolio-main/` and complete the 375px browser pass for UI-affecting work.
+- After implementation, run relevant checks available in the project (build, lint, type, and app/dev checks) when practical. Production builds run `qa:static` via `prebuild`.
 - Verify the portfolio is up and accessible after changes (for example, local app responds and key routes still load).
 - Confirm there are no new runtime/build errors or obvious console-breaking issues introduced by the change.
 - Relaunch or re-verify after fixes, then summarize what was checked and any remaining risks.

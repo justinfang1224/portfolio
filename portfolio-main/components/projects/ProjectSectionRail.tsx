@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { dsMarker } from "@/lib/ds-marker";
 import styles from "./ProjectSectionRail.module.css";
 
@@ -11,9 +11,39 @@ type ProjectSectionRailProps = {
   }[];
 };
 
+const SELECTION_SETTLE_MS = 180;
+
 export function ProjectSectionRail({ items }: ProjectSectionRailProps) {
+  const navRef = useRef<HTMLElement>(null);
+  const lockedIdRef = useRef<string | null>(null);
+  const settleTimerRef = useRef(0);
   const [activeId, setActiveId] = useState(items[0]?.id ?? "");
+  const [indicator, setIndicator] = useState({ x: 0, y: 0, width: 0, height: 0 });
+  const [indicatorReady, setIndicatorReady] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+
+  const measureIndicator = useCallback(() => {
+    const nav = navRef.current;
+    const active = nav?.querySelector<HTMLElement>("[aria-current='true']");
+
+    if (!nav || !active) {
+      return;
+    }
+
+    setIndicator({
+      x: active.offsetLeft,
+      y: active.offsetTop,
+      width: active.offsetWidth,
+      height: active.offsetHeight
+    });
+  }, []);
+
+  const releaseLockedSelection = useCallback(() => {
+    window.clearTimeout(settleTimerRef.current);
+    settleTimerRef.current = window.setTimeout(() => {
+      lockedIdRef.current = null;
+    }, SELECTION_SETTLE_MS);
+  }, []);
 
   useEffect(() => {
     const sections = items
@@ -29,10 +59,17 @@ export function ProjectSectionRail({ items }: ProjectSectionRailProps) {
         const visibleEntry = entries
           .filter((entry) => entry.isIntersecting)
           .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+        const visibleId = visibleEntry?.target.id;
 
-        if (visibleEntry?.target.id) {
-          setActiveId(visibleEntry.target.id);
+        if (!visibleId) {
+          return;
         }
+
+        if (lockedIdRef.current) {
+          return;
+        }
+
+        setActiveId(visibleId);
       },
       {
         rootMargin: "-28% 0px -58% 0px",
@@ -46,6 +83,23 @@ export function ProjectSectionRail({ items }: ProjectSectionRailProps) {
       observer.disconnect();
     };
   }, [items]);
+
+  useEffect(() => {
+    const onScroll = () => {
+      if (!lockedIdRef.current) {
+        return;
+      }
+
+      releaseLockedSelection();
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.clearTimeout(settleTimerRef.current);
+    };
+  }, [releaseLockedSelection]);
 
   useEffect(() => {
     const backgroundSection = document.getElementById("background");
@@ -72,6 +126,36 @@ export function ProjectSectionRail({ items }: ProjectSectionRailProps) {
     };
   }, []);
 
+  useLayoutEffect(() => {
+    measureIndicator();
+  }, [activeId, isVisible, items, measureIndicator]);
+
+  useEffect(() => {
+    const nav = navRef.current;
+
+    if (!nav) {
+      return;
+    }
+
+    const observer = new ResizeObserver(() => {
+      measureIndicator();
+    });
+
+    observer.observe(nav);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [activeId, items, measureIndicator]);
+
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => setIndicatorReady(true));
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+    };
+  }, []);
+
   return (
     <aside
       aria-hidden={!isVisible}
@@ -79,7 +163,23 @@ export function ProjectSectionRail({ items }: ProjectSectionRailProps) {
       className={`${styles.rail} ${isVisible ? styles.railVisible : ""}`}
       {...dsMarker("ProjectSectionRail")}
     >
-      <nav className={styles.nav}>
+      <nav
+        className={[styles.nav, indicatorReady ? styles.navReady : ""].filter(Boolean).join(" ")}
+        ref={navRef}
+      >
+        <span
+          aria-hidden="true"
+          className={styles.indicator}
+          style={
+            indicator.width === 0
+              ? undefined
+              : {
+                  height: `${indicator.height}px`,
+                  transform: `translate3d(${indicator.x}px, ${indicator.y}px, 0px)`,
+                  width: `${indicator.width}px`
+                }
+          }
+        />
         {items.map((item) => {
           const isActive = item.id === activeId;
 
@@ -89,7 +189,11 @@ export function ProjectSectionRail({ items }: ProjectSectionRailProps) {
               className={isActive ? styles.activeLink : styles.link}
               href={`#${item.id}`}
               key={item.id}
-              onClick={() => setActiveId(item.id)}
+              onClick={() => {
+                lockedIdRef.current = item.id;
+                setActiveId(item.id);
+                releaseLockedSelection();
+              }}
               tabIndex={isVisible ? undefined : -1}
             >
               {item.label}

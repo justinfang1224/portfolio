@@ -25,7 +25,6 @@ export const cryptoProjectAssets = {
   unifiedHome: "/images/projects/crypto-com/unified-home.png",
   creditScreens: "/images/projects/crypto-com/credit-screens.png",
   rewardsHub: "/images/projects/crypto-com/rewards-hub.png",
-  takeaway: "/images/projects/crypto-com/takeaway.png"
 } as const;
 
 export const okxProjectAssets = {
@@ -360,15 +359,6 @@ export const cryptoProjectDetail = {
                 text: "The card occupies a unique strategic position, acting as a vital bridge between Trad-Fi and Web3 space. Navigating this compliance-intensive project challenged myself to architect a refreshing experience distinctly differentiated from legacy banking institutions."
               }
             ]
-          ]
-        },
-        {
-          kind: "image",
-          images: [
-            {
-              src: cryptoProjectAssets.takeaway,
-              alt: "Stacked Crypto.com card visual."
-            }
           ]
         }
       ]

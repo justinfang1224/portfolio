@@ -14,6 +14,7 @@ type ButtonProps = {
   "aria-expanded"?: boolean;
   "aria-haspopup"?: boolean | "dialog" | "menu" | "listbox" | "tree" | "grid";
   "aria-label"?: string;
+  "aria-pressed"?: boolean | "mixed";
   children: ReactNode;
   href?: string;
   onClick?: MouseEventHandler<HTMLButtonElement>;
@@ -43,6 +44,7 @@ export function Button({
   "aria-expanded": ariaExpanded,
   "aria-haspopup": ariaHasPopup,
   "aria-label": ariaLabel,
+  "aria-pressed": ariaPressed,
   children,
   href,
   onClick,
@@ -64,6 +66,7 @@ export function Button({
         aria-expanded={ariaExpanded}
         aria-haspopup={ariaHasPopup}
         aria-label={ariaLabel}
+        aria-pressed={ariaPressed}
         className={className}
         onClick={handleClick}
         type="button"

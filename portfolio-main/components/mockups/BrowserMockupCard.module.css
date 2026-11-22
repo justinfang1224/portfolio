@@ -1,0 +1,73 @@
+.shell {
+  border: 1px solid var(--color-border-secondary);
+  border-radius: var(--radius-lg);
+  box-sizing: border-box;
+  font-family: var(--font-family-base);
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  user-select: none;
+  width: 100%;
+}
+
+.chrome {
+  align-items: center;
+  background: var(--color-surface-card-primary);
+  border-bottom: 1px solid var(--color-border-secondary);
+  display: flex;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+}
+
+.lights {
+  display: flex;
+  flex: none;
+  gap: var(--space-2);
+}
+
+.light {
+  border-radius: var(--radius-full);
+  height: var(--space-2);
+  width: var(--space-2);
+}
+
+.close {
+  background: var(--red-400);
+}
+
+.minimize {
+  background: var(--amber-400);
+}
+
+.zoom {
+  background: var(--green-400);
+}
+
+.content {
+  background: var(--color-background-contrast);
+  position: relative;
+  width: 100%;
+}
+
+.stage {
+  width: 100%;
+}
+
+.stage :global(video),
+.stage :global(img) {
+  display: block;
+  height: auto;
+  max-width: 100%;
+  object-fit: contain;
+  width: 100%;
+}
+
+:global(html[data-theme="dark"]) .chrome {
+  background: var(--gray-800);
+}
+
+@media (prefers-color-scheme: dark) {
+  :global(html:not([data-theme="light"])) .chrome {
+    background: var(--gray-800);
+  }
+}

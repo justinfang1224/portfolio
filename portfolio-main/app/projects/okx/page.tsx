@@ -5,6 +5,7 @@ import { ProjectCaseMedia, ProjectCaseMediaItem } from "@/components/projects/Pr
 import { ProjectHeroParallax } from "@/components/projects/ProjectHeroParallax";
 import { ProjectSectionRail } from "@/components/projects/ProjectSectionRail";
 import { RollingMetricValue } from "@/components/projects/RollingMetricValue";
+import { BrowserMockupCard } from "@/components/mockups/BrowserMockupCard";
 import { ScrollAutoplayVideo } from "@/components/projects/ScrollAutoplayVideo";
 import { okxProjectDetail } from "@/content/portfolio";
 import styles from "./page.module.css";
@@ -160,8 +161,10 @@ export default function OkxProjectPage() {
                           className={styles.imageBlock}
                           key={`${section.id}-video-${blockIndex}`}
                         >
-                          <ProjectCaseMediaItem caption={block.caption} frame="video">
-                            <ScrollAutoplayVideo label={block.label} src={block.src} />
+                          <ProjectCaseMediaItem caption={block.caption} frame="browser">
+                            <BrowserMockupCard>
+                              <ScrollAutoplayVideo label={block.label} src={block.src} />
+                            </BrowserMockupCard>
                           </ProjectCaseMediaItem>
                         </ProjectCaseMedia>
                       );

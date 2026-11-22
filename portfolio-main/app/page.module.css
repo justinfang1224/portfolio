@@ -94,19 +94,25 @@
 }
 
 .companyLink {
+  --company-logo-size: 16px;
   align-items: center;
   display: inline-flex;
   gap: var(--space-1);
   vertical-align: -2px;
 }
 
+.companyLink:global(.text-link)::before,
+.companyLink:global(.text-link)::after {
+  left: calc(var(--company-logo-size) + var(--space-1));
+}
+
 .companyLogo {
   border-radius: var(--radius-sm);
   display: inline-block;
   flex: 0 0 auto;
-  height: 16px;
+  height: var(--company-logo-size);
   object-fit: cover;
-  width: 16px;
+  width: var(--company-logo-size);
 }
 
 .workSection {

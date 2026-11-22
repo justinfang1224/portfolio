@@ -2,7 +2,7 @@
 
 import { animate } from "motion/react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { type MouseEvent, useEffect, useId, useRef, useState } from "react";
 import { aboutCollageImages } from "@/content/about";
 import {
@@ -21,14 +21,15 @@ import styles from "./FloatingNav.module.css";
 const navItems = [
   { id: "home", label: "Home", href: "/" },
   { id: "projects", label: "Projects", href: "/projects" },
-  { id: "writings", label: "Writings", href: "/writings" },
-  { id: "about", label: "About", href: "/about" }
+  { id: "about", label: "About", href: "/about" },
+  { id: "catalog", label: "Objects", href: "/catalog" },
+  { id: "writings", label: "Writings", href: "/writings" }
 ] as const;
 
 type NavItemId = (typeof navItems)[number]["id"];
 
 const PANEL_WIDTH = 196;
-const PANEL_HEIGHT = 174;
+const PANEL_HEIGHT = 210;
 const PANEL_RADIUS = 24;
 const SINK_MS = 60;
 
@@ -65,11 +66,14 @@ function preloadAboutHeroImages() {
 
 export function FloatingNav() {
   const pathname = usePathname();
+  const router = useRouter();
   const menuId = useId();
   const menuRef = useRef<HTMLDivElement>(null);
   const shellRef = useRef<HTMLDivElement>(null);
   const menuOpenRef = useRef(false);
   const sinkTimer = useRef<number | undefined>(undefined);
+  const previousPathnameRef = useRef(pathname);
+  const hasInternalHistoryRef = useRef(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [shellOn, setShellOn] = useState(false);
   const [sinking, setSinking] = useState(false);
@@ -83,6 +87,22 @@ export function FloatingNav() {
   });
 
   menuOpenRef.current = menuOpen;
+
+  useEffect(() => {
+    if (previousPathnameRef.current !== pathname) {
+      hasInternalHistoryRef.current = true;
+      previousPathnameRef.current = pathname;
+    }
+  }, [pathname]);
+
+  const handleBack = () => {
+    if (hasInternalHistoryRef.current && window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+
+    router.push("/");
+  };
 
   const showShell = () => {
     if (shellRef.current) {
@@ -320,7 +340,7 @@ export function FloatingNav() {
           >
             <div className={styles.backPad}>
               <div className={styles.backMotion}>
-                <Button aria-label="Go back" onClick={() => window.history.back()} variant="outline">
+                <Button aria-label="Go back" onClick={handleBack} variant="outline">
                   <ReplyIcon aria-hidden="true" height={18} strokeWidth={1.75} width={18} />
                 </Button>
               </div>

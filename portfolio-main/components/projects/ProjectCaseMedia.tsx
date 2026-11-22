@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 export type ProjectCaseMediaFrame =
   | "standard"
   | "video"
+  | "browser"
   | "filterAnalysis"
   | "portalAnalysis"
   | "earlyDrafts"

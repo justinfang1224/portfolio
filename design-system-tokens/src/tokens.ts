@@ -89,6 +89,7 @@ export const radius = {
 
 export const motion = {
   "ease-smooth": "cubic-bezier(0.22, 1, 0.36, 1)",
+  "ease-in-out": "cubic-bezier(0.77, 0, 0.175, 1)",
   "duration-fast": 150,
   "duration-normal": 200,
   "duration-slow": 300,

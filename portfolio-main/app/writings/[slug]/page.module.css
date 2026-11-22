@@ -55,9 +55,9 @@
 .caption {
   color: var(--color-content-tertiary);
   font-family: var(--font-family-base);
-  font-size: var(--typography-body-medium-font-size);
-  font-weight: var(--typography-body-medium-font-weight);
-  line-height: var(--typography-body-medium-line-height);
+  font-size: var(--typography-caption-font-size);
+  font-weight: var(--typography-caption-font-weight);
+  line-height: var(--typography-caption-line-height);
   margin: 0;
   text-align: center;
 }
@@ -207,11 +207,6 @@
 
   .article {
     gap: var(--space-12);
-  }
-
-  .caption {
-    font-size: var(--typography-body-small-font-size);
-    line-height: var(--typography-body-small-line-height);
   }
 }
 
