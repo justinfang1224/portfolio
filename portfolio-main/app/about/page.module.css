@@ -69,21 +69,13 @@
   width: 100%;
 }
 
-.title {
-  color: var(--color-content-primary);
-  font-family: var(--font-family-base);
-  font-size: var(--typography-heading-2-font-size);
-  font-weight: var(--typography-heading-2-font-weight);
-  line-height: var(--typography-heading-2-line-height);
-  margin: 0;
-}
-
+.title,
 .sectionTitle {
   color: var(--color-content-primary);
   font-family: var(--font-family-base);
-  font-size: var(--typography-heading-2-font-size);
-  font-weight: var(--typography-heading-2-font-weight);
-  line-height: var(--typography-heading-2-line-height);
+  font-size: var(--typography-heading-3-font-size);
+  font-weight: var(--typography-heading-3-font-weight);
+  line-height: var(--typography-heading-3-line-height);
   margin: 0;
 }
 

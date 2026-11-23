@@ -53,6 +53,14 @@ export const catalogItems: CatalogItem[] = [
     title: "Neo Vista 2"
   },
   {
+    brand: "Nike",
+    category: "sports",
+    id: "vaporfly-next-2",
+    imageAlt: "Nike ZoomX Vaporfly Next% 2 running shoes",
+    imageSrc: "/catalog/vaporfly-next-2.png",
+    title: "Vaporfly Next% 2"
+  },
+  {
     brand: "Garmin",
     category: "sports",
     id: "forerunner-570",
