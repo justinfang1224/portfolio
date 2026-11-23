@@ -55,10 +55,10 @@ export const catalogItems: CatalogItem[] = [
   {
     brand: "Nike",
     category: "sports",
-    id: "vaporfly-next-2",
-    imageAlt: "Nike ZoomX Vaporfly Next% 2 running shoes",
-    imageSrc: "/catalog/vaporfly-next-2.png",
-    title: "Vaporfly Next% 2"
+    id: "vaporfly-3",
+    imageAlt: "Nike Vaporfly 3 running shoes",
+    imageSrc: "/catalog/vaporfly-3.png",
+    title: "Vaporfly 3"
   },
   {
     brand: "Garmin",

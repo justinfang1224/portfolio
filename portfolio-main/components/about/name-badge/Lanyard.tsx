@@ -24,6 +24,7 @@ import {
   createBadgeTextures,
   createContactShadowTexture,
   readBadgePalette,
+  repaintBadgePortraitOnFront,
   type BadgePalette
 } from "./badgeTexture";
 
@@ -115,6 +116,8 @@ type LanyardProps = {
   name?: string;
   onReady?: () => void;
   photo?: string | null;
+  portraitCanvas?: HTMLCanvasElement | null;
+  portraitTick?: number;
   position?: [number, number, number];
   gravity?: [number, number, number];
   fov?: number;
@@ -298,6 +301,8 @@ export default function Lanyard({
   location = "",
   email = "",
   photo = null,
+  portraitCanvas = null,
+  portraitTick = 0,
   lanyardWidth = 0.62,
   onReady
 }: LanyardProps) {
@@ -363,6 +368,8 @@ export default function Lanyard({
               onReady={markReady}
               palette={palette}
               photo={photo}
+              portraitCanvas={portraitCanvas}
+              portraitTick={portraitTick}
             />
           </Physics>
         </Suspense>
@@ -409,6 +416,8 @@ function Band({
   location = "",
   email = "",
   photo = null,
+  portraitCanvas = null,
+  portraitTick = 0,
   lanyardWidth = 0.62,
   fov = 20,
   baseZ = 18,
@@ -424,6 +433,8 @@ function Band({
   location?: string;
   email?: string;
   photo?: string | null;
+  portraitCanvas?: HTMLCanvasElement | null;
+  portraitTick?: number;
   lanyardWidth?: number;
   fov?: number;
   baseZ?: number;
@@ -522,10 +533,19 @@ function Band({
   const clipFace = useCallback((shader: { fragmentShader: string; uniforms: Record<string, { value: THREE.Vector3 }> }) => {
     clipCardCorners(shader, borderColor.current!);
   }, []);
+  const portraitSource = portraitCanvas ?? photoImg;
   const maps = useMemo(
-    () => createBadgeTextures({ name, job, location, email, photo: photoImg, pixelWidth, palette }),
-    [name, job, location, email, photoImg, fontEpoch, pixelWidth, palette]
+    () => createBadgeTextures({ name, job, location, email, photo: portraitSource, pixelWidth, palette }),
+    [name, job, location, email, portraitSource, fontEpoch, pixelWidth, palette]
   );
+
+  useEffect(() => {
+    if (!portraitCanvas || !maps.frontCanvas) {
+      return;
+    }
+    repaintBadgePortraitOnFront(maps.frontCanvas, portraitCanvas, palette);
+    maps.front.needsUpdate = true;
+  }, [portraitCanvas, portraitTick, maps, palette]);
 
   useEffect(() => {
     curve.curveType = "chordal";
@@ -658,7 +678,7 @@ function Band({
       void renderer.compileAsync(scene, camera);
     }
 
-    const photoReady = !photo || photoImg || photoFailed;
+    const photoReady = !photo || portraitCanvas || photoImg || photoFailed;
     const frameReady = frameState.current?.stable === true && fontEpochRef.current > 0;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (!revealed.current && frameReady && photoReady && card.current && band.current) {

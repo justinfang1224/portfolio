@@ -12,6 +12,8 @@ import styles from "./CatalogGrid.module.css";
 
 type FilterId = "all" | CatalogCategory;
 
+const FILTER_SWAP_MS = 110;
+
 const categoryCounts = catalogCategories.reduce(
   (counts, category) => {
     counts[category] = catalogItems.filter((item) => item.category === category).length;
@@ -47,8 +49,8 @@ export function CatalogGrid() {
     setVisible(false);
     const timeoutId = window.setTimeout(() => {
       setItems(filterItems(filter));
-      setVisible(true);
-    }, 120);
+      window.requestAnimationFrame(() => setVisible(true));
+    }, FILTER_SWAP_MS);
 
     return () => {
       window.clearTimeout(timeoutId);
@@ -124,15 +126,11 @@ export function CatalogGrid() {
 
       <ul
         className={styles.grid}
-        data-visible={visible ? "true" : undefined}
+        data-visible={visible ? "true" : "false"}
         id={filtersId}
       >
-        {items.map((item, index) => (
-          <li
-            className={styles.item}
-            key={item.id}
-            style={{ transitionDelay: visible ? `${Math.min(index, 11) * 20}ms` : "0ms" }}
-          >
+        {items.map((item) => (
+          <li className={styles.item} key={item.id}>
             <article className={styles.card}>
               <div className={styles.imageFrame}>
                 <img

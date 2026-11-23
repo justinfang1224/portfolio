@@ -126,9 +126,46 @@ function themePortrait(img: HTMLImageElement, palette: BadgePalette) {
   return canvas;
 }
 
+export type BadgePortraitSource = HTMLImageElement | HTMLCanvasElement | null;
+
+function getBadgePhotoLayout(texW: number, texH: number) {
+  const sx = (value: number) => (value * texW) / FRAME_W;
+  const sy = (value: number) => (value * texH) / FRAME_H;
+  const pad = 40;
+  const hairline = Math.max(1, Math.round(sy(1)));
+  return {
+    hairline,
+    pad,
+    photoSize: sx(180),
+    photoX: sx(FRAME_W - pad - 180),
+    photoY: sy(pad),
+    radius: sx(24),
+    sx,
+    sy,
+    texH,
+    texW
+  };
+}
+
+export function repaintBadgePortraitOnFront(
+  frontCanvas: HTMLCanvasElement,
+  photo: BadgePortraitSource,
+  palette: BadgePalette
+) {
+  if (!photo) {
+    return;
+  }
+
+  const { photoSize, photoX, photoY, radius, hairline } = getBadgePhotoLayout(frontCanvas.width, frontCanvas.height);
+  const ctx = drawingContext(frontCanvas);
+  drawCoverRoundRect(ctx, photo, photoX, photoY, photoSize, radius, hairline, palette);
+  const faceRgb = parseCssColor(palette.card) ?? [247, 247, 247];
+  bleedHiddenPixels(ctx, frontCanvas, faceRgb);
+}
+
 function drawCoverRoundRect(
   ctx: CanvasRenderingContext2D,
-  img: HTMLImageElement | HTMLCanvasElement | null,
+  img: BadgePortraitSource,
   x: number,
   y: number,
   size: number,
@@ -232,15 +269,14 @@ export function createBadgeTextures({
   job?: string;
   location?: string;
   email?: string;
-  photo?: HTMLImageElement | null;
+  photo?: BadgePortraitSource;
   pixelWidth?: number;
   palette: BadgePalette;
 }) {
   const texW = Math.round(Math.min(4096, Math.max(pixelWidth, 2)));
   const texH = Math.round(texW * (FRAME_H / FRAME_W));
-  const sx = (value: number) => (value * texW) / FRAME_W;
-  const sy = (value: number) => (value * texH) / FRAME_H;
-  const hairline = Math.max(1, Math.round(sy(1)));
+  const layout = getBadgePhotoLayout(texW, texH);
+  const { hairline, photoSize, photoX, photoY, radius, sx, sy } = layout;
 
   const nameText = name.trim() || "Name";
   const jobText = job.trim() || "Job title";
@@ -256,11 +292,8 @@ export function createBadgeTextures({
 
   paintCard(ctx, texW, texH, palette.card);
 
-  const pad = 40;
-  const photoSize = sx(180);
-  const photoX = sx(FRAME_W - pad - 180);
-  const photoY = sy(pad);
-  drawCoverRoundRect(ctx, photo, photoX, photoY, photoSize, sx(24), hairline, palette);
+  const pad = layout.pad;
+  drawCoverRoundRect(ctx, photo, photoX, photoY, photoSize, radius, hairline, palette);
 
   const nameSize = Math.round(sy(52));
   ctx.textBaseline = "middle";
@@ -310,25 +343,18 @@ export function createBadgeTextures({
   const back = drawingContext(backCanvas);
   back.imageSmoothingEnabled = true;
   back.imageSmoothingQuality = "high";
-  paintCard(back, texW, texH, palette.white);
-
-  if (name.trim()) {
-    back.textBaseline = "middle";
-    back.textAlign = "left";
-    back.letterSpacing = "-0.02em";
-    back.font = `500 ${nameSize}px ${palette.fontFamily}`;
-    back.fillStyle = palette.text;
-    back.fillText(ellipsize(back, name.trim(), sx(700)), sx(40), sy(250));
-  }
+  paintCard(back, texW, texH, palette.card);
 
   const faceRgb = parseCssColor(palette.card) ?? [247, 247, 247];
-  const backRgb = parseCssColor(palette.white) ?? [255, 255, 255];
+  const backRgb = faceRgb;
   bleedHiddenPixels(ctx, frontCanvas, faceRgb);
   bleedHiddenPixels(back, backCanvas, backRgb);
 
   return {
+    back: makeTexture(backCanvas),
+    faceRgb,
     front: makeTexture(frontCanvas),
-    back: makeTexture(backCanvas)
+    frontCanvas
   };
 }
 
